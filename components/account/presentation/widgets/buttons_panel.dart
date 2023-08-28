@@ -1,6 +1,8 @@
 import 'package:amazon_clone/common/data/constant_data.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
+import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ButtonsPanel extends StatelessWidget {
   const ButtonsPanel({super.key});
@@ -52,7 +54,9 @@ class ButtonsPanel extends StatelessWidget {
                   backgroundColor: ConstantData.backgroundColor,
                   foregroundColor: ConstantData.selectedColor,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  BlocProvider.of<AuthBloc>(context).add(SignOutUser());
+                },
                 label: 'Log Out',
               ),
               const SizedBox(

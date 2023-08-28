@@ -1,7 +1,6 @@
 import 'package:amazon_clone/common/data/constant_data.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
-import 'package:amazon_clone/components/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -227,9 +226,5 @@ class _AuthPageState extends State<AuthPage> {
         password: _passwordController.text,
       ),
     );
-  }
-
-  void pushUserToHomePage(BuildContext context) {
-    Navigator.of(context).pushReplacementNamed(HomePage.routeName);
   }
 }
