@@ -1,5 +1,6 @@
 import 'package:amazon_clone/common/data/constant_data.dart';
 import 'package:amazon_clone/common/presentation/pages/message_page.dart';
+import 'package:amazon_clone/components/account/presentation/pages/account_page.dart';
 import 'package:amazon_clone/components/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
 
   List<Widget> pages = [
     const HomePage(),
-    const MessagePage(message: 'Account Page'),
+    const AccountPage(),
     const MessagePage(message: 'Cart Page'),
   ];
 
