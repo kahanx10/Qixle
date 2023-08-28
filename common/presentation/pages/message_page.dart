@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class ErrorPage extends StatelessWidget {
+class MessagePage extends StatelessWidget {
   final String message;
 
-  const ErrorPage({super.key, this.message = ''});
+  const MessagePage({super.key, this.message = ''});
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,7 @@
 import 'dart:io';
 
-import 'package:amazon_clone/common/presentation/pages/error_page.dart';
+import 'package:amazon_clone/common/presentation/pages/message_page.dart';
+import 'package:amazon_clone/common/presentation/widgets/bottom_bar.dart';
 import 'package:amazon_clone/components/authentication/presentation/pages/auth_page.dart';
 import 'package:amazon_clone/components/home/presentation/pages/home_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,9 +16,13 @@ class AppRouter {
       case HomePage.routeName:
         return platformAwarePageRoute(builder: (context) => const HomePage());
 
+      case BottomBarPage.routeName:
+        return platformAwarePageRoute(
+            builder: (context) => const BottomBarPage());
+
       default:
         return platformAwarePageRoute(
-          builder: (context) => const ErrorPage(
+          builder: (context) => const MessagePage(
             message: 'Invalid Route Name',
           ),
         );

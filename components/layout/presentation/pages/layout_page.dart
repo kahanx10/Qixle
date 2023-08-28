@@ -1,11 +1,11 @@
 import 'package:amazon_clone/common/data/services/message_service.dart';
 import 'package:amazon_clone/common/logic/cubits/ui_feedback_cubit.dart';
-import 'package:amazon_clone/common/presentation/pages/error_page.dart';
+import 'package:amazon_clone/common/presentation/pages/message_page.dart';
 import 'package:amazon_clone/common/presentation/pages/loading_page.dart';
 import 'package:amazon_clone/common/presentation/pages/splash_screen.dart';
+import 'package:amazon_clone/common/presentation/widgets/bottom_bar.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:amazon_clone/components/authentication/presentation/pages/auth_page.dart';
-import 'package:amazon_clone/components/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,12 +54,12 @@ class _LayoutPageState extends State<LayoutPage> {
               return const LoadingPage();
 
             case UserAuthenticatedState:
-              return const HomePage();
+              return const BottomBarPage();
 
             case UserUnauthenticatedState:
               return const AuthPage();
             default:
-              return const ErrorPage(message: 'Invalid Page');
+              return const MessagePage(message: 'Invalid Page');
           }
         },
       ),
