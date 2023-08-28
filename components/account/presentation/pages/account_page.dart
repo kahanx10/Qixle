@@ -1,7 +1,7 @@
 import 'package:amazon_clone/components/account/presentation/widgets/account_app_bar.dart';
-import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
+import 'package:amazon_clone/components/account/presentation/widgets/buttons_panel.dart';
+import 'package:amazon_clone/components/account/presentation/widgets/greet_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountPage extends StatefulWidget {
   static const String routeName = '/home_route';
@@ -15,10 +15,6 @@ class AccountPage extends StatefulWidget {
 class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
-    var user =
-        (BlocProvider.of<AuthBloc>(context).state as UserAuthenticatedState)
-            .user;
-
     return SafeArea(
       child: Scaffold(
         appBar: AccountAppBar(
@@ -34,8 +30,11 @@ class _AccountPageState extends State<AccountPage> {
             )
           ],
         ),
-        body: Center(
-          child: Text(user.name),
+        body: const Column(
+          children: [
+            GreetBar(),
+            ButtonsPanel(),
+          ],
         ),
       ),
     );

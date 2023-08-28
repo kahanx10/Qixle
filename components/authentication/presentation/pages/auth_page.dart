@@ -1,4 +1,5 @@
 import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:amazon_clone/components/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
@@ -42,11 +43,12 @@ class _AuthPageState extends State<AuthPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
+              Text(
                 'Welcome',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w500,
+                  color: ConstantData.selectedColor,
                 ),
               ),
               RadioListTile(
@@ -115,17 +117,17 @@ class _AuthPageState extends State<AuthPage> {
                           },
                         ),
                         const SizedBox(height: 10),
-                        SizedBox(
+                        AppButton(
                           width: double.infinity,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (_signUpFormKey.currentState!.validate()) {
-                                signUpUser(context);
-                              }
-                            },
-                            child: const Text('Sign Up'),
+                          isExpanded: false,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: ConstantData.backgroundColor,
+                            foregroundColor: ConstantData.selectedColor,
                           ),
+                          onPressed: () {
+                            signUpUser(context);
+                          },
+                          label: 'Sign Up',
                         ),
                       ],
                     ),
@@ -183,15 +185,17 @@ class _AuthPageState extends State<AuthPage> {
                           },
                         ),
                         const SizedBox(height: 10),
-                        SizedBox(
+                        AppButton(
                           width: double.infinity,
-                          height: 50,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              signInUser(context);
-                            },
-                            child: const Text('Sign In'),
+                          isExpanded: false,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: ConstantData.backgroundColor,
+                            foregroundColor: ConstantData.selectedColor,
                           ),
+                          onPressed: () {
+                            signInUser(context);
+                          },
+                          label: 'Sign In',
                         ),
                       ],
                     ),

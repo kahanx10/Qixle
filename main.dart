@@ -1,4 +1,3 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
 import 'package:amazon_clone/common/logic/cubits/ui_feedback_cubit.dart';
 import 'package:amazon_clone/components/authentication/data/services/auth_service.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
@@ -38,9 +37,6 @@ class _QixleState extends State<Qixle> {
         onGenerateRoute: (settings) => AppRouter().generateRoute(settings),
         title: 'Flutter Demo',
         theme: ThemeData(
-          colorScheme: const ColorScheme.light(
-            primary: ConstantData.secondaryColor,
-          ),
           useMaterial3: true,
         ),
         home: const LayoutPage(),

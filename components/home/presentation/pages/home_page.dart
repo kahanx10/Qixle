@@ -14,10 +14,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    var user =
-        (BlocProvider.of<AuthBloc>(context).state as UserAuthenticatedState)
-            .user;
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -30,8 +26,8 @@ class _HomePageState extends State<HomePage> {
             )
           ],
         ),
-        body: Center(
-          child: Text(user.name),
+        body: const Center(
+          child: Text('Home Page'),
         ),
       ),
     );

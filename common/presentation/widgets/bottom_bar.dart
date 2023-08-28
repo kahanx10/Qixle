@@ -35,8 +35,8 @@ class _BottomBarPageState extends State<BottomBarPage> {
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
-        selectedItemColor: ConstantData.selectedNavBarColor,
-        unselectedItemColor: ConstantData.unselectedNavBarColor,
+        selectedItemColor: ConstantData.selectedColor,
+        unselectedItemColor: ConstantData.unselectedColor,
         backgroundColor: ConstantData.backgroundColor,
         iconSize: 28,
         onTap: updatePage,
@@ -49,8 +49,8 @@ class _BottomBarPageState extends State<BottomBarPage> {
                 border: Border(
                   top: BorderSide(
                     color: _page == 0
-                        ? ConstantData.selectedNavBarColor
-                        : ConstantData.backgroundColor,
+                        ? ConstantData.selectedColor
+                        : Colors.transparent,
                     width: bottomBarBorderWidth,
                   ),
                 ),
@@ -69,8 +69,8 @@ class _BottomBarPageState extends State<BottomBarPage> {
                 border: Border(
                   top: BorderSide(
                     color: _page == 1
-                        ? ConstantData.selectedNavBarColor
-                        : ConstantData.backgroundColor,
+                        ? ConstantData.selectedColor
+                        : Colors.transparent,
                     width: bottomBarBorderWidth,
                   ),
                 ),
@@ -89,15 +89,16 @@ class _BottomBarPageState extends State<BottomBarPage> {
                 border: Border(
                   top: BorderSide(
                     color: _page == 2
-                        ? ConstantData.selectedNavBarColor
-                        : ConstantData.backgroundColor,
+                        ? ConstantData.selectedColor
+                        : Colors.transparent,
                     width: bottomBarBorderWidth,
                   ),
                 ),
               ),
               child: const Badge(
-                backgroundColor: ConstantData.secondaryColor,
+                backgroundColor: ConstantData.backgroundColor,
                 label: Text('6'),
+                textColor: ConstantData.unselectedColor,
                 child: Icon(
                   Icons.shopping_cart_outlined,
                 ),
