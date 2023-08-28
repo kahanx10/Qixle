@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:amazon_clone/common/presentation/pages/message_page.dart';
-import 'package:amazon_clone/common/presentation/widgets/bottom_bar.dart';
 import 'package:amazon_clone/components/authentication/presentation/pages/auth_page.dart';
+import 'package:amazon_clone/components/bottom_bars/customer_bottom_bar_page.dart';
 import 'package:amazon_clone/components/home/presentation/pages/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +16,9 @@ class AppRouter {
       case HomePage.routeName:
         return platformAwarePageRoute(builder: (context) => const HomePage());
 
-      case BottomBarPage.routeName:
+      case CustomerBottomBarPage.routeName:
         return platformAwarePageRoute(
-            builder: (context) => const BottomBarPage());
+            builder: (context) => const CustomerBottomBarPage());
 
       default:
         return platformAwarePageRoute(

@@ -4,15 +4,15 @@ import 'package:amazon_clone/components/account/presentation/pages/account_page.
 import 'package:amazon_clone/components/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
-class BottomBarPage extends StatefulWidget {
+class CustomerBottomBarPage extends StatefulWidget {
   static const String routeName = '/bottom_bar_route';
-  const BottomBarPage({Key? key}) : super(key: key);
+  const CustomerBottomBarPage({Key? key}) : super(key: key);
 
   @override
-  State<BottomBarPage> createState() => _BottomBarPageState();
+  State<CustomerBottomBarPage> createState() => _CustomerBottomBarPageState();
 }
 
-class _BottomBarPageState extends State<BottomBarPage> {
+class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
   int _page = 0;
   double bottomBarWidth = 42;
   double bottomBarBorderWidth = 5;

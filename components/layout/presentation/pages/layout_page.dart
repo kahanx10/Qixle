@@ -3,7 +3,8 @@ import 'package:amazon_clone/common/logic/cubits/ui_feedback_cubit.dart';
 import 'package:amazon_clone/common/presentation/pages/message_page.dart';
 import 'package:amazon_clone/common/presentation/pages/loading_page.dart';
 import 'package:amazon_clone/common/presentation/pages/splash_screen.dart';
-import 'package:amazon_clone/common/presentation/widgets/bottom_bar.dart';
+import 'package:amazon_clone/components/bottom_bars/admin_bottom_bar.dart';
+import 'package:amazon_clone/components/bottom_bars/customer_bottom_bar_page.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:amazon_clone/components/authentication/presentation/pages/auth_page.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,8 @@ class _LayoutPageState extends State<LayoutPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<UiFeedbackCubit, UiFeedbackState>(
-      listener: (context, state) {
-        switch (state.runtimeType) {
+      listener: (context, uiFeedbackState) {
+        switch (uiFeedbackState.runtimeType) {
           case ShowLoadingOverlayState:
             MessageService.showLoadingOverlay(context);
             break;
@@ -30,7 +31,7 @@ class _LayoutPageState extends State<LayoutPage> {
           case ShowSnackbarState:
             MessageService.showSnackBar(
               context,
-              message: (state as ShowSnackbarState).message,
+              message: (uiFeedbackState as ShowSnackbarState).message,
             );
 
             break;
@@ -38,8 +39,8 @@ class _LayoutPageState extends State<LayoutPage> {
         }
       },
       child: BlocBuilder<AuthBloc, UserState>(
-        builder: (context, state) {
-          switch (state.runtimeType) {
+        builder: (context, userState) {
+          switch (userState.runtimeType) {
             case UserInitialState:
               Future.delayed(
                 const Duration(seconds: 5),
@@ -54,7 +55,12 @@ class _LayoutPageState extends State<LayoutPage> {
               return const LoadingPage();
 
             case UserAuthenticatedState:
-              return const BottomBarPage();
+              var userType = (userState as UserAuthenticatedState).user.type;
+
+              //  otherwise it's gonna be 'customer'
+              return userType == 'admin'
+                  ? const AdminBottomBar()
+                  : const CustomerBottomBarPage();
 
             case UserUnauthenticatedState:
               return const AuthPage();
