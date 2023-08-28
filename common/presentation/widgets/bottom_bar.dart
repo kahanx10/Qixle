@@ -49,7 +49,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
                   top: BorderSide(
                     color: _page == 0
                         ? ConstantData.selectedNavBarColor
-                        : ConstantData.backgroundColor,
+                        : Colors.transparent,
                     width: bottomBarBorderWidth,
                   ),
                 ),
@@ -69,7 +69,7 @@ class _BottomBarPageState extends State<BottomBarPage> {
                   top: BorderSide(
                     color: _page == 1
                         ? ConstantData.selectedNavBarColor
-                        : ConstantData.backgroundColor,
+                        : Colors.transparent,
                     width: bottomBarBorderWidth,
                   ),
                 ),
@@ -89,13 +89,13 @@ class _BottomBarPageState extends State<BottomBarPage> {
                   top: BorderSide(
                     color: _page == 2
                         ? ConstantData.selectedNavBarColor
-                        : ConstantData.backgroundColor,
+                        : Colors.transparent,
                     width: bottomBarBorderWidth,
                   ),
                 ),
               ),
               child: const Badge(
-                backgroundColor: ConstantData.secondaryColor,
+                backgroundColor: ConstantData.backgroundColor,
                 label: Text('6'),
                 child: Icon(
                   Icons.shopping_cart_outlined,

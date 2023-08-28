@@ -36,6 +36,7 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: ConstantData.greyBackgroundColor,
         body: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -188,7 +189,12 @@ class _AuthPageState extends State<AuthPage> {
                           height: 50,
                           child: ElevatedButton(
                             onPressed: () {
-                              signInUser(context);
+                              var isValidated =
+                                  _signInFormKey.currentState!.validate();
+
+                              if (isValidated) {
+                                signInUser(context);
+                              }
                             },
                             child: const Text('Sign In'),
                           ),
