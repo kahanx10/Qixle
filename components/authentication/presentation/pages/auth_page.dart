@@ -1,5 +1,6 @@
 import 'package:amazon_clone/common/data/constant_data.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
+import 'package:amazon_clone/common/presentation/widgets/my_textfield.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,11 +75,10 @@ class _AuthPageState extends State<AuthPage> {
                       key: _signUpFormKey,
                       child: Column(
                         children: [
-                          TextFormField(
+                          MyTextField(
+                            obscureText: false,
                             controller: _nameController,
-                            decoration: const InputDecoration(
-                              hintText: 'Name',
-                            ),
+                            hintText: 'Name',
                             validator: (val) {
                               if (val!.isNotEmpty) {
                                 return null;
@@ -88,11 +88,10 @@ class _AuthPageState extends State<AuthPage> {
                             },
                           ),
                           const SizedBox(height: 10),
-                          TextFormField(
+                          MyTextField(
+                            obscureText: false,
                             controller: _usernameController,
-                            decoration: const InputDecoration(
-                              hintText: 'Username',
-                            ),
+                            hintText: 'Username',
                             validator: (val) {
                               if (val!.isNotEmpty && !val.contains(' ')) {
                                 return null;
@@ -102,12 +101,10 @@ class _AuthPageState extends State<AuthPage> {
                             },
                           ),
                           const SizedBox(height: 10),
-                          TextFormField(
-                            controller: _passwordController,
+                          MyTextField(
                             obscureText: true,
-                            decoration: const InputDecoration(
-                              hintText: 'Password',
-                            ),
+                            controller: _passwordController,
+                            hintText: 'Password',
                             validator: (val) {
                               if (val!.isNotEmpty && !val.contains(' ')) {
                                 return null;
@@ -156,11 +153,10 @@ class _AuthPageState extends State<AuthPage> {
                       key: _signInFormKey,
                       child: Column(
                         children: [
-                          TextFormField(
+                          MyTextField(
+                            obscureText: false,
                             controller: _usernameController,
-                            decoration: const InputDecoration(
-                              hintText: 'Username',
-                            ),
+                            hintText: 'Username',
                             validator: (val) {
                               if (val!.isNotEmpty && !val.contains(' ')) {
                                 return null;
@@ -170,12 +166,10 @@ class _AuthPageState extends State<AuthPage> {
                             },
                           ),
                           const SizedBox(height: 10),
-                          TextFormField(
-                            controller: _passwordController,
+                          MyTextField(
                             obscureText: true,
-                            decoration: const InputDecoration(
-                              hintText: 'Password',
-                            ),
+                            controller: _passwordController,
+                            hintText: 'Password',
                             validator: (val) {
                               if (val!.isNotEmpty && !val.contains(' ')) {
                                 return null;

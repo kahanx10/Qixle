@@ -19,25 +19,14 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isExpanded
-        ? Expanded(
-            child: SizedBox(
-              height: 50,
-              child: ElevatedButton(
-                style: style,
-                onPressed: onPressed,
-                child: Text(label),
-              ),
-            ),
-          )
-        : SizedBox(
-            width: width!,
-            height: 50,
-            child: ElevatedButton(
-              style: style,
-              onPressed: onPressed,
-              child: Text(label),
-            ),
-          );
+    return SizedBox(
+      width: isExpanded ? double.infinity : width!,
+      height: 50,
+      child: ElevatedButton(
+        style: style,
+        onPressed: onPressed,
+        child: Text(label),
+      ),
+    );
   }
 }

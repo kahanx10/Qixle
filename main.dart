@@ -34,6 +34,7 @@ class _QixleState extends State<Qixle> {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         onGenerateRoute: (settings) => AppRouter().generateRoute(settings),
         title: 'Flutter Demo',
         theme: ThemeData(

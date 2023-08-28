@@ -1,4 +1,4 @@
-import 'package:amazon_clone/components/account/presentation/widgets/account_app_bar.dart';
+import 'package:amazon_clone/common/presentation/widgets/my_app_bar.dart';
 import 'package:amazon_clone/components/account/presentation/widgets/buttons_panel.dart';
 import 'package:amazon_clone/components/account/presentation/widgets/greet_bar.dart';
 import 'package:amazon_clone/components/account/presentation/widgets/orders_panel.dart';
@@ -17,7 +17,7 @@ class _AccountPageState extends State<AccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AccountAppBar(
+      appBar: MyAppBar(
         title: const Text('Qixle'),
         actions: [
           IconButton(

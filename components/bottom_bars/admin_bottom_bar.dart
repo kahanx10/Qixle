@@ -1,5 +1,6 @@
 import 'package:amazon_clone/common/data/constant_data.dart';
 import 'package:amazon_clone/common/presentation/pages/message_page.dart';
+import 'package:amazon_clone/components/products/presentation/pages/products_page.dart';
 import 'package:flutter/material.dart';
 
 class AdminBottomBar extends StatefulWidget {
@@ -15,9 +16,7 @@ class _AdminBottomBarState extends State<AdminBottomBar> {
   double bottomBarBorderWidth = 5;
 
   List<Widget> pages = [
-    const MessagePage(
-      message: 'Products Page',
-    ),
+    const ProductsPage(),
     const MessagePage(
       message: 'Analytics Page',
     ),
