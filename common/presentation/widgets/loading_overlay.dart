@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:flutter/material.dart';
 
 class LoadingOverlay extends StatelessWidget {
@@ -10,7 +10,7 @@ class LoadingOverlay extends StatelessWidget {
       backgroundColor: Colors.transparent,
       body: Center(
         child: CircularProgressIndicator(
-          color: ConstantData.selectedColor,
+          color: Constants.selectedColor,
         ),
       ),
     );

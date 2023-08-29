@@ -18,7 +18,7 @@ class _AccountPageState extends State<AccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
-        title: const Text('Qixle'),
+        title: const Text('QIXA'),
         actions: [
           IconButton(
             onPressed: () {},

@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 
 import 'package:flutter/material.dart';
 
@@ -10,7 +10,7 @@ class RecommendedCategories extends StatelessWidget {
     return SizedBox(
       height: 70,
       child: ListView.builder(
-        itemCount: ConstantData.categoryImages.length,
+        itemCount: Constants.categoryImages.length,
         scrollDirection: Axis.horizontal,
         itemExtent: 85,
         itemBuilder: (context, index) {
@@ -23,7 +23,7 @@ class RecommendedCategories extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: Image.asset(
-                      ConstantData.categoryImages[index]['image']!,
+                      Constants.categoryImages[index]['image']!,
                       fit: BoxFit.cover,
                       height: 40,
                       width: 40,
@@ -31,7 +31,7 @@ class RecommendedCategories extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  ConstantData.categoryImages[index]['title']!,
+                  Constants.categoryImages[index]['title']!,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,

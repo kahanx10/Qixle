@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +14,7 @@ class GreetBar extends StatelessWidget {
 
     return Container(
       decoration: const BoxDecoration(
-        gradient: ConstantData.appBarGradient,
+        gradient: Constants.appBarGradient,
       ),
       padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
       child: Padding(

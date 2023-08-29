@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/common/presentation/widgets/my_textfield.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
@@ -37,7 +37,7 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ConstantData.greyBackgroundColor,
+        backgroundColor: Constants.greyBackgroundColor,
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(
@@ -49,13 +49,13 @@ class _AuthPageState extends State<AuthPage> {
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w500,
-                    color: ConstantData.selectedColor,
+                    color: Constants.selectedColor,
                   ),
                 ),
                 RadioListTile(
                   tileColor: _authVal == Auth.signUp
-                      ? ConstantData.backgroundColor
-                      : ConstantData.greyBackgroundColor,
+                      ? Constants.backgroundColor
+                      : Constants.greyBackgroundColor,
                   title: const Text('Create Account'),
                   value: Auth.signUp,
                   groupValue: _authVal,
@@ -69,7 +69,7 @@ class _AuthPageState extends State<AuthPage> {
                 ),
                 if (_authVal == Auth.signUp)
                   Container(
-                    color: ConstantData.backgroundColor,
+                    color: Constants.backgroundColor,
                     padding: const EdgeInsets.all(8),
                     child: Form(
                       key: _signUpFormKey,
@@ -118,8 +118,8 @@ class _AuthPageState extends State<AuthPage> {
                             width: double.infinity,
                             isExpanded: false,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: ConstantData.selectedColor,
-                              foregroundColor: ConstantData.backgroundColor,
+                              backgroundColor: Constants.selectedColor,
+                              foregroundColor: Constants.backgroundColor,
                             ),
                             onPressed: () {
                               signUpUser(context);
@@ -132,8 +132,8 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                 RadioListTile(
                   tileColor: _authVal == Auth.signIn
-                      ? ConstantData.backgroundColor
-                      : ConstantData.greyBackgroundColor,
+                      ? Constants.backgroundColor
+                      : Constants.greyBackgroundColor,
                   title: const Text('Already have an account?'),
                   value: Auth.signIn,
                   groupValue: _authVal,
@@ -147,7 +147,7 @@ class _AuthPageState extends State<AuthPage> {
                 ),
                 if (_authVal == Auth.signIn)
                   Container(
-                    color: ConstantData.backgroundColor,
+                    color: Constants.backgroundColor,
                     padding: const EdgeInsets.all(8),
                     child: Form(
                       key: _signInFormKey,
@@ -183,8 +183,8 @@ class _AuthPageState extends State<AuthPage> {
                             width: double.infinity,
                             isExpanded: false,
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: ConstantData.selectedColor,
-                              foregroundColor: ConstantData.backgroundColor,
+                              backgroundColor: Constants.selectedColor,
+                              foregroundColor: Constants.backgroundColor,
                             ),
                             onPressed: () {
                               signInUser(context);

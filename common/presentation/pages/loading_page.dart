@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:flutter/material.dart';
 
 class LoadingPage extends StatelessWidget {
@@ -9,7 +9,7 @@ class LoadingPage extends StatelessWidget {
     return const Scaffold(
       body: Center(
         child: CircularProgressIndicator(
-          color: ConstantData.secondaryColor,
+          color: Constants.secondaryColor,
         ),
       ),
     );

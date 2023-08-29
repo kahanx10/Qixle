@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +8,7 @@ class CarouselImages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
-      items: ConstantData.carouselImages.map(
+      items: Constants.carouselImages.map(
         (i) {
           return Builder(
             builder: (BuildContext context) => Image.network(

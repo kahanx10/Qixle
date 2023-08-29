@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:flutter/material.dart';
 
 class DealOfTheDay extends StatefulWidget {
@@ -49,7 +49,7 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
             scrollDirection: Axis.horizontal,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: ConstantData.dealsOfTheDayTemp
+              children: Constants.dealsOfTheDayTemp
                   .map(
                     (e) => Image.network(
                       e,

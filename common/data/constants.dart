@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ConstantData {
+class Constants {
   static String host = 'http://192.168.46.86:8000';
   static String signUpPath = '/signup';
   static String signInPath = '/signin';
   static String authTokenName = 'authToken';
+
+  static String cloudinaryUploadPreset = 'nt5roocu';
+  static String cloudinaryCloudName = 'dz8e7dziq';
 
   // COLORS
   static const appBarGradient = LinearGradient(

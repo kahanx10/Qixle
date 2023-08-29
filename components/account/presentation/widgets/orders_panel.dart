@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/components/account/presentation/widgets/single_product.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +43,7 @@ class _OrdersPanelState extends State<OrdersPanel> {
               child: Text(
                 'See all',
                 style: TextStyle(
-                  color: ConstantData.selectedColor,
+                  color: Constants.selectedColor,
                 ),
               ),
             ),

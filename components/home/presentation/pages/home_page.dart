@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/components/home/presentation/widgets/address_panel.dart';
 import 'package:amazon_clone/components/home/presentation/widgets/carousel_images.dart';
 import 'package:amazon_clone/components/home/presentation/widgets/deal_of_the_day.dart';
@@ -17,13 +17,13 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ConstantData.backgroundColor,
+      backgroundColor: Constants.backgroundColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
           flexibleSpace: Container(
             decoration: const BoxDecoration(
-              gradient: ConstantData.appBarGradient,
+              gradient: Constants.appBarGradient,
             ),
           ),
           title: Row(

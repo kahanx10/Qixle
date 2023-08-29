@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/presentation/pages/message_page.dart';
 import 'package:amazon_clone/components/account/presentation/pages/account_page.dart';
 import 'package:amazon_clone/components/home/presentation/pages/home_page.dart';
@@ -35,9 +35,9 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
       body: pages[_page],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
-        selectedItemColor: ConstantData.selectedColor,
-        unselectedItemColor: ConstantData.unselectedColor,
-        backgroundColor: ConstantData.backgroundColor,
+        selectedItemColor: Constants.selectedColor,
+        unselectedItemColor: Constants.unselectedColor,
+        backgroundColor: Constants.backgroundColor,
         iconSize: 28,
         onTap: updatePage,
         items: [
@@ -49,7 +49,7 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
                 border: Border(
                   top: BorderSide(
                     color: _page == 0
-                        ? ConstantData.selectedColor
+                        ? Constants.selectedColor
                         : Colors.transparent,
                     width: bottomBarBorderWidth,
                   ),
@@ -69,7 +69,7 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
                 border: Border(
                   top: BorderSide(
                     color: _page == 1
-                        ? ConstantData.selectedColor
+                        ? Constants.selectedColor
                         : Colors.transparent,
                     width: bottomBarBorderWidth,
                   ),
@@ -89,16 +89,16 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
                 border: Border(
                   top: BorderSide(
                     color: _page == 2
-                        ? ConstantData.selectedColor
+                        ? Constants.selectedColor
                         : Colors.transparent,
                     width: bottomBarBorderWidth,
                   ),
                 ),
               ),
               child: const Badge(
-                backgroundColor: ConstantData.backgroundColor,
+                backgroundColor: Constants.backgroundColor,
                 label: Text('6'),
-                textColor: ConstantData.unselectedColor,
+                textColor: Constants.unselectedColor,
                 child: Icon(
                   Icons.shopping_cart_outlined,
                 ),

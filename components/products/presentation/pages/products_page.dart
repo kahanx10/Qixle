@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/presentation/widgets/my_app_bar.dart';
 import 'package:amazon_clone/components/products/presentation/pages/add_product_page.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +14,9 @@ class _ProductsPageState extends State<ProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ConstantData.backgroundColor,
+      backgroundColor: Constants.backgroundColor,
       appBar: const MyAppBar(
-        title: Text('Qixle'),
+        title: Text('QIXA'),
         actions: [
           Text(
             'Admin',
@@ -37,10 +37,10 @@ class _ProductsPageState extends State<ProductsPage> {
         onPressed: () {
           Navigator.of(context).pushNamed(AddProductPage.routeName);
         },
-        backgroundColor: ConstantData.selectedColor,
+        backgroundColor: Constants.selectedColor,
         child: const Icon(
           Icons.add,
-          color: ConstantData.backgroundColor,
+          color: Constants.backgroundColor,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

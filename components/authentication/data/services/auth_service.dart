@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/components/authentication/data/models/user_model.dart';
 import 'package:amazon_clone/components/authentication/data/services/auth_token_service.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +22,7 @@ class AuthService {
       print('entered handling userSignUpAuthentication() in auth_service.dart');
       // make api call(s) to database
       var res = await client.post(
-        Uri.parse('${ConstantData.host}${ConstantData.signUpPath}'),
+        Uri.parse('${Constants.host}${Constants.signUpPath}'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -54,7 +54,7 @@ class AuthService {
       print('entered handling userSignInAuthentication() in auth_service.dart');
       // make api call(s) to database
       var res = await client.post(
-        Uri.parse('${ConstantData.host}${ConstantData.signInPath}'),
+        Uri.parse('${Constants.host}${Constants.signInPath}'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -86,7 +86,7 @@ class AuthService {
       }
 
       var res = await client.get(
-        Uri.parse('${ConstantData.host}/'),
+        Uri.parse('${Constants.host}/'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'authToken': token,

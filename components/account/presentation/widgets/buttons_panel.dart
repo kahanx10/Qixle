@@ -1,4 +1,4 @@
-import 'package:amazon_clone/common/data/constant_data.dart';
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
@@ -22,8 +22,8 @@ class ButtonsPanel extends StatelessWidget {
               AppButton(
                 isExpanded: true,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: ConstantData.backgroundColor,
-                  foregroundColor: ConstantData.selectedColor,
+                  backgroundColor: Constants.backgroundColor,
+                  foregroundColor: Constants.selectedColor,
                 ),
                 onPressed: () {},
                 label: 'Your Orders',
@@ -34,8 +34,8 @@ class ButtonsPanel extends StatelessWidget {
               AppButton(
                 isExpanded: true,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: ConstantData.backgroundColor,
-                  foregroundColor: ConstantData.selectedColor,
+                  backgroundColor: Constants.backgroundColor,
+                  foregroundColor: Constants.selectedColor,
                 ),
                 onPressed: () {},
                 label: 'Turn Seller',
@@ -51,8 +51,8 @@ class ButtonsPanel extends StatelessWidget {
               AppButton(
                 isExpanded: true,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: ConstantData.backgroundColor,
-                  foregroundColor: ConstantData.selectedColor,
+                  backgroundColor: Constants.backgroundColor,
+                  foregroundColor: Constants.selectedColor,
                 ),
                 onPressed: () {
                   BlocProvider.of<AuthBloc>(context).add(SignOutUser());
@@ -65,8 +65,8 @@ class ButtonsPanel extends StatelessWidget {
               AppButton(
                 isExpanded: true,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: ConstantData.backgroundColor,
-                  foregroundColor: ConstantData.selectedColor,
+                  backgroundColor: Constants.backgroundColor,
+                  foregroundColor: Constants.selectedColor,
                 ),
                 onPressed: () {},
                 label: 'Wish List',
