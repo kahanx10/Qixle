@@ -5,7 +5,6 @@ class AppButton extends StatelessWidget {
   final ButtonStyle style;
   final VoidCallback onPressed;
   final String label;
-  final bool isExpanded;
   final double? width;
 
   const AppButton({
@@ -13,14 +12,12 @@ class AppButton extends StatelessWidget {
     required this.style,
     required this.onPressed,
     required this.label,
-    required this.isExpanded,
     this.width,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: isExpanded ? double.infinity : width!,
       height: 50,
       child: ElevatedButton(
         style: style,

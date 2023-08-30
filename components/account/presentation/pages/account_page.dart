@@ -31,6 +31,7 @@ class _AccountPageState extends State<AccountPage> {
         ],
       ),
       body: const Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           GreetBar(),
           ButtonsPanel(),

@@ -114,17 +114,17 @@ class _AuthPageState extends State<AuthPage> {
                             },
                           ),
                           const SizedBox(height: 10),
-                          AppButton(
-                            width: double.infinity,
-                            isExpanded: false,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Constants.selectedColor,
-                              foregroundColor: Constants.backgroundColor,
+                          Expanded(
+                            child: AppButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Constants.selectedColor,
+                                foregroundColor: Constants.backgroundColor,
+                              ),
+                              onPressed: () {
+                                signUpUser(context);
+                              },
+                              label: 'Sign Up',
                             ),
-                            onPressed: () {
-                              signUpUser(context);
-                            },
-                            label: 'Sign Up',
                           ),
                         ],
                       ),
@@ -179,17 +179,17 @@ class _AuthPageState extends State<AuthPage> {
                             },
                           ),
                           const SizedBox(height: 10),
-                          AppButton(
-                            width: double.infinity,
-                            isExpanded: false,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Constants.selectedColor,
-                              foregroundColor: Constants.backgroundColor,
+                          Expanded(
+                            child: AppButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Constants.selectedColor,
+                                foregroundColor: Constants.backgroundColor,
+                              ),
+                              onPressed: () {
+                                signInUser(context);
+                              },
+                              label: 'Sign In',
                             ),
-                            onPressed: () {
-                              signInUser(context);
-                            },
-                            label: 'Sign In',
                           ),
                         ],
                       ),

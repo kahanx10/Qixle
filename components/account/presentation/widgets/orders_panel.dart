@@ -1,5 +1,5 @@
 import 'package:amazon_clone/common/data/constants.dart';
-import 'package:amazon_clone/components/account/presentation/widgets/single_product.dart';
+import 'package:amazon_clone/common/presentation/widgets/single_product.dart';
 import 'package:flutter/material.dart';
 
 class OrdersPanel extends StatefulWidget {
@@ -64,7 +64,7 @@ class _OrdersPanelState extends State<OrdersPanel> {
               return GestureDetector(
                 onTap: () {},
                 child: SingleProduct(
-                  image: orders[index],
+                  imageUrl: orders[index],
                 ),
               );
             },

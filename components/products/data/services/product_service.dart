@@ -1,32 +1,106 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:amazon_clone/common/data/constants.dart';
+import 'package:amazon_clone/components/authentication/data/services/auth_token_service.dart';
+import 'package:amazon_clone/components/products/logic/blocs/products_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:http/http.dart' as http;
 
 class ProductService {
-  static Future<void> uploadProduct({
-    required String productName,
-    required String description,
-    required int quantity,
-    required double price,
-    required List<String> images,
-    required String category,
-  }) async {
-    var imagePaths = <String>[];
+  static Future<http.Response> fetchProducts() async {
+    late http.Response res;
+    try {
+      var token = await AuthTokenService.getToken();
 
-    var cloudinary = CloudinaryPublic(
-      Constants.cloudinaryCloudName,
-      Constants.cloudinaryUploadPreset,
-    );
+      res = await http.get(
+        Uri.parse('${Constants.host}/admin/fetch-products'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authToken': token!,
+        },
+      );
 
-    var resList = await cloudinary.uploadFiles(
-      images.map((path) => CloudinaryFile.fromFile(path)).toList(),
-    );
-
-    for (var res in resList) {
-      imagePaths.add(res.secureUrl);
+      if (res.statusCode == 200) {
+        return res;
+      }
+    } catch (e) {
+      rethrow;
     }
+    return res;
+  }
+
+  static Future<http.Response?> uploadProduct({
+    required AddProductEvent event,
+  }) async {
+    try {
+      var imagePaths = <String>[];
+
+      var cloudinary = CloudinaryPublic(
+        Constants.cloudinaryCloudName,
+        Constants.cloudinaryUploadPreset,
+      );
+
+      var resList = await cloudinary.uploadFiles(
+        event.images.map((path) => CloudinaryFile.fromFile(path)).toList(),
+      );
+
+      for (var res in resList) {
+        imagePaths.add(res.secureUrl);
+      }
+
+      var token = await AuthTokenService.getToken();
+
+      var res = await http.post(
+        Uri.parse('${Constants.host}/admin/add-product'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authToken': token!,
+        },
+        body: jsonEncode({
+          'name': event.productName,
+          'description': event.description,
+          'category': event.category,
+          'price': event.price,
+          'quantity': event.quantity,
+          'images': imagePaths,
+        }),
+      );
+
+      if (res.statusCode == 200) {
+        return res;
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
+  }
+
+  static Future<http.Response?> deleteProduct({
+    required DeleteProductEvent event,
+  }) async {
+    try {
+      var token = await AuthTokenService.getToken();
+
+      var res = await http.delete(
+        Uri.parse('${Constants.host}/admin/delete-product'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authToken': token!,
+        },
+        body: jsonEncode({'id': event.productID}),
+      );
+
+      print(res.statusCode);
+
+      if (res.statusCode == 200) {
+        return res;
+      }
+    } catch (e) {
+      rethrow;
+    }
+    return null;
   }
 
   static Future<List<File>> pickProductImages() async {

@@ -19,26 +19,28 @@ class ButtonsPanel extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              AppButton(
-                isExpanded: true,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Constants.backgroundColor,
-                  foregroundColor: Constants.selectedColor,
+              Expanded(
+                child: AppButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Constants.backgroundColor,
+                    foregroundColor: Constants.selectedColor,
+                  ),
+                  onPressed: () {},
+                  label: 'Your Orders',
                 ),
-                onPressed: () {},
-                label: 'Your Orders',
               ),
               const SizedBox(
                 width: 8,
               ),
-              AppButton(
-                isExpanded: true,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Constants.backgroundColor,
-                  foregroundColor: Constants.selectedColor,
+              Expanded(
+                child: AppButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Constants.backgroundColor,
+                    foregroundColor: Constants.selectedColor,
+                  ),
+                  onPressed: () {},
+                  label: 'Turn Seller',
                 ),
-                onPressed: () {},
-                label: 'Turn Seller',
               ),
             ],
           ),
@@ -48,28 +50,30 @@ class ButtonsPanel extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              AppButton(
-                isExpanded: true,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Constants.backgroundColor,
-                  foregroundColor: Constants.selectedColor,
+              Expanded(
+                child: AppButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Constants.backgroundColor,
+                    foregroundColor: Constants.selectedColor,
+                  ),
+                  onPressed: () {
+                    BlocProvider.of<AuthBloc>(context).add(SignOutUser());
+                  },
+                  label: 'Log Out',
                 ),
-                onPressed: () {
-                  BlocProvider.of<AuthBloc>(context).add(SignOutUser());
-                },
-                label: 'Log Out',
               ),
               const SizedBox(
                 width: 8,
               ),
-              AppButton(
-                isExpanded: true,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Constants.backgroundColor,
-                  foregroundColor: Constants.selectedColor,
+              Expanded(
+                child: AppButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Constants.backgroundColor,
+                    foregroundColor: Constants.selectedColor,
+                  ),
+                  onPressed: () {},
+                  label: 'Wish List',
                 ),
-                onPressed: () {},
-                label: 'Wish List',
               ),
             ],
           ),

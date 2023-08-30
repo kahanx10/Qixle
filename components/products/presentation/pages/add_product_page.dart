@@ -6,6 +6,7 @@ import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/common/presentation/widgets/my_app_bar.dart';
 import 'package:amazon_clone/common/presentation/widgets/my_textfield.dart';
 import 'package:amazon_clone/components/products/data/services/product_service.dart';
+import 'package:amazon_clone/components/products/logic/blocs/products_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -59,61 +60,6 @@ class _AddProductPageState extends State<AddProductPage> {
               children: [
                 CarouselSlider(
                   items: [
-                    GestureDetector(
-                      onTap: () async {
-                        var imageFiles =
-                            await ProductService.pickProductImages();
-
-                        if (imageFiles.isNotEmpty) {
-                          if (imageFiles.length > 4) {
-                            BlocProvider.of<UiFeedbackCubit>(context)
-                                .showSnackbar(
-                              'You can only add up to 5 images!',
-                            );
-                          }
-
-                          for (int i = 0; i < 5; i++) {
-                            images.add(imageFiles[i]);
-                          }
-                        }
-
-                        setState(() {});
-                      },
-                      child: DottedBorder(
-                        strokeWidth: 2,
-                        borderType: BorderType.RRect,
-                        radius: const Radius.circular(12.0),
-                        dashPattern: const [10, 4],
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          width: double.infinity,
-                          height: 150,
-                          child: Center(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(
-                                  Icons.folder_open_rounded,
-                                  size: 40,
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Text(
-                                  'Select Product Images',
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Colors.grey.shade400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                     images.isNotEmpty
                         ? CarouselSlider(
                             items: [
@@ -166,11 +112,72 @@ class _AddProductPageState extends State<AddProductPage> {
                         : SizedBox(
                             child: Center(
                               child: Text(
-                                'No Images Added',
+                                'No images added yet.\nSwipe right to add images here!',
                                 style: TextStyle(color: Colors.grey.shade400),
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           ),
+                    GestureDetector(
+                      onTap: () async {
+                        var imageFiles =
+                            await ProductService.pickProductImages();
+
+                        if (imageFiles.isNotEmpty) {
+                          if (imageFiles.length > 4) {
+                            BlocProvider.of<UiFeedbackCubit>(context)
+                                .showSnackbar(
+                              'You can only add up to 5 images!',
+                            );
+                          }
+
+                          for (int i = 0; i < imageFiles.length; i++) {
+                            images.add(imageFiles[i]);
+
+                            if (imageFiles.length == 4) {
+                              break;
+                            }
+                          }
+                        }
+
+                        setState(() {});
+                      },
+                      child: DottedBorder(
+                        strokeWidth: 2,
+                        borderType: BorderType.RRect,
+                        radius: const Radius.circular(12.0),
+                        dashPattern: const [10, 4],
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          width: double.infinity,
+                          height: 150,
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(
+                                  Icons.folder_open_rounded,
+                                  size: 40,
+                                ),
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  'Select product images here.\nSwipe left to view them!',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey.shade400,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                   options: CarouselOptions(
                     viewportFraction: 1,
@@ -185,6 +192,12 @@ class _AddProductPageState extends State<AddProductPage> {
                   obscureText: false,
                   controller: _productNameController,
                   hintText: 'Product Name',
+                  validator: (val) {
+                    if (val != null && val.isNotEmpty) {
+                      return null;
+                    }
+                    return 'Please enter a product name';
+                  },
                 ),
                 const SizedBox(
                   height: 12.0,
@@ -194,6 +207,12 @@ class _AddProductPageState extends State<AddProductPage> {
                   obscureText: false,
                   controller: _descriptionController,
                   hintText: 'Description',
+                  validator: (val) {
+                    if (val != null && val.isNotEmpty) {
+                      return null;
+                    }
+                    return 'Please enter a product description';
+                  },
                 ),
                 const SizedBox(
                   height: 12.0,
@@ -202,6 +221,17 @@ class _AddProductPageState extends State<AddProductPage> {
                   obscureText: false,
                   controller: _priceController,
                   hintText: 'Price',
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a price';
+                    }
+                    final isDigitsOnly = num.tryParse(value);
+                    if (isDigitsOnly == null) {
+                      return 'Please enter a valid price';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 12.0,
@@ -210,6 +240,17 @@ class _AddProductPageState extends State<AddProductPage> {
                   obscureText: false,
                   controller: _quantityController,
                   hintText: 'Quantity',
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter a quantity';
+                    }
+                    final isDigitsOnly = num.tryParse(value);
+                    if (isDigitsOnly == null) {
+                      return 'Please enter a valid quantity';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(
                   height: 12.0,
@@ -244,14 +285,45 @@ class _AddProductPageState extends State<AddProductPage> {
                 const SizedBox(
                   height: 12.0,
                 ),
-                AppButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Constants.selectedColor,
-                    foregroundColor: Constants.backgroundColor,
+                Expanded(
+                  child: AppButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Constants.selectedColor,
+                      foregroundColor: Constants.backgroundColor,
+                    ),
+                    onPressed: () {
+                      if (images.isEmpty) {
+                        BlocProvider.of<UiFeedbackCubit>(context).showSnackbar(
+                          'You need to add minimum one image!',
+                        );
+
+                        return;
+                      }
+
+                      if (_addProductFormKey.currentState!.validate()) {
+                        BlocProvider.of<ProductBloc>(context).add(
+                          AddProductEvent(
+                            productName: _productNameController.text,
+                            description: _descriptionController.text,
+                            quantity: int.parse(_quantityController.text),
+                            price: double.parse(_priceController.text),
+                            images: images.map((file) => file.path).toList(),
+                            category: _category,
+                          ),
+                        );
+
+                        setState(() {
+                          images.clear();
+                          _addProductFormKey.currentState!.reset();
+                        });
+
+                        BlocProvider.of<UiFeedbackCubit>(context).showSnackbar(
+                          'Go back to home page to view added products!',
+                        );
+                      }
+                    },
+                    label: 'Sell',
                   ),
-                  onPressed: () {},
-                  label: 'Sell',
-                  isExpanded: true,
                 )
               ],
             ),
@@ -259,5 +331,15 @@ class _AddProductPageState extends State<AddProductPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _productNameController.dispose();
+    _quantityController.dispose();
+    _priceController.dispose();
+    _descriptionController.dispose();
+
+    super.dispose();
   }
 }

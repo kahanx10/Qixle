@@ -1,10 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class SingleProduct extends StatelessWidget {
-  final String image;
+  final String imageUrl;
+
   const SingleProduct({
     Key? key,
-    required this.image,
+    required this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -23,8 +25,8 @@ class SingleProduct extends StatelessWidget {
         child: Container(
           width: 180,
           padding: const EdgeInsets.all(10),
-          child: Image.network(
-            image,
+          child: CachedNetworkImage(
+            imageUrl: imageUrl,
             fit: BoxFit.fitHeight,
             width: 180,
           ),

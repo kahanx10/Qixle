@@ -9,6 +9,7 @@ class MyTextField extends StatelessWidget {
   final String hintText;
   final int maxLines;
   final String? Function(String?)? validator;
+  final TextInputType? keyboardType;
 
   const MyTextField({
     Key? key,
@@ -17,11 +18,13 @@ class MyTextField extends StatelessWidget {
     required this.hintText,
     this.maxLines = 1,
     this.validator,
+    this.keyboardType,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyboardType,
       obscureText: obscureText,
       controller: controller,
       decoration: InputDecoration(
