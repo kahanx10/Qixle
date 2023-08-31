@@ -2,9 +2,10 @@ import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/data/services/message_service.dart';
 import 'package:amazon_clone/common/presentation/widgets/my_app_bar.dart';
 import 'package:amazon_clone/common/presentation/widgets/single_product.dart';
-import 'package:amazon_clone/components/products/data/models/product_model.dart';
-import 'package:amazon_clone/components/products/logic/blocs/products_bloc.dart';
-import 'package:amazon_clone/components/products/presentation/pages/add_product_page.dart';
+import 'package:amazon_clone/components/admin_products/data/models/product_model.dart';
+import 'package:amazon_clone/components/admin_products/logic/blocs/products_bloc.dart';
+import 'package:amazon_clone/components/admin_products/presentation/pages/add_product_page.dart';
+import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,7 +20,12 @@ class _ProductsPageState extends State<ProductsPage> {
   var products = <Product>[];
 
   void fetchProducts() {
-    BlocProvider.of<ProductBloc>(context).add(FetchProductsEvent());
+    var token =
+        (BlocProvider.of<AuthBloc>(context).state as UserAuthenticatedState)
+            .user
+            .token;
+
+    BlocProvider.of<ProductBloc>(context).add(FetchProductsEvent(token: token));
   }
 
   @override
@@ -57,7 +63,14 @@ class _ProductsPageState extends State<ProductsPage> {
             var product = (state as ProductDeletedState).deletedProduct;
             products.removeWhere((element) => element.id == product.id);
 
-            BlocProvider.of<ProductBloc>(context).add(FetchProductsEvent());
+            var token = (BlocProvider.of<AuthBloc>(context).state
+                    as UserAuthenticatedState)
+                .user
+                .token;
+
+            BlocProvider.of<ProductBloc>(context).add(FetchProductsEvent(
+              token: token,
+            ));
 
             MessageService.showSnackBar(
               context,
@@ -121,9 +134,15 @@ class _ProductsPageState extends State<ProductsPage> {
                           ),
                           IconButton(
                             onPressed: () {
+                              var token = (BlocProvider.of<AuthBloc>(context)
+                                      .state as UserAuthenticatedState)
+                                  .user
+                                  .token;
+
                               BlocProvider.of<ProductBloc>(context).add(
                                 DeleteProductEvent(
                                   productID: product.id!,
+                                  token: token,
                                 ),
                               );
                             },

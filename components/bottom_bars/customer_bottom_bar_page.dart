@@ -1,7 +1,7 @@
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/presentation/pages/message_page.dart';
 import 'package:amazon_clone/components/account/presentation/pages/account_page.dart';
-import 'package:amazon_clone/components/home/presentation/pages/home_page.dart';
+import 'package:amazon_clone/components/customer_home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class CustomerBottomBarPage extends StatefulWidget {

@@ -4,14 +4,21 @@ import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:amazon_clone/components/products/data/models/product_model.dart';
-import 'package:amazon_clone/components/products/data/services/product_service.dart';
+import 'package:amazon_clone/components/admin_products/data/models/product_model.dart';
+import 'package:amazon_clone/components/admin_products/data/services/product_service.dart';
 
 class ProductEvent {}
 
-class FetchProductsEvent extends ProductEvent {}
+class FetchProductsEvent extends ProductEvent {
+  String token;
+
+  FetchProductsEvent({
+    required this.token,
+  });
+}
 
 class AddProductEvent extends ProductEvent {
+  String token;
   String productName;
   String description;
   int quantity;
@@ -20,6 +27,7 @@ class AddProductEvent extends ProductEvent {
   String category;
 
   AddProductEvent({
+    required this.token,
     required this.productName,
     required this.description,
     required this.quantity,
@@ -31,9 +39,11 @@ class AddProductEvent extends ProductEvent {
 
 class DeleteProductEvent extends ProductEvent {
   String productID;
+  String token;
 
   DeleteProductEvent({
     required this.productID,
+    required this.token,
   });
 }
 
@@ -55,7 +65,17 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     var products = <Product>[];
 
     try {
-      var res = await ProductService.fetchProducts();
+      var res = await ProductService.fetchProducts(token: event.token);
+
+      if (res == null) {
+        emit(
+          ProductErrorState(
+            errorMessage: 'Couldn\'t fetch products, please try again!',
+          ),
+        );
+
+        return;
+      }
 
       switch (res.statusCode) {
         case 200:

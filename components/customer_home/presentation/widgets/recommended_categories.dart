@@ -1,4 +1,5 @@
 import 'package:amazon_clone/common/data/constants.dart';
+import 'package:amazon_clone/components/customer_home/presentation/pages/categorized_products_page.dart';
 
 import 'package:flutter/material.dart';
 
@@ -10,12 +11,17 @@ class RecommendedCategories extends StatelessWidget {
     return SizedBox(
       height: 70,
       child: ListView.builder(
-        itemCount: Constants.categoryImages.length,
+        itemCount: Constants.categories.length,
         scrollDirection: Axis.horizontal,
         itemExtent: 85,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                CategorizedProductsPage.routeName,
+                arguments: Constants.categories[index]['title'],
+              );
+            },
             child: Column(
               children: [
                 Container(
@@ -23,7 +29,7 @@ class RecommendedCategories extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(50),
                     child: Image.asset(
-                      Constants.categoryImages[index]['image']!,
+                      Constants.categories[index]['image']!,
                       fit: BoxFit.cover,
                       height: 40,
                       width: 40,
@@ -31,7 +37,7 @@ class RecommendedCategories extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  Constants.categoryImages[index]['title']!,
+                  Constants.categories[index]['title']!,
                   style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,

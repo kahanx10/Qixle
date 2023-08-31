@@ -1,8 +1,9 @@
 import 'package:amazon_clone/common/data/constants.dart';
-import 'package:amazon_clone/components/home/presentation/widgets/address_panel.dart';
-import 'package:amazon_clone/components/home/presentation/widgets/carousel_images.dart';
-import 'package:amazon_clone/components/home/presentation/widgets/deal_of_the_day.dart';
-import 'package:amazon_clone/components/home/presentation/widgets/recommended_categories.dart';
+import 'package:amazon_clone/components/customer_home/presentation/pages/searched_products_page.dart';
+import 'package:amazon_clone/components/customer_home/presentation/widgets/address_panel.dart';
+import 'package:amazon_clone/components/customer_home/presentation/widgets/carousel_images.dart';
+import 'package:amazon_clone/components/customer_home/presentation/widgets/deal_of_the_day.dart';
+import 'package:amazon_clone/components/customer_home/presentation/widgets/recommended_categories.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,6 +15,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,10 +40,25 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(7),
                     elevation: 1,
                     child: TextFormField(
-                      onFieldSubmitted: (val) {},
+                      controller: searchController,
+                      onFieldSubmitted: (val) {
+                        if (val.isNotEmpty) {
+                          Navigator.of(context).pushNamed(
+                            SearchedProductsPage.routeName,
+                            arguments: val,
+                          );
+                        }
+                      },
                       decoration: InputDecoration(
                         prefixIcon: InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            if (searchController.text.isNotEmpty) {
+                              Navigator.of(context).pushNamed(
+                                SearchedProductsPage.routeName,
+                                arguments: searchController.text,
+                              );
+                            }
+                          },
                           child: const Padding(
                             padding: EdgeInsets.only(
                               left: 6,

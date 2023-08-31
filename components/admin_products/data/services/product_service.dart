@@ -2,23 +2,20 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:amazon_clone/common/data/constants.dart';
-import 'package:amazon_clone/components/authentication/data/services/auth_token_service.dart';
-import 'package:amazon_clone/components/products/logic/blocs/products_bloc.dart';
+import 'package:amazon_clone/components/admin_products/logic/blocs/products_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:http/http.dart' as http;
 
 class ProductService {
-  static Future<http.Response> fetchProducts() async {
+  static Future<http.Response?> fetchProducts({required String token}) async {
     late http.Response res;
     try {
-      var token = await AuthTokenService.getToken();
-
       res = await http.get(
         Uri.parse('${Constants.host}/admin/fetch-products'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
-          'authToken': token!,
+          'authToken': token,
         },
       );
 
@@ -28,7 +25,7 @@ class ProductService {
     } catch (e) {
       rethrow;
     }
-    return res;
+    return null;
   }
 
   static Future<http.Response?> uploadProduct({
@@ -50,13 +47,11 @@ class ProductService {
         imagePaths.add(res.secureUrl);
       }
 
-      var token = await AuthTokenService.getToken();
-
       var res = await http.post(
         Uri.parse('${Constants.host}/admin/add-product'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
-          'authToken': token!,
+          'authToken': event.token,
         },
         body: jsonEncode({
           'name': event.productName,
@@ -81,13 +76,11 @@ class ProductService {
     required DeleteProductEvent event,
   }) async {
     try {
-      var token = await AuthTokenService.getToken();
-
       var res = await http.delete(
         Uri.parse('${Constants.host}/admin/delete-product'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
-          'authToken': token!,
+          'authToken': event.token,
         },
         body: jsonEncode({'id': event.productID}),
       );

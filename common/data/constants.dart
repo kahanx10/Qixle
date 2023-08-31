@@ -41,7 +41,7 @@ class Constants {
     'https://images.unsplash.com/photo-1587304189583-c248c72e8242?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2R1Y3RzJTIwYW5kJTIwYnJhbmRzfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60',
   ];
 
-  static const List<Map<String, String>> categoryImages = [
+  static const List<Map<String, String>> categories = [
     {
       'title': 'Mobiles',
       'image': 'assets/images/mobiles.jpeg',

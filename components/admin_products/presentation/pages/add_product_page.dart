@@ -5,8 +5,9 @@ import 'package:amazon_clone/common/logic/cubits/ui_feedback_cubit.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/common/presentation/widgets/my_app_bar.dart';
 import 'package:amazon_clone/common/presentation/widgets/my_textfield.dart';
-import 'package:amazon_clone/components/products/data/services/product_service.dart';
-import 'package:amazon_clone/components/products/logic/blocs/products_bloc.dart';
+import 'package:amazon_clone/components/admin_products/data/services/product_service.dart';
+import 'package:amazon_clone/components/admin_products/logic/blocs/products_bloc.dart';
+import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
@@ -57,6 +58,7 @@ class _AddProductPageState extends State<AddProductPage> {
             padding:
                 const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16.0),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 CarouselSlider(
                   items: [
@@ -285,45 +287,50 @@ class _AddProductPageState extends State<AddProductPage> {
                 const SizedBox(
                   height: 12.0,
                 ),
-                Expanded(
-                  child: AppButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Constants.selectedColor,
-                      foregroundColor: Constants.backgroundColor,
-                    ),
-                    onPressed: () {
-                      if (images.isEmpty) {
-                        BlocProvider.of<UiFeedbackCubit>(context).showSnackbar(
-                          'You need to add minimum one image!',
-                        );
-
-                        return;
-                      }
-
-                      if (_addProductFormKey.currentState!.validate()) {
-                        BlocProvider.of<ProductBloc>(context).add(
-                          AddProductEvent(
-                            productName: _productNameController.text,
-                            description: _descriptionController.text,
-                            quantity: int.parse(_quantityController.text),
-                            price: double.parse(_priceController.text),
-                            images: images.map((file) => file.path).toList(),
-                            category: _category,
-                          ),
-                        );
-
-                        setState(() {
-                          images.clear();
-                          _addProductFormKey.currentState!.reset();
-                        });
-
-                        BlocProvider.of<UiFeedbackCubit>(context).showSnackbar(
-                          'Go back to home page to view added products!',
-                        );
-                      }
-                    },
-                    label: 'Sell',
+                AppButton(
+                  width: double.infinity,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Constants.selectedColor,
+                    foregroundColor: Constants.backgroundColor,
                   ),
+                  onPressed: () {
+                    if (images.isEmpty) {
+                      BlocProvider.of<UiFeedbackCubit>(context).showSnackbar(
+                        'You need to add minimum one image!',
+                      );
+
+                      return;
+                    }
+
+                    if (_addProductFormKey.currentState!.validate()) {
+                      var token = (BlocProvider.of<AuthBloc>(context).state
+                              as UserAuthenticatedState)
+                          .user
+                          .token;
+
+                      BlocProvider.of<ProductBloc>(context).add(
+                        AddProductEvent(
+                          token: token,
+                          productName: _productNameController.text,
+                          description: _descriptionController.text,
+                          quantity: int.parse(_quantityController.text),
+                          price: double.parse(_priceController.text),
+                          images: images.map((file) => file.path).toList(),
+                          category: _category,
+                        ),
+                      );
+
+                      setState(() {
+                        images.clear();
+                        _addProductFormKey.currentState!.reset();
+                      });
+
+                      BlocProvider.of<UiFeedbackCubit>(context).showSnackbar(
+                        'Go back to home page to view added products!',
+                      );
+                    }
+                  },
+                  label: 'Sell',
                 )
               ],
             ),

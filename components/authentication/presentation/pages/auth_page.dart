@@ -114,17 +114,16 @@ class _AuthPageState extends State<AuthPage> {
                             },
                           ),
                           const SizedBox(height: 10),
-                          Expanded(
-                            child: AppButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Constants.selectedColor,
-                                foregroundColor: Constants.backgroundColor,
-                              ),
-                              onPressed: () {
-                                signUpUser(context);
-                              },
-                              label: 'Sign Up',
+                          AppButton(
+                            width: MediaQuery.of(context).size.width,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Constants.selectedColor,
+                              foregroundColor: Constants.backgroundColor,
                             ),
+                            onPressed: () {
+                              signUpUser(context);
+                            },
+                            label: 'Sign Up',
                           ),
                         ],
                       ),
@@ -179,17 +178,16 @@ class _AuthPageState extends State<AuthPage> {
                             },
                           ),
                           const SizedBox(height: 10),
-                          Expanded(
-                            child: AppButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Constants.selectedColor,
-                                foregroundColor: Constants.backgroundColor,
-                              ),
-                              onPressed: () {
-                                signInUser(context);
-                              },
-                              label: 'Sign In',
+                          AppButton(
+                            width: MediaQuery.of(context).size.width,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Constants.selectedColor,
+                              foregroundColor: Constants.backgroundColor,
                             ),
+                            onPressed: () {
+                              signInUser(context);
+                            },
+                            label: 'Sign In',
                           ),
                         ],
                       ),

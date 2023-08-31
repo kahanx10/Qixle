@@ -1,10 +1,14 @@
 import 'dart:io';
 
 import 'package:amazon_clone/common/presentation/pages/message_page.dart';
+import 'package:amazon_clone/components/admin_products/data/models/product_model.dart';
 import 'package:amazon_clone/components/authentication/presentation/pages/auth_page.dart';
 import 'package:amazon_clone/components/bottom_bars/customer_bottom_bar_page.dart';
-import 'package:amazon_clone/components/home/presentation/pages/home_page.dart';
-import 'package:amazon_clone/components/products/presentation/pages/add_product_page.dart';
+import 'package:amazon_clone/components/customer_home/presentation/pages/categorized_products_page.dart';
+import 'package:amazon_clone/components/customer_home/presentation/pages/home_page.dart';
+import 'package:amazon_clone/components/admin_products/presentation/pages/add_product_page.dart';
+import 'package:amazon_clone/components/customer_home/presentation/pages/product_details_page.dart';
+import 'package:amazon_clone/components/customer_home/presentation/pages/searched_products_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -29,6 +33,27 @@ class AppRouter {
       case AddProductPage.routeName:
         return platformAwarePageRoute(
           builder: (context) => const AddProductPage(),
+        );
+
+      case CategorizedProductsPage.routeName:
+        return platformAwarePageRoute(
+          builder: (context) => CategorizedProductsPage(
+            category: settings.arguments as String,
+          ),
+        );
+
+      case SearchedProductsPage.routeName:
+        return platformAwarePageRoute(
+          builder: (context) => SearchedProductsPage(
+            searchQuery: settings.arguments as String,
+          ),
+        );
+
+      case ProductDetailsPage.routeName:
+        return platformAwarePageRoute(
+          builder: (context) => ProductDetailsPage(
+            product: settings.arguments as Product,
+          ),
         );
       default:
         return platformAwarePageRoute(

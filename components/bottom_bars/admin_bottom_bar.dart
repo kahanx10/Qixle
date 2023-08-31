@@ -1,6 +1,6 @@
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/presentation/pages/message_page.dart';
-import 'package:amazon_clone/components/products/presentation/pages/products_page.dart';
+import 'package:amazon_clone/components/admin_products/presentation/pages/products_page.dart';
 import 'package:flutter/material.dart';
 
 class AdminBottomBar extends StatefulWidget {
