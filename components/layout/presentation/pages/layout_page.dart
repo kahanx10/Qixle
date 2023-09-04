@@ -26,15 +26,18 @@ class _LayoutPageState extends State<LayoutPage> {
           case ShowLoadingOverlayState:
             MessageService.showLoadingOverlay(context);
             break;
+
           case HideLoadingOverlayState:
             MessageService.popLoadingOverlay(context);
+            break;
+
           case ShowSnackbarState:
             MessageService.showSnackBar(
               context,
               message: (uiFeedbackState as ShowSnackbarState).message,
             );
-
             break;
+
           default:
         }
       },

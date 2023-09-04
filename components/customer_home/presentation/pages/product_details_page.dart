@@ -1,11 +1,17 @@
+import 'dart:convert';
+
 import 'package:amazon_clone/common/data/constants.dart';
+import 'package:amazon_clone/common/data/services/message_service.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
-import 'package:amazon_clone/components/admin_products/data/models/product_model.dart';
+import 'package:amazon_clone/components/admin/data/models/product_model.dart';
+import 'package:amazon_clone/components/authentication/data/services/auth_token_service.dart';
+import 'package:amazon_clone/components/customer_home/data/services/customer_products_service.dart';
 import 'package:amazon_clone/components/customer_home/presentation/pages/searched_products_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:http/http.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   static const String routeName = '/product_details_page_route';
@@ -21,7 +27,14 @@ class ProductDetailsPage extends StatefulWidget {
 }
 
 class _ProductDetailsPageState extends State<ProductDetailsPage> {
-  double myRating = 4.5;
+  late double avgRating;
+  double? myRating;
+
+  @override
+  void initState() {
+    super.initState();
+    avgRating = widget.product.avgRating.toDouble();
+  }
 
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(
@@ -229,28 +242,107 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 ),
               ),
             ),
-            RatingBar.builder(
-              initialRating: myRating,
-              minRating: 1,
-              direction: Axis.horizontal,
-              allowHalfRating: true,
-              itemCount: 5,
-              itemPadding: const EdgeInsets.symmetric(horizontal: 4),
-              itemBuilder: (context, _) => const Icon(
-                Icons.star,
-                color: Constants.secondaryColor,
+            const Text('Your Rating'),
+            FutureBuilder(
+                future: fetchMyRating(productId: widget.product.id!),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData && snapshot.data != null) {
+                    return RatingBar.builder(
+                      initialRating: myRating ??
+                          jsonDecode(snapshot.data!.body).toDouble(),
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Constants.secondaryColor,
+                      ),
+                      onRatingUpdate: (newRating) async {
+                        var token = await AuthTokenService.getToken();
+
+                        if (token != null) {
+                          var res = await CustomerProductsService.rateProduct(
+                            rating: newRating,
+                            productId: widget.product.id!,
+                            token: token,
+                          );
+
+                          var res2 = await CustomerProductsService
+                              .fetchMyRatingOnProduct(
+                            productId: widget.product.id!,
+                            token: token,
+                          );
+
+                          if (res == null || res.statusCode != 200) {
+                            MessageService.showSnackBar(
+                              context,
+                              message:
+                                  'Couldn\'t rate the product, please try again!',
+                            );
+                          }
+
+                          var averageRatingUpdated =
+                              jsonDecode(res!.body) as num;
+
+                          setState(() {
+                            avgRating = averageRatingUpdated.toDouble();
+                          });
+
+                          if (res2 == null || res.statusCode != 200) {
+                            MessageService.showSnackBar(
+                              context,
+                              message:
+                                  'Couldn\'t fetch your rating, please try again!',
+                            );
+                          }
+
+                          var myRatingResult = jsonDecode(res2!.body);
+                          myRating = myRatingResult.toDouble();
+                        }
+                      },
+                    );
+                  } else if (snapshot.hasError) {
+                    return const Text('Error while fetching your rating!');
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                }),
+            const Text('Average Rating'),
+            AbsorbPointer(
+              absorbing: true,
+              child: RatingBar.builder(
+                initialRating: avgRating,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: true,
+                itemCount: 5,
+                itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+                itemBuilder: (context, _) => const Icon(
+                  Icons.star,
+                  color: Constants.secondaryColor,
+                ),
+                onRatingUpdate: (newRating) {
+                  // fetch avg rating again
+                },
               ),
-              onRatingUpdate: (rating) {
-                // productDetailsServices.rateProduct(
-                //   context: context,
-                //   product: widget.product,
-                //   rating: rating,
-                // );
-              },
-            )
+            ),
           ],
         ),
       ),
     );
   }
+}
+
+Future<Response?> fetchMyRating({required String productId}) async {
+  var token = await AuthTokenService.getToken();
+
+  if (token != null) {
+    return await CustomerProductsService.fetchMyRatingOnProduct(
+      productId: productId,
+      token: token,
+    );
+  }
+  return null;
 }

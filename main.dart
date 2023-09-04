@@ -3,7 +3,7 @@ import 'package:amazon_clone/components/authentication/data/services/auth_servic
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:amazon_clone/components/customer_home/logic/cubits/customer_products_cubit.dart';
 import 'package:amazon_clone/components/layout/presentation/pages/layout_page.dart';
-import 'package:amazon_clone/components/admin_products/logic/blocs/products_bloc.dart';
+import 'package:amazon_clone/components/admin/logic/blocs/products_bloc.dart';
 import 'package:amazon_clone/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

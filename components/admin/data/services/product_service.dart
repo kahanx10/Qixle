@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:amazon_clone/common/data/constants.dart';
-import 'package:amazon_clone/components/admin_products/logic/blocs/products_bloc.dart';
+import 'package:amazon_clone/components/admin/logic/blocs/products_bloc.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:http/http.dart' as http;

@@ -4,8 +4,8 @@ import 'dart:convert';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:amazon_clone/components/admin_products/data/models/product_model.dart';
-import 'package:amazon_clone/components/admin_products/data/services/product_service.dart';
+import 'package:amazon_clone/components/admin/data/models/product_model.dart';
+import 'package:amazon_clone/components/admin/data/services/product_service.dart';
 
 class ProductEvent {}
 

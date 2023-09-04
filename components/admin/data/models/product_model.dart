@@ -9,6 +9,7 @@ class Product {
   final String? id;
   final String category;
   final List<String> images;
+  final num avgRating;
   // rating
 
   Product({
@@ -19,6 +20,7 @@ class Product {
     this.id,
     required this.category,
     required this.images,
+    required this.avgRating,
   });
 
   Map<String, dynamic> toMap() {
@@ -30,6 +32,7 @@ class Product {
       'id': id,
       'category': category,
       'images': images,
+      'avgRating': avgRating,
     };
   }
 
@@ -44,6 +47,7 @@ class Product {
       images: List<String>.from(
         (map['images'] as List<dynamic>),
       ),
+      avgRating: map['avgRating'],
     );
   }
 

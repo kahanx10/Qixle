@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:amazon_clone/components/customer_home/data/services/customer_products_service.dart';
 import 'package:bloc/bloc.dart';
-import 'package:amazon_clone/components/admin_products/data/models/product_model.dart';
+import 'package:amazon_clone/components/admin/data/models/product_model.dart';
 
 class CustomerProductsCubit extends Cubit<CustomerProductsState> {
   CustomerProductsCubit() : super(FetchingProducts());
-
   // Method to display categorized products
   void displayCategorizedProducts({
     required String category,
