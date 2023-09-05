@@ -14,6 +14,12 @@ abstract class UserEvent {}
 
 class FetchUserData extends UserEvent {}
 
+class UpdateUser extends UserEvent {
+  User user;
+
+  UpdateUser(this.user);
+}
+
 class SignUpUser extends UserEvent {
   String name;
   String userName;
@@ -39,11 +45,11 @@ class SignInUser extends UserEvent {
 class SignOutUser extends UserEvent {}
 
 // bloc
-class AuthBloc extends Bloc<UserEvent, UserState> {
+class UserBloc extends Bloc<UserEvent, UserState> {
   final AuthService _authService;
   final UiFeedbackCubit _uiFeedbackCubit;
 
-  AuthBloc({
+  UserBloc({
     required AuthService authService,
     required uiFeedbackCubit,
   })  : _authService = authService,
@@ -53,11 +59,21 @@ class AuthBloc extends Bloc<UserEvent, UserState> {
     on<SignUpUser>(_onSignUpUser);
     on<SignInUser>(_onSignInUser);
     on<SignOutUser>(_onSignOutUser);
+    on<UpdateUser>(_onUpdateUser);
+  }
+
+  Future<void> _onUpdateUser(
+    UpdateUser event,
+    Emitter<UserState> emit,
+  ) async {
+    emit(UserAuthenticatedState(user: event.user));
   }
 
   // handlers
   Future<void> _onFetchUserData(
-      FetchUserData event, Emitter<UserState> emit) async {
+    FetchUserData event,
+    Emitter<UserState> emit,
+  ) async {
     emit(UserLoadingState());
 
     try {
@@ -207,10 +223,10 @@ class UserAuthenticatedState extends UserState {
   UserAuthenticatedState({required this.user});
 }
 
+class UpdatedUser extends UserState {
+  User user;
+
+  UpdatedUser(this.user);
+}
+
 class UserUnauthenticatedState extends UserState {}
-
-// class UserErrorState extends UserState {
-//   final String errorMessage;
-
-//   UserErrorState({required this.errorMessage});
-// }

@@ -57,7 +57,7 @@ class ButtonsPanel extends StatelessWidget {
                     foregroundColor: Constants.selectedColor,
                   ),
                   onPressed: () {
-                    BlocProvider.of<AuthBloc>(context).add(SignOutUser());
+                    BlocProvider.of<UserBloc>(context).add(SignOutUser());
                   },
                   label: 'Log Out',
                 ),

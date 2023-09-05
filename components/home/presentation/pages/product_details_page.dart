@@ -5,8 +5,9 @@ import 'package:amazon_clone/common/data/services/message_service.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/components/admin/data/models/product_model.dart';
 import 'package:amazon_clone/components/authentication/data/services/auth_token_service.dart';
-import 'package:amazon_clone/components/customer_home/data/services/customer_products_service.dart';
-import 'package:amazon_clone/components/customer_home/presentation/pages/searched_products_page.dart';
+import 'package:amazon_clone/components/cart/data/services/cart_service.dart';
+import 'package:amazon_clone/components/home/data/services/customer_products_service.dart';
+import 'package:amazon_clone/components/home/presentation/pages/searched_products_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -220,7 +221,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               child: AppButton(
                 width: double.infinity,
                 label: 'Add to Cart',
-                onPressed: () {},
+                onPressed: () {
+                  CartService.addToCart(
+                    product: widget.product,
+                    context: context,
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color.fromRGBO(254, 216, 19, 1),
                   foregroundColor: Constants.backgroundColor,

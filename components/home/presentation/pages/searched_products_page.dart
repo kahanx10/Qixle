@@ -1,8 +1,8 @@
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
-import 'package:amazon_clone/components/customer_home/logic/cubits/customer_products_cubit.dart';
-import 'package:amazon_clone/components/customer_home/presentation/widgets/address_panel.dart';
-import 'package:amazon_clone/components/customer_home/presentation/widgets/searched_product.dart';
+import 'package:amazon_clone/components/home/logic/cubits/customer_products_cubit.dart';
+import 'package:amazon_clone/components/home/presentation/widgets/address_panel.dart';
+import 'package:amazon_clone/components/home/presentation/widgets/searched_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -39,7 +39,7 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
 
   fetchSearchedProduct(BuildContext context) async {
     var token =
-        (context.read<AuthBloc>().state as UserAuthenticatedState).user.token;
+        (context.read<UserBloc>().state as UserAuthenticatedState).user.token;
 
     context.read<CustomerProductsCubit>().displaySearchedProducts(
           name: widget.searchQuery,

@@ -1,8 +1,10 @@
 import 'package:amazon_clone/common/data/constants.dart';
-import 'package:amazon_clone/common/presentation/pages/message_page.dart';
 import 'package:amazon_clone/components/account/presentation/pages/account_page.dart';
-import 'package:amazon_clone/components/customer_home/presentation/pages/home_page.dart';
+import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
+import 'package:amazon_clone/components/cart/presentation/pages/cart_page.dart';
+import 'package:amazon_clone/components/home/presentation/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomerBottomBarPage extends StatefulWidget {
   static const String routeName = '/bottom_bar_route';
@@ -20,7 +22,7 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
   List<Widget> pages = [
     const HomePage(),
     const AccountPage(),
-    const MessagePage(message: 'Cart Page'),
+    const CartPage(),
   ];
 
   void updatePage(int page) {
@@ -95,13 +97,24 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
                   ),
                 ),
               ),
-              child: const Badge(
-                backgroundColor: Constants.backgroundColor,
-                label: Text('6'),
-                textColor: Constants.unselectedColor,
-                child: Icon(
-                  Icons.shopping_cart_outlined,
-                ),
+              child: BlocBuilder<UserBloc, UserState>(
+                buildWhen: (previous, current) {
+                  return previous.runtimeType == UserAuthenticatedState;
+                },
+                builder: (context, state) {
+                  var user = (BlocProvider.of<UserBloc>(context).state
+                          as UserAuthenticatedState)
+                      .user;
+
+                  return Badge(
+                    backgroundColor: Constants.backgroundColor,
+                    label: Text(user.cart.length.toString()),
+                    textColor: Constants.unselectedColor,
+                    child: const Icon(
+                      Icons.shopping_cart_outlined,
+                    ),
+                  );
+                },
               ),
             ),
             label: '',

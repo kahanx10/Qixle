@@ -9,13 +9,14 @@ class User {
   String address;
   String type;
   String token;
-  // cart
+  List<dynamic> cart;
 
   User({
     required this.uid,
     required this.name,
     required this.username,
     required this.password,
+    this.cart = const [],
     this.address = '',
     this.type = 'customer',
     this.token = '',
@@ -29,6 +30,7 @@ class User {
     String? address,
     String? type,
     String? token,
+    List<dynamic>? cart,
   }) {
     return User(
       uid: uid ?? this.uid,
@@ -38,6 +40,7 @@ class User {
       address: address ?? this.address,
       type: type ?? this.type,
       token: token ?? this.token,
+      cart: cart ?? this.cart,
     );
   }
 
@@ -50,6 +53,7 @@ class User {
       'address': address,
       'type': type,
       'token': token,
+      'cart': cart,
     };
   }
 
@@ -62,6 +66,7 @@ class User {
       address: map['address'] as String,
       type: map['type'] as String,
       token: map['token'] as String,
+      cart: map['cart'] ?? const [],
     );
   }
 
@@ -69,33 +74,4 @@ class User {
 
   factory User.fromJson(String source) =>
       User.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  String toString() {
-    return 'User(uid: $uid, name: $name, username: $username, password: $password, address: $address, type: $type, token: $token)';
-  }
-
-  @override
-  bool operator ==(covariant User other) {
-    if (identical(this, other)) return true;
-
-    return other.uid == uid &&
-        other.name == name &&
-        other.username == username &&
-        other.password == password &&
-        other.address == address &&
-        other.type == type &&
-        other.token == token;
-  }
-
-  @override
-  int get hashCode {
-    return uid.hashCode ^
-        name.hashCode ^
-        username.hashCode ^
-        password.hashCode ^
-        address.hashCode ^
-        type.hashCode ^
-        token.hashCode;
-  }
 }

@@ -1,5 +1,5 @@
 import 'package:amazon_clone/components/admin/data/models/product_model.dart';
-import 'package:amazon_clone/components/customer_home/presentation/pages/product_details_page.dart';
+import 'package:amazon_clone/components/home/presentation/pages/product_details_page.dart';
 import 'package:flutter/material.dart';
 
 class SearchedProduct extends StatelessWidget {

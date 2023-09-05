@@ -41,14 +41,14 @@ class _LayoutPageState extends State<LayoutPage> {
           default:
         }
       },
-      child: BlocBuilder<AuthBloc, UserState>(
+      child: BlocBuilder<UserBloc, UserState>(
         builder: (context, userState) {
           switch (userState.runtimeType) {
             case UserInitialState:
               Future.delayed(
                 const Duration(seconds: 5),
               ).then(
-                (value) => BlocProvider.of<AuthBloc>(context).add(
+                (value) => BlocProvider.of<UserBloc>(context).add(
                   FetchUserData(),
                 ),
               );
@@ -58,8 +58,10 @@ class _LayoutPageState extends State<LayoutPage> {
               return const LoadingPage();
 
             case UserAuthenticatedState:
-              var userType = (userState as UserAuthenticatedState).user.type;
+              (userState as UserAuthenticatedState);
+              var userType = userState.user.type;
 
+              print('${userState.user.cart}\n from layout page');
               //  otherwise it's gonna be 'customer'
               return userType == 'admin'
                   ? const AdminBottomBar()

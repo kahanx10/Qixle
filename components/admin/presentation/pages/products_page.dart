@@ -22,7 +22,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
   void fetchProducts() {
     var token =
-        (BlocProvider.of<AuthBloc>(context).state as UserAuthenticatedState)
+        (BlocProvider.of<UserBloc>(context).state as UserAuthenticatedState)
             .user
             .token;
 
@@ -64,7 +64,7 @@ class _ProductsPageState extends State<ProductsPage> {
             var product = (state as ProductDeletedState).deletedProduct;
             products.removeWhere((element) => element.id == product.id);
 
-            var token = (BlocProvider.of<AuthBloc>(context).state
+            var token = (BlocProvider.of<UserBloc>(context).state
                     as UserAuthenticatedState)
                 .user
                 .token;
@@ -108,7 +108,7 @@ class _ProductsPageState extends State<ProductsPage> {
 
                 await Future.delayed(const Duration(seconds: 3));
 
-                BlocProvider.of<AuthBloc>(context).add(SignOutUser());
+                BlocProvider.of<UserBloc>(context).add(SignOutUser());
 
                 BlocProvider.of<UiFeedbackCubit>(context).popLoadingOverlay();
               },
@@ -150,7 +150,7 @@ class _ProductsPageState extends State<ProductsPage> {
                           ),
                           IconButton(
                             onPressed: () {
-                              var token = (BlocProvider.of<AuthBloc>(context)
+                              var token = (BlocProvider.of<UserBloc>(context)
                                       .state as UserAuthenticatedState)
                                   .user
                                   .token;

@@ -1,9 +1,9 @@
 import 'package:amazon_clone/common/data/constants.dart';
-import 'package:amazon_clone/components/customer_home/presentation/pages/searched_products_page.dart';
-import 'package:amazon_clone/components/customer_home/presentation/widgets/address_panel.dart';
-import 'package:amazon_clone/components/customer_home/presentation/widgets/carousel_images.dart';
-import 'package:amazon_clone/components/customer_home/presentation/widgets/deal_of_the_day.dart';
-import 'package:amazon_clone/components/customer_home/presentation/widgets/recommended_categories.dart';
+import 'package:amazon_clone/components/home/presentation/pages/searched_products_page.dart';
+import 'package:amazon_clone/components/home/presentation/widgets/address_panel.dart';
+import 'package:amazon_clone/components/home/presentation/widgets/carousel_images.dart';
+import 'package:amazon_clone/components/home/presentation/widgets/deal_of_the_day.dart';
+import 'package:amazon_clone/components/home/presentation/widgets/recommended_categories.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {

@@ -29,7 +29,7 @@ class Product {
       'description': description,
       'price': price,
       'quantity': quantity,
-      'id': id,
+      '_id': id,
       'category': category,
       'images': images,
       'avgRating': avgRating,

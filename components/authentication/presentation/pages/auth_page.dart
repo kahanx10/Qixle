@@ -202,7 +202,7 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   void signUpUser(BuildContext context) {
-    BlocProvider.of<AuthBloc>(context).add(
+    BlocProvider.of<UserBloc>(context).add(
       SignUpUser(
         name: _nameController.text,
         userName: _usernameController.text.toLowerCase(),
@@ -212,7 +212,7 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   void signInUser(BuildContext context) {
-    BlocProvider.of<AuthBloc>(context).add(
+    BlocProvider.of<UserBloc>(context).add(
       SignInUser(
         userName: _usernameController.text.toLowerCase(),
         password: _passwordController.text,

@@ -303,7 +303,7 @@ class _AddProductPageState extends State<AddProductPage> {
                     }
 
                     if (_addProductFormKey.currentState!.validate()) {
-                      var token = (BlocProvider.of<AuthBloc>(context).state
+                      var token = (BlocProvider.of<UserBloc>(context).state
                               as UserAuthenticatedState)
                           .user
                           .token;

@@ -9,7 +9,7 @@ class GreetBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var user =
-        (BlocProvider.of<AuthBloc>(context).state as UserAuthenticatedState)
+        (BlocProvider.of<UserBloc>(context).state as UserAuthenticatedState)
             .user;
 
     return Container(

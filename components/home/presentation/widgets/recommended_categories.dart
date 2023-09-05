@@ -1,5 +1,5 @@
 import 'package:amazon_clone/common/data/constants.dart';
-import 'package:amazon_clone/components/customer_home/presentation/pages/categorized_products_page.dart';
+import 'package:amazon_clone/components/home/presentation/pages/categorized_products_page.dart';
 
 import 'package:flutter/material.dart';
 

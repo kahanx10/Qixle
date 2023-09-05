@@ -1,7 +1,7 @@
 import 'package:amazon_clone/common/logic/cubits/ui_feedback_cubit.dart';
 import 'package:amazon_clone/components/authentication/data/services/auth_service.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
-import 'package:amazon_clone/components/customer_home/logic/cubits/customer_products_cubit.dart';
+import 'package:amazon_clone/components/home/logic/cubits/customer_products_cubit.dart';
 import 'package:amazon_clone/components/layout/presentation/pages/layout_page.dart';
 import 'package:amazon_clone/components/admin/logic/blocs/products_bloc.dart';
 import 'package:amazon_clone/router.dart';
@@ -27,11 +27,9 @@ class _QixleState extends State<Qixle> {
       providers: [
         BlocProvider(create: (context) => CustomerProductsCubit()),
         BlocProvider(create: (context) => ProductBloc()),
+        BlocProvider(create: (context) => UiFeedbackCubit()),
         BlocProvider(
-          create: (context) => UiFeedbackCubit(),
-        ),
-        BlocProvider(
-          create: (context) => AuthBloc(
+          create: (context) => UserBloc(
             authService: AuthService(client: http.Client()),
             uiFeedbackCubit: context.read<UiFeedbackCubit>(),
           ),

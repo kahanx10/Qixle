@@ -1,7 +1,7 @@
 import 'package:amazon_clone/components/admin/data/models/product_model.dart';
 import 'package:amazon_clone/components/authentication/data/services/auth_token_service.dart';
-import 'package:amazon_clone/components/customer_home/data/services/customer_products_service.dart';
-import 'package:amazon_clone/components/customer_home/presentation/pages/product_details_page.dart';
+import 'package:amazon_clone/components/home/data/services/customer_products_service.dart';
+import 'package:amazon_clone/components/home/presentation/pages/product_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 

@@ -1,7 +1,7 @@
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
-import 'package:amazon_clone/components/customer_home/logic/cubits/customer_products_cubit.dart';
-import 'package:amazon_clone/components/customer_home/presentation/pages/product_details_page.dart';
+import 'package:amazon_clone/components/home/logic/cubits/customer_products_cubit.dart';
+import 'package:amazon_clone/components/home/presentation/pages/product_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +32,7 @@ class _CategorizedProductsPageState extends State<CategorizedProductsPage> {
 
   fetchCategorizedProducts(BuildContext context) {
     final cubit = context.read<CustomerProductsCubit>();
-    final authBloc = context.read<AuthBloc>().state as UserAuthenticatedState;
+    final authBloc = context.read<UserBloc>().state as UserAuthenticatedState;
 
     cubit.displayCategorizedProducts(
       category: widget.category,

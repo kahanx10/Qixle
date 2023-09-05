@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:amazon_clone/components/customer_home/data/services/customer_products_service.dart';
+import 'package:amazon_clone/components/home/data/services/customer_products_service.dart';
 import 'package:bloc/bloc.dart';
 import 'package:amazon_clone/components/admin/data/models/product_model.dart';
 
