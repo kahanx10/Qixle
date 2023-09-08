@@ -39,6 +39,10 @@ class CartService {
         authBloc.add(UpdateUser(user));
 
         MessageService.showSnackBar(context, message: 'Added product to cart!');
+      } else if (res.statusCode == 400) {
+        uiFeedbackCubit.showSnackbar(
+          jsonDecode(res.body)['msg'],
+        );
       } else {
         print(jsonDecode(res.body));
         uiFeedbackCubit.showSnackbar(

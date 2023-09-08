@@ -1,7 +1,7 @@
 import 'package:amazon_clone/common/presentation/widgets/my_app_bar.dart';
 import 'package:amazon_clone/components/account/presentation/widgets/buttons_panel.dart';
 import 'package:amazon_clone/components/account/presentation/widgets/greet_bar.dart';
-import 'package:amazon_clone/components/account/presentation/widgets/orders_panel.dart';
+import 'package:amazon_clone/components/orders/presentation/widgets/orders_panel.dart';
 import 'package:flutter/material.dart';
 
 class AccountPage extends StatefulWidget {

@@ -6,6 +6,7 @@ import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/components/admin/data/models/product_model.dart';
 import 'package:amazon_clone/components/authentication/data/services/auth_token_service.dart';
 import 'package:amazon_clone/components/cart/data/services/cart_service.dart';
+import 'package:amazon_clone/components/cart/presentation/pages/cart_page.dart';
 import 'package:amazon_clone/components/home/data/services/customer_products_service.dart';
 import 'package:amazon_clone/components/home/presentation/pages/searched_products_page.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -208,7 +209,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               child: AppButton(
                 width: double.infinity,
                 label: 'Buy Now',
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).pushNamed(CartPage.routeName);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Constants.secondaryColor,
                   foregroundColor: Constants.backgroundColor,

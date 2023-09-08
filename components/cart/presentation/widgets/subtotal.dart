@@ -13,7 +13,8 @@ class CartSubtotal extends StatelessWidget {
 
     int sum = 0;
     user.cart
-        .map((e) => sum += e['quantity'] * e['product']['price'] as int)
+        .map((cartItem) =>
+            sum += cartItem['quantity'] * cartItem['product']['price'] as int)
         .toList();
 
     return Container(

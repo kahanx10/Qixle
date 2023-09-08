@@ -108,7 +108,9 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
 
                   return Badge(
                     backgroundColor: Constants.backgroundColor,
-                    label: Text(user.cart.length.toString()),
+                    label: user.cart.isNotEmpty
+                        ? Text(user.cart.length.toString())
+                        : null,
                     textColor: Constants.unselectedColor,
                     child: const Icon(
                       Icons.shopping_cart_outlined,

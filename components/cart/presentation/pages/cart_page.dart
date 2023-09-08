@@ -2,12 +2,14 @@ import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:amazon_clone/components/cart/presentation/widgets/cart_product.dart';
+import 'package:amazon_clone/components/home/presentation/pages/address_page.dart';
 import 'package:amazon_clone/components/home/presentation/pages/searched_products_page.dart';
 import 'package:amazon_clone/components/home/presentation/widgets/address_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartPage extends StatefulWidget {
+  static const String routeName = '/cart_route';
   const CartPage({Key? key}) : super(key: key);
 
   @override
@@ -24,11 +26,11 @@ class _CartPageState extends State<CartPage> {
   }
 
   void navigateToAddress(int sum) {
-    // Navigator.pushNamed(
-    //   context,
-    //   AddressScreen.routeName,
-    //   arguments: sum.toString(),
-    // );
+    Navigator.pushNamed(
+      context,
+      AddressPage.routeName,
+      arguments: sum.toString(),
+    );
   }
 
   @override
@@ -98,7 +100,7 @@ class _CartPageState extends State<CartPage> {
                                 width: 1,
                               ),
                             ),
-                            hintText: 'Search Amazon.in',
+                            hintText: 'Find More Products',
                             hintStyle: const TextStyle(
                               fontWeight: FontWeight.w500,
                               fontSize: 17,
