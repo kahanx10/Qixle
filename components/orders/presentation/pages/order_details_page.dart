@@ -1,5 +1,7 @@
 import 'package:amazon_clone/common/data/constants.dart';
+import 'package:amazon_clone/common/data/services/message_service.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
+import 'package:amazon_clone/components/admin/data/services/admin_service.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:amazon_clone/components/home/presentation/pages/searched_products_page.dart';
 import 'package:amazon_clone/components/orders/data/models/order_model.dart';
@@ -37,17 +39,19 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
     currentStep = widget.order.status;
   }
 
-  void changeOrderStatus(int status) {
-    // AddminServices.changeOrderStatus(
-    //   context: context,
-    //   status: status + 1,
-    //   order: widget.order,
-    //   onSuccess: () {
-    //     setState(() {
-    //       currentStep += 1;
-    //     });
-    //   },
-    // );
+  void changeOrderStatus(int status) async {
+    try {
+      var newStatus = await AdminService.changeOrderStatus(
+        context,
+        status: status + 1,
+        orderId: widget.order.id,
+      );
+      setState(() {
+        currentStep = newStatus;
+      });
+    } catch (e) {
+      MessageService.showSnackBar(context, message: e.toString());
+    }
   }
 
   @override
@@ -68,63 +72,62 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Container(
-                  height: 42,
-                  margin: const EdgeInsets.only(left: 15),
-                  child: Material(
-                    borderRadius: BorderRadius.circular(7),
-                    elevation: 1,
-                    child: TextFormField(
-                      onFieldSubmitted: navigateToSearchScreen,
-                      decoration: InputDecoration(
-                        prefixIcon: InkWell(
-                          onTap: () {},
-                          child: const Padding(
-                            padding: EdgeInsets.only(
-                              left: 6,
+              user.type == 'admin'
+                  ? const SizedBox(
+                      width: 0,
+                      height: 0,
+                    )
+                  : Expanded(
+                      child: Container(
+                        height: 42,
+                        margin: const EdgeInsets.only(left: 15),
+                        child: Material(
+                          borderRadius: BorderRadius.circular(7),
+                          elevation: 1,
+                          child: TextFormField(
+                            onFieldSubmitted: navigateToSearchScreen,
+                            decoration: InputDecoration(
+                              prefixIcon: InkWell(
+                                onTap: () {},
+                                child: const Padding(
+                                  padding: EdgeInsets.only(
+                                    left: 6,
+                                  ),
+                                  child: Icon(
+                                    Icons.search,
+                                    color: Colors.black,
+                                    size: 23,
+                                  ),
+                                ),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              contentPadding: const EdgeInsets.only(top: 10),
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(7),
+                                ),
+                                borderSide: BorderSide.none,
+                              ),
+                              enabledBorder: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(7),
+                                ),
+                                borderSide: BorderSide(
+                                  color: Colors.black38,
+                                  width: 1,
+                                ),
+                              ),
+                              hintText: 'Find More Products',
+                              hintStyle: const TextStyle(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 17,
+                              ),
                             ),
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.black,
-                              size: 23,
-                            ),
                           ),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding: const EdgeInsets.only(top: 10),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(7),
-                          ),
-                          borderSide: BorderSide.none,
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(7),
-                          ),
-                          borderSide: BorderSide(
-                            color: Colors.black38,
-                            width: 1,
-                          ),
-                        ),
-                        hintText: 'Search Amazon.in',
-                        hintStyle: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17,
                         ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              Container(
-                color: Colors.transparent,
-                height: 42,
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                child: const Icon(Icons.mic, color: Colors.black, size: 25),
-              ),
             ],
           ),
         ),
@@ -234,7 +237,9 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                       return AppButton(
                         label: 'Done',
                         onPressed: () => changeOrderStatus(details.currentStep),
-                        style: ElevatedButton.styleFrom(),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Constants.selectedColor,
+                        ),
                       );
                     }
                     return const SizedBox();

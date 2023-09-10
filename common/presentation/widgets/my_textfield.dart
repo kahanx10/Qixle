@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-
-import 'package:amazon_clone/common/data/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyTextField extends StatelessWidget {
   final bool obscureText;
@@ -28,20 +27,30 @@ class MyTextField extends StatelessWidget {
       obscureText: obscureText,
       controller: controller,
       decoration: InputDecoration(
+        hintStyle: GoogleFonts.leagueSpartan(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
         hintText: hintText,
-        border: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black38,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(
+            width: 2.5,
+            color: Colors.black26,
           ),
         ),
-        enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.black38,
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(
+            width: 2.5,
+            color: Colors.black26,
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Constants.selectedColor,
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(
+            width: 2.5,
+            color: Colors.black,
           ),
         ),
       ),

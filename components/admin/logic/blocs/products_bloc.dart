@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:amazon_clone/components/admin/data/models/product_model.dart';
-import 'package:amazon_clone/components/admin/data/services/product_service.dart';
+import 'package:amazon_clone/components/admin/data/services/admin_service.dart';
 
 class ProductEvent {}
 
@@ -65,7 +65,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     var products = <Product>[];
 
     try {
-      var res = await ProductService.fetchProducts(token: event.token);
+      var res = await AdminService.fetchProducts(token: event.token);
 
       if (res == null) {
         emit(
@@ -113,7 +113,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     Emitter<ProductState> emit,
   ) async {
     try {
-      var res = await ProductService.uploadProduct(event: event);
+      var res = await AdminService.uploadProduct(event: event);
 
       if (res == null) {
         throw Exception('Couldn\'t add product, please try again!');
@@ -149,7 +149,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     Emitter<ProductState> emit,
   ) async {
     try {
-      var res = await ProductService.deleteProduct(event: event);
+      var res = await AdminService.deleteProduct(event: event);
 
       if (res == null) {
         throw Exception('Couldn\'t delete the product, please try again!');

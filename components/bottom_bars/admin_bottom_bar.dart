@@ -1,5 +1,6 @@
 import 'package:amazon_clone/common/data/constants.dart';
-import 'package:amazon_clone/common/presentation/pages/message_page.dart';
+import 'package:amazon_clone/components/admin/presentation/pages/admin_orders_page.dart';
+import 'package:amazon_clone/components/admin/presentation/pages/analytics_page.dart';
 import 'package:amazon_clone/components/admin/presentation/pages/products_page.dart';
 import 'package:flutter/material.dart';
 
@@ -17,12 +18,8 @@ class _AdminBottomBarState extends State<AdminBottomBar> {
 
   List<Widget> pages = [
     const ProductsPage(),
-    const MessagePage(
-      message: 'Analytics Page',
-    ),
-    const MessagePage(
-      message: 'Orders Page',
-    ),
+    const AnalyticsPage(),
+    const OrdersPage(),
   ];
 
   void updatePage(int page) {

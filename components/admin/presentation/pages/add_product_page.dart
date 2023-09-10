@@ -5,7 +5,7 @@ import 'package:amazon_clone/common/logic/cubits/ui_feedback_cubit.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/common/presentation/widgets/my_app_bar.dart';
 import 'package:amazon_clone/common/presentation/widgets/my_textfield.dart';
-import 'package:amazon_clone/components/admin/data/services/product_service.dart';
+import 'package:amazon_clone/components/admin/data/services/admin_service.dart';
 import 'package:amazon_clone/components/admin/logic/blocs/products_bloc.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -122,8 +122,7 @@ class _AddProductPageState extends State<AddProductPage> {
                           ),
                     GestureDetector(
                       onTap: () async {
-                        var imageFiles =
-                            await ProductService.pickProductImages();
+                        var imageFiles = await AdminService.pickProductImages();
 
                         if (imageFiles.isNotEmpty) {
                           if (imageFiles.length > 4) {

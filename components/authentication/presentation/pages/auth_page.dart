@@ -1,9 +1,13 @@
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
+import 'package:amazon_clone/common/presentation/widgets/my_app_bar.dart';
 import 'package:amazon_clone/common/presentation/widgets/my_textfield.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 enum Auth { signUp, signIn }
 
@@ -35,165 +39,204 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Constants.greyBackgroundColor,
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Welcome',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w500,
-                    color: Constants.selectedColor,
-                  ),
-                ),
-                RadioListTile(
-                  tileColor: _authVal == Auth.signUp
-                      ? Constants.backgroundColor
-                      : Constants.greyBackgroundColor,
-                  title: const Text('Create Account'),
-                  value: Auth.signUp,
-                  groupValue: _authVal,
-                  onChanged: (val) {
-                    setState(
-                      () {
-                        _authVal = val!;
-                      },
-                    );
-                  },
-                ),
-                if (_authVal == Auth.signUp)
-                  Container(
-                    color: Constants.backgroundColor,
-                    padding: const EdgeInsets.all(8),
-                    child: Form(
-                      key: _signUpFormKey,
-                      child: Column(
-                        children: [
-                          MyTextField(
-                            obscureText: false,
-                            controller: _nameController,
-                            hintText: 'Name',
-                            validator: (val) {
-                              if (val!.isNotEmpty) {
-                                return null;
-                              } else {
-                                return 'Please enter a valid name!';
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          MyTextField(
-                            obscureText: false,
-                            controller: _usernameController,
-                            hintText: 'Username',
-                            validator: (val) {
-                              if (val!.isNotEmpty && !val.contains(' ')) {
-                                return null;
-                              } else {
-                                return 'Please enter a valid username!';
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          MyTextField(
-                            obscureText: true,
-                            controller: _passwordController,
-                            hintText: 'Password',
-                            validator: (val) {
-                              if (val!.isNotEmpty && !val.contains(' ')) {
-                                return null;
-                              } else {
-                                return 'Please enter a valid password!';
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          AppButton(
-                            width: MediaQuery.of(context).size.width,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Constants.selectedColor,
-                              foregroundColor: Constants.backgroundColor,
-                            ),
-                            onPressed: () {
-                              signUpUser(context);
-                            },
-                            label: 'Sign Up',
-                          ),
-                        ],
-                      ),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light.copyWith(
+        statusBarColor: Constants.backgroundColor,
+      ),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Constants.backgroundColor,
+          appBar: MyAppBar(
+            title: Text(
+              'LOGIN',
+              style: GoogleFonts.leagueSpartan(
+                color: Colors.black,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.only(
+              left: 8,
+              right: 8,
+              bottom: 8,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 250,
+                    width: 250,
+                    child: Lottie.asset(
+                      'assets/lottie/person.json',
                     ),
                   ),
-                RadioListTile(
-                  tileColor: _authVal == Auth.signIn
-                      ? Constants.backgroundColor
-                      : Constants.greyBackgroundColor,
-                  title: const Text('Already have an account?'),
-                  value: Auth.signIn,
-                  groupValue: _authVal,
-                  onChanged: (val) {
-                    setState(
-                      () {
-                        _authVal = val!;
-                      },
-                    );
-                  },
-                ),
-                if (_authVal == Auth.signIn)
-                  Container(
-                    color: Constants.backgroundColor,
-                    padding: const EdgeInsets.all(8),
-                    child: Form(
-                      key: _signInFormKey,
-                      child: Column(
-                        children: [
-                          MyTextField(
-                            obscureText: false,
-                            controller: _usernameController,
-                            hintText: 'Username',
-                            validator: (val) {
-                              if (val!.isNotEmpty && !val.contains(' ')) {
-                                return null;
-                              } else {
-                                return 'Please enter a valid username!';
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          MyTextField(
-                            obscureText: true,
-                            controller: _passwordController,
-                            hintText: 'Password',
-                            validator: (val) {
-                              if (val!.isNotEmpty && !val.contains(' ')) {
-                                return null;
-                              } else {
-                                return 'Please enter a valid password!';
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 10),
-                          AppButton(
-                            width: MediaQuery.of(context).size.width,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Constants.selectedColor,
-                              foregroundColor: Constants.backgroundColor,
-                            ),
-                            onPressed: () {
-                              signInUser(context);
-                            },
-                            label: 'Sign In',
-                          ),
-                        ],
-                      ),
-                    ),
+                  const SizedBox(
+                    height: 12,
                   ),
-              ],
+                  Column(
+                    children: [
+                      RadioListTile(
+                        activeColor: Colors.black,
+                        tileColor: Colors.transparent,
+                        title: Text(
+                          'Create Account',
+                          style: GoogleFonts.leagueSpartan(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        value: Auth.signUp,
+                        groupValue: _authVal,
+                        onChanged: (val) {
+                          setState(
+                            () {
+                              _authVal = val!;
+                            },
+                          );
+                        },
+                      ),
+                      if (_authVal == Auth.signUp)
+                        Container(
+                          color: Constants.backgroundColor,
+                          padding: const EdgeInsets.all(8),
+                          child: Form(
+                            key: _signUpFormKey,
+                            child: Column(
+                              children: [
+                                MyTextField(
+                                  obscureText: false,
+                                  controller: _nameController,
+                                  hintText: 'Name',
+                                  validator: (val) {
+                                    if (val!.isNotEmpty) {
+                                      return null;
+                                    } else {
+                                      return 'Please enter a valid name!';
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 12),
+                                MyTextField(
+                                  obscureText: false,
+                                  controller: _usernameController,
+                                  hintText: 'Username',
+                                  validator: (val) {
+                                    if (val!.isNotEmpty && !val.contains(' ')) {
+                                      return null;
+                                    } else {
+                                      return 'Please enter a valid username!';
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 12),
+                                MyTextField(
+                                  obscureText: true,
+                                  controller: _passwordController,
+                                  hintText: 'Password',
+                                  validator: (val) {
+                                    if (val!.isNotEmpty && !val.contains(' ')) {
+                                      return null;
+                                    } else {
+                                      return 'Please enter a valid password!';
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 24),
+                                AppButton(
+                                  width: MediaQuery.of(context).size.width,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.black,
+                                    foregroundColor: Constants.backgroundColor,
+                                  ),
+                                  onPressed: () {
+                                    signUpUser(context);
+                                  },
+                                  label: 'Register',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      RadioListTile(
+                        activeColor: Colors.black,
+                        tileColor: Constants.backgroundColor,
+                        title: Text(
+                          'Existing Account',
+                          style: GoogleFonts.leagueSpartan(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        value: Auth.signIn,
+                        groupValue: _authVal,
+                        onChanged: (val) {
+                          setState(
+                            () {
+                              _authVal = val!;
+                            },
+                          );
+                        },
+                      ),
+                      if (_authVal == Auth.signIn)
+                        Container(
+                          color: Constants.backgroundColor,
+                          padding: const EdgeInsets.all(8),
+                          child: Form(
+                            key: _signInFormKey,
+                            child: Column(
+                              children: [
+                                MyTextField(
+                                  obscureText: false,
+                                  controller: _usernameController,
+                                  hintText: 'Username',
+                                  validator: (val) {
+                                    if (val!.isNotEmpty && !val.contains(' ')) {
+                                      return null;
+                                    } else {
+                                      return 'Please enter a valid username!';
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 12),
+                                MyTextField(
+                                  obscureText: true,
+                                  controller: _passwordController,
+                                  hintText: 'Password',
+                                  validator: (val) {
+                                    if (val!.isNotEmpty && !val.contains(' ')) {
+                                      return null;
+                                    } else {
+                                      return 'Please enter a valid password!';
+                                    }
+                                  },
+                                ),
+                                const SizedBox(height: 24),
+                                AppButton(
+                                  width: MediaQuery.of(context).size.width,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.black,
+                                    foregroundColor: Constants.backgroundColor,
+                                  ),
+                                  onPressed: () {
+                                    signInUser(context);
+                                  },
+                                  label: 'Log In',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

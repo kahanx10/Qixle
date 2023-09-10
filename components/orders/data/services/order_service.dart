@@ -76,6 +76,7 @@ class OrderService {
 
       if (res.statusCode == 200) {
         var ordersList = jsonDecode(res.body);
+
         for (var order in ordersList) {
           order as Map<String, dynamic>;
           orders.add(Order.fromMap(order));
