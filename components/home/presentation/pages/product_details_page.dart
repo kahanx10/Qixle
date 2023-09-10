@@ -206,7 +206,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: AppButton(
+              child: MyButton(
                 width: double.infinity,
                 label: 'Buy Now',
                 onPressed: () {
@@ -221,7 +221,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
             const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: AppButton(
+              child: MyButton(
                 width: double.infinity,
                 label: 'Add to Cart',
                 onPressed: () {

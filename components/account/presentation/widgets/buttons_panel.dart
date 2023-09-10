@@ -20,7 +20,7 @@ class ButtonsPanel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
-                child: AppButton(
+                child: MyButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Constants.backgroundColor,
                     foregroundColor: Constants.selectedColor,
@@ -33,7 +33,7 @@ class ButtonsPanel extends StatelessWidget {
                 width: 8,
               ),
               Expanded(
-                child: AppButton(
+                child: MyButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Constants.backgroundColor,
                     foregroundColor: Constants.selectedColor,
@@ -51,7 +51,7 @@ class ButtonsPanel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
-                child: AppButton(
+                child: MyButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Constants.backgroundColor,
                     foregroundColor: Constants.selectedColor,
@@ -66,7 +66,7 @@ class ButtonsPanel extends StatelessWidget {
                 width: 8,
               ),
               Expanded(
-                child: AppButton(
+                child: MyButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Constants.backgroundColor,
                     foregroundColor: Constants.selectedColor,

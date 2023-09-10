@@ -1,3 +1,4 @@
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/logic/cubits/ui_feedback_cubit.dart';
 import 'package:amazon_clone/components/authentication/data/services/auth_service.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
@@ -41,6 +42,13 @@ class _QixleState extends State<Qixle> {
         title: 'Flutter Demo',
         theme: ThemeData(
           useMaterial3: true,
+          scrollbarTheme: ScrollbarThemeData(
+            thickness: MaterialStateProperty.all<double>(5),
+            radius: const Radius.circular(6),
+            thumbColor: MaterialStateProperty.all<Color>(
+                Constants.selectedColor), // Your color
+            // You can also set other properties like thickness, radius, etc.
+          ),
         ),
         home: const LayoutPage(),
       ),

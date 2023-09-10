@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -26,6 +27,7 @@ class MyTextField extends StatelessWidget {
       keyboardType: keyboardType,
       obscureText: obscureText,
       controller: controller,
+      cursorColor: Constants.selectedColor,
       decoration: InputDecoration(
         hintStyle: GoogleFonts.leagueSpartan(
           fontSize: 16,

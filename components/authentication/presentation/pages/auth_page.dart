@@ -29,12 +29,17 @@ class _AuthPageState extends State<AuthPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
 
+  final registerScrollController = ScrollController();
+  final loginScrollController = ScrollController();
+
   @override
   void dispose() {
     super.dispose();
     _usernameController.dispose();
     _passwordController.dispose();
     _nameController.dispose();
+    registerScrollController.dispose();
+    loginScrollController.dispose();
   }
 
   @override
@@ -50,7 +55,7 @@ class _AuthPageState extends State<AuthPage> {
             title: Text(
               'LOGIN',
               style: GoogleFonts.leagueSpartan(
-                color: Colors.black,
+                color: Constants.selectedColor,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
               ),
@@ -58,9 +63,9 @@ class _AuthPageState extends State<AuthPage> {
           ),
           body: Padding(
             padding: const EdgeInsets.only(
-              left: 8,
-              right: 8,
-              bottom: 8,
+              left: 15,
+              right: 15,
+              bottom: 15,
             ),
             child: SingleChildScrollView(
               child: Column(
@@ -79,160 +84,221 @@ class _AuthPageState extends State<AuthPage> {
                   ),
                   Column(
                     children: [
-                      RadioListTile(
-                        activeColor: Colors.black,
-                        tileColor: Colors.transparent,
-                        title: Text(
-                          'Create Account',
-                          style: GoogleFonts.leagueSpartan(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        value: Auth.signUp,
-                        groupValue: _authVal,
-                        onChanged: (val) {
-                          setState(
-                            () {
-                              _authVal = val!;
+                      Column(
+                        children: [
+                          RadioListTile(
+                            activeColor: Constants.selectedColor,
+                            tileColor: Colors.transparent,
+                            title: Text(
+                              'Create Account',
+                              style: GoogleFonts.leagueSpartan(
+                                color: _authVal == Auth.signUp
+                                    ? Constants.selectedColor
+                                    : Constants.unselectedColor,
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            value: Auth.signUp,
+                            groupValue: _authVal,
+                            onChanged: (val) {
+                              setState(
+                                () {
+                                  _authVal = val!;
+                                },
+                              );
                             },
-                          );
-                        },
+                          ),
+                          AnimatedContainer(
+                            decoration: BoxDecoration(
+                              color: Constants.selectedColor,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            duration: const Duration(milliseconds: 500),
+                            height: 2.5,
+                            width: _authVal == Auth.signUp ? 150 : 0,
+                          ),
+                          SizedBox(
+                            height: _authVal == Auth.signUp ? 8 : 0,
+                          ),
+                        ],
                       ),
-                      if (_authVal == Auth.signUp)
-                        Container(
-                          color: Constants.backgroundColor,
-                          padding: const EdgeInsets.all(8),
-                          child: Form(
-                            key: _signUpFormKey,
-                            child: Column(
-                              children: [
-                                MyTextField(
-                                  obscureText: false,
-                                  controller: _nameController,
-                                  hintText: 'Name',
-                                  validator: (val) {
-                                    if (val!.isNotEmpty) {
-                                      return null;
-                                    } else {
-                                      return 'Please enter a valid name!';
-                                    }
-                                  },
-                                ),
-                                const SizedBox(height: 12),
-                                MyTextField(
-                                  obscureText: false,
-                                  controller: _usernameController,
-                                  hintText: 'Username',
-                                  validator: (val) {
-                                    if (val!.isNotEmpty && !val.contains(' ')) {
-                                      return null;
-                                    } else {
-                                      return 'Please enter a valid username!';
-                                    }
-                                  },
-                                ),
-                                const SizedBox(height: 12),
-                                MyTextField(
-                                  obscureText: true,
-                                  controller: _passwordController,
-                                  hintText: 'Password',
-                                  validator: (val) {
-                                    if (val!.isNotEmpty && !val.contains(' ')) {
-                                      return null;
-                                    } else {
-                                      return 'Please enter a valid password!';
-                                    }
-                                  },
-                                ),
-                                const SizedBox(height: 24),
-                                AppButton(
-                                  width: MediaQuery.of(context).size.width,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.black,
-                                    foregroundColor: Constants.backgroundColor,
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 500),
+                        height: _authVal == Auth.signUp ? 350 : 0,
+                        key: const ValueKey('signUp'),
+                        color: Constants.backgroundColor,
+                        padding: const EdgeInsets.all(8),
+                        child: Scrollbar(
+                          controller: registerScrollController,
+                          child: SingleChildScrollView(
+                            controller: registerScrollController,
+                            child: Form(
+                              key: _signUpFormKey,
+                              child: Column(
+                                children: [
+                                  MyTextField(
+                                    obscureText: false,
+                                    controller: _nameController,
+                                    hintText: 'Name',
+                                    validator: (val) {
+                                      if (val!.isNotEmpty) {
+                                        return null;
+                                      } else {
+                                        return 'Please enter a valid name!';
+                                      }
+                                    },
                                   ),
-                                  onPressed: () {
-                                    signUpUser(context);
-                                  },
-                                  label: 'Register',
-                                ),
-                              ],
+                                  const SizedBox(height: 12),
+                                  MyTextField(
+                                    obscureText: false,
+                                    controller: _usernameController,
+                                    hintText: 'Username',
+                                    validator: (val) {
+                                      if (val!.isNotEmpty &&
+                                          !val.contains(' ')) {
+                                        return null;
+                                      } else {
+                                        return 'Please enter a valid username!';
+                                      }
+                                    },
+                                  ),
+                                  const SizedBox(height: 12),
+                                  MyTextField(
+                                    obscureText: true,
+                                    controller: _passwordController,
+                                    hintText: 'Password',
+                                    validator: (val) {
+                                      if (val!.isNotEmpty &&
+                                          !val.contains(' ') &&
+                                          val.length >= 8) {
+                                        return null;
+                                      } else {
+                                        return 'Please enter a valid password!';
+                                      }
+                                    },
+                                  ),
+                                  const SizedBox(height: 24),
+                                  MyButton(
+                                    width: MediaQuery.of(context).size.width,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Constants.selectedColor,
+                                      foregroundColor:
+                                          Constants.backgroundColor,
+                                    ),
+                                    onPressed: () {
+                                      signUpUser(context);
+                                    },
+                                    label: 'Register',
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
+                      ),
                       const SizedBox(
                         height: 8,
                       ),
-                      RadioListTile(
-                        activeColor: Colors.black,
-                        tileColor: Constants.backgroundColor,
-                        title: Text(
-                          'Existing Account',
-                          style: GoogleFonts.leagueSpartan(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        value: Auth.signIn,
-                        groupValue: _authVal,
-                        onChanged: (val) {
-                          setState(
-                            () {
-                              _authVal = val!;
+                      Column(
+                        children: [
+                          RadioListTile(
+                            activeColor: Constants.selectedColor,
+                            tileColor: Constants.backgroundColor,
+                            title: Text(
+                              'Existing Account',
+                              style: GoogleFonts.leagueSpartan(
+                                color: _authVal == Auth.signIn
+                                    ? Constants.selectedColor
+                                    : Constants.unselectedColor,
+                                fontSize: 24,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            value: Auth.signIn,
+                            groupValue: _authVal,
+                            onChanged: (val) {
+                              setState(
+                                () {
+                                  _authVal = val!;
+                                },
+                              );
                             },
-                          );
-                        },
+                          ),
+                          AnimatedContainer(
+                            decoration: BoxDecoration(
+                              color: Constants.selectedColor,
+                              borderRadius: BorderRadius.circular(6),
+                            ),
+                            duration: const Duration(milliseconds: 500),
+                            height: 2.5,
+                            width: _authVal == Auth.signIn ? 150 : 0,
+                          ),
+                          SizedBox(
+                            height: _authVal == Auth.signIn ? 8 : 0,
+                          ),
+                        ],
                       ),
-                      if (_authVal == Auth.signIn)
-                        Container(
-                          color: Constants.backgroundColor,
-                          padding: const EdgeInsets.all(8),
-                          child: Form(
-                            key: _signInFormKey,
-                            child: Column(
-                              children: [
-                                MyTextField(
-                                  obscureText: false,
-                                  controller: _usernameController,
-                                  hintText: 'Username',
-                                  validator: (val) {
-                                    if (val!.isNotEmpty && !val.contains(' ')) {
-                                      return null;
-                                    } else {
-                                      return 'Please enter a valid username!';
-                                    }
-                                  },
-                                ),
-                                const SizedBox(height: 12),
-                                MyTextField(
-                                  obscureText: true,
-                                  controller: _passwordController,
-                                  hintText: 'Password',
-                                  validator: (val) {
-                                    if (val!.isNotEmpty && !val.contains(' ')) {
-                                      return null;
-                                    } else {
-                                      return 'Please enter a valid password!';
-                                    }
-                                  },
-                                ),
-                                const SizedBox(height: 24),
-                                AppButton(
-                                  width: MediaQuery.of(context).size.width,
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.black,
-                                    foregroundColor: Constants.backgroundColor,
+                      AnimatedContainer(
+                        duration: const Duration(milliseconds: 500),
+                        height: _authVal == Auth.signIn ? 300 : 0,
+                        key: const ValueKey('signIn'),
+                        color: Constants.backgroundColor,
+                        padding: const EdgeInsets.all(8),
+                        child: Scrollbar(
+                          controller: loginScrollController,
+                          child: SingleChildScrollView(
+                            controller: loginScrollController,
+                            child: Form(
+                              key: _signInFormKey,
+                              child: Column(
+                                children: [
+                                  MyTextField(
+                                    obscureText: false,
+                                    controller: _usernameController,
+                                    hintText: 'Username',
+                                    validator: (val) {
+                                      if (val!.isNotEmpty &&
+                                          !val.contains(' ')) {
+                                        return null;
+                                      } else {
+                                        return 'Please enter a valid username!';
+                                      }
+                                    },
                                   ),
-                                  onPressed: () {
-                                    signInUser(context);
-                                  },
-                                  label: 'Log In',
-                                ),
-                              ],
+                                  const SizedBox(height: 12),
+                                  MyTextField(
+                                    obscureText: true,
+                                    controller: _passwordController,
+                                    hintText: 'Password',
+                                    validator: (val) {
+                                      if (val!.isNotEmpty &&
+                                          !val.contains(' ')) {
+                                        return null;
+                                      } else {
+                                        return 'Please enter a valid password!';
+                                      }
+                                    },
+                                  ),
+                                  const SizedBox(height: 24),
+                                  MyButton(
+                                    width: MediaQuery.of(context).size.width,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Constants.selectedColor,
+                                      foregroundColor:
+                                          Constants.backgroundColor,
+                                    ),
+                                    onPressed: () {
+                                      signInUser(context);
+                                    },
+                                    label: 'Log In',
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
+                      ),
                     ],
                   ),
                 ],
@@ -245,21 +311,25 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   void signUpUser(BuildContext context) {
-    BlocProvider.of<UserBloc>(context).add(
-      SignUpUser(
-        name: _nameController.text,
-        userName: _usernameController.text.toLowerCase(),
-        password: _passwordController.text,
-      ),
-    );
+    if (_signUpFormKey.currentState!.validate()) {
+      BlocProvider.of<UserBloc>(context).add(
+        SignUpUser(
+          name: _nameController.text,
+          userName: _usernameController.text.toLowerCase(),
+          password: _passwordController.text,
+        ),
+      );
+    }
   }
 
   void signInUser(BuildContext context) {
-    BlocProvider.of<UserBloc>(context).add(
-      SignInUser(
-        userName: _usernameController.text.toLowerCase(),
-        password: _passwordController.text,
-      ),
-    );
+    if (_signInFormKey.currentState!.validate()) {
+      BlocProvider.of<UserBloc>(context).add(
+        SignInUser(
+          userName: _usernameController.text.toLowerCase(),
+          password: _passwordController.text,
+        ),
+      );
+    }
   }
 }

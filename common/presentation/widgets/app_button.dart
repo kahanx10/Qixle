@@ -2,24 +2,26 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppButton extends StatelessWidget {
+class MyButton extends StatelessWidget {
   final ButtonStyle style;
   final VoidCallback onPressed;
   final String label;
   final double? width;
+  final bool useWidth;
 
-  const AppButton({
+  const MyButton({
     Key? key,
     required this.style,
     required this.onPressed,
     required this.label,
     this.width,
+    this.useWidth = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width,
+      width: useWidth ? width : 320,
       height: 70,
       child: ElevatedButton(
         style: style,

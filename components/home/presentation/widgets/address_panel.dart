@@ -1,3 +1,4 @@
+import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,15 +14,12 @@ class AddressPanel extends StatelessWidget {
 
     return Container(
       height: 40,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Color.fromARGB(255, 114, 226, 221),
-            Color.fromARGB(255, 162, 236, 233),
-          ],
-          stops: [0.5, 1.0],
-        ),
-      ),
+      decoration: BoxDecoration(
+          border: Border.symmetric(
+              horizontal: BorderSide(
+        color: Constants.selectedColor,
+        width: 2.5,
+      ))),
       padding: const EdgeInsets.only(left: 10),
       child: Row(
         children: [
@@ -33,7 +31,7 @@ class AddressPanel extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 5),
               child: Text(
-                'Delivery to ${user.name} - ${user.address}',
+                'Deliver to ${user.name} - ${user.address}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w500,
                 ),

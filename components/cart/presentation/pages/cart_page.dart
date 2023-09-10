@@ -127,7 +127,7 @@ class _CartPageState extends State<CartPage> {
                 // const CartSubtotal(),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: AppButton(
+                  child: MyButton(
                     label: 'Proceed to Buy (${user.cart.length} items)',
                     onPressed: () => navigateToAddress(sum),
                     style: ElevatedButton.styleFrom(

@@ -286,7 +286,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 const SizedBox(
                   height: 12.0,
                 ),
-                AppButton(
+                MyButton(
                   width: double.infinity,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Constants.selectedColor,
