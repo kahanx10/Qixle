@@ -3,6 +3,7 @@ import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dar
 import 'package:amazon_clone/components/cart/presentation/pages/cart_page.dart';
 import 'package:amazon_clone/components/home/presentation/pages/searched_products_page.dart';
 import 'package:amazon_clone/components/home/presentation/widgets/category_chips.dart';
+import 'package:amazon_clone/components/home/presentation/widgets/product_thumbnail.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,22 +57,7 @@ class _HomePageState extends State<HomePage> {
                     height: 35.0,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(
-                            0.05,
-                          ), // subtle shadow
-                          blurRadius: 5, // soften the shadow
-                          spreadRadius:
-                              0.1, // extent of shadow, negative values can also be used
-                          offset: const Offset(
-                            -0.1,
-                            0.1,
-                          ), // Move to bottom-left by 4 units
-                        ),
-                      ],
-                      border:
-                          Border.all(color: Colors.grey.shade100, width: 1.5),
+                      border: Border.all(color: Colors.grey.shade100, width: 2),
                       borderRadius: BorderRadius.circular(100.0),
                       color: Constants.backgroundColor,
                     ),
@@ -182,7 +168,7 @@ class _HomePageState extends State<HomePage> {
             Stack(
               children: [
                 Container(
-                  height: 240,
+                  height: 220,
                   constraints: const BoxConstraints(
                     // This ensures the height does not exceed 50 units.
                     minWidth:
@@ -278,8 +264,8 @@ class _HomePageState extends State<HomePage> {
                             child: Image.network(
                               'https://images.dailyobjects.com/marche/product-images/1101/dailyobjects-blue-hybrid-clear-case-cover-for-iphone-13-pro-max-images/DailyObjects-Blue-Hybrid-Clear-Case-Cover-for-iPhone-13-Pro-Max.png?tr=cm-pad_resize,v-2',
                               fit: BoxFit.cover,
-                              height: 220,
-                              width: 220,
+                              height: 210,
+                              width: 210,
                             ),
                           ),
                           Transform.translate(
@@ -287,16 +273,16 @@ class _HomePageState extends State<HomePage> {
                             child: Image.network(
                               'https://www.freepnglogos.com/uploads/laptop-png/laptop-transparent-png-pictures-icons-and-png-40.png',
                               // fit: BoxFit.cover,
-                              height: 260,
-                              width: 260,
+                              height: 250,
+                              width: 250,
                             ),
                           ),
                           Transform.translate(
                             offset: const Offset(100, 65), //
                             child: Image.network(
                               'https://www.freepnglogos.com/uploads/women-bag-png/women-bag-women-shoulder-bags-png-transparent-images-27.png',
-                              height: 190,
-                              width: 190,
+                              height: 180,
+                              width: 180,
                             ),
                           ),
                           Transform.rotate(
@@ -306,8 +292,8 @@ class _HomePageState extends State<HomePage> {
                               child: Image.network(
                                 'https://static.nike.com/a/images/t_default/e47bddea-7a42-4925-8f36-b4364b6fa12c/custom-nike-air-force-1-mid-by-you-shoes.png',
                                 // fit: BoxFit.cover,
-                                height: 275,
-                                width: 275,
+                                height: 265,
+                                width: 265,
                               ),
                             ),
                           ),
@@ -316,16 +302,17 @@ class _HomePageState extends State<HomePage> {
                             child: Image.network(
                               'https://static.vecteezy.com/system/resources/previews/008/847/343/original/isolated-blue-front-sweater-free-png.png',
                               // fit: BoxFit.cover,
-                              height: 360,
-                              width: 360,
+                              height: 350,
+                              width: 350,
                             ),
                           ),
                         ],
                         options: CarouselOptions(
                           autoPlay: true,
-                          height: 365,
+                          autoPlayAnimationDuration: const Duration(seconds: 1),
+                          height: 355,
                           viewportFraction: 1.0,
-                          autoPlayCurve: Curves.decelerate,
+                          autoPlayCurve: Curves.elasticOut,
                         ),
                       ),
                     ),
@@ -342,26 +329,41 @@ class _HomePageState extends State<HomePage> {
                 vertical: 40.0,
               ),
               child: GridView.count(
+                childAspectRatio: 3 / 4,
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 crossAxisCount: 2,
-                children: [
-                  Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade100,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    margin: const EdgeInsets.all(4),
-                    child: Center(
-                      child: Image.network(
-                        'https://www.vhv.rs/dpng/d/565-5657905_airpods-pro-matte-black-hd-png-download.png',
-                        width: 190,
-                        height: 190,
-                      ),
-                    ),
-                  ),
+                children: const [
+                  ProductThumbnail(
+                    productName: 'AirPods',
+                    productImage:
+                        'https://www.pngmart.com/files/13/Apple-Airpods-PNG-Photos.png',
+                    rating: 4.88,
+                    price: 132.00,
+                  ), //
+
+                  ProductThumbnail(
+                    productName: 'MacBook Air',
+                    productImage:
+                        'https://cdn.pixabay.com/photo/2020/06/26/12/21/macbook-pro-5342546_1280.png',
+                    rating: 5.0,
+                    price: 1100.0,
+                  ), // here
+
+                  ProductThumbnail(
+                    productName: 'Comsetics Kit',
+                    productImage:
+                        'https://www.pngmart.com/files/17/Luxury-Cosmetics-PNG-Transparent-Image.png',
+                    rating: 4.5,
+                    price: 39,
+                  ), //
+                  ProductThumbnail(
+                    productName: 'Bottle',
+                    productImage:
+                        'https://www.pngmart.com/files/1/Aluminium-Water-Bottle-PNG.png',
+                    rating: 4.1,
+                    price: 15,
+                  ), //here
                 ],
               ),
             ),

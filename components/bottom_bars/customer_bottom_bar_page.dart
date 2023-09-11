@@ -52,7 +52,7 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
               ), // Move to bottom-left by 4 units
             ),
           ],
-          color: Colors.black,
+          color: Constants.selectedColor,
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(30),
             topRight: Radius.circular(30),
