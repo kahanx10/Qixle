@@ -6,7 +6,6 @@ import 'package:amazon_clone/components/authentication/presentation/pages/auth_p
 import 'package:amazon_clone/components/bottom_bars/customer_bottom_bar_page.dart';
 import 'package:amazon_clone/components/cart/presentation/pages/cart_page.dart';
 import 'package:amazon_clone/components/home/presentation/pages/address_page.dart';
-import 'package:amazon_clone/components/home/presentation/pages/categorized_products_page.dart';
 import 'package:amazon_clone/components/home/presentation/pages/home_page.dart';
 import 'package:amazon_clone/components/admin/presentation/pages/add_product_page.dart';
 import 'package:amazon_clone/components/home/presentation/pages/product_details_page.dart';
@@ -37,13 +36,6 @@ class AppRouter {
       case AddProductPage.routeName:
         return platformAwarePageRoute(
           builder: (context) => const AddProductPage(),
-        );
-
-      case CategorizedProductsPage.routeName:
-        return platformAwarePageRoute(
-          builder: (context) => CategorizedProductsPage(
-            category: settings.arguments as String,
-          ),
         );
 
       case SearchedProductsPage.routeName:

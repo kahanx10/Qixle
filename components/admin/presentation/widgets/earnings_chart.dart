@@ -72,12 +72,6 @@ class EarningChart extends StatelessWidget {
   }
 
   Widget getTitles(double value, TitleMeta meta) {
-    var style = const TextStyle(
-      color: Colors.grey,
-      fontWeight: FontWeight.bold,
-      fontSize: 14,
-    );
-
     Widget text = Text(categoriesAvailable[value.toInt()]!);
 
     return text;

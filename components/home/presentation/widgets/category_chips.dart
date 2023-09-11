@@ -1,5 +1,8 @@
 import 'package:amazon_clone/common/data/constants.dart';
+import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
+import 'package:amazon_clone/components/home/logic/cubits/customer_products_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CategoryChips extends StatefulWidget {
@@ -12,8 +15,25 @@ class CategoryChips extends StatefulWidget {
 class _CategoryChipsState extends State<CategoryChips> {
   String? _selectedChip;
 
+  fetchCategorizedProducts(BuildContext context, String category) {
+    final productsCubit = context.read<CustomerProductsCubit>();
+    final authBloc = context.read<UserBloc>().state as UserAuthenticatedState;
+
+    productsCubit.displayCategorizedProducts(
+      category: category,
+      token: authBloc.user.token,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    var categorySelected = context.read<CustomerProductsCubit>().state;
+
+    if (categorySelected.runtimeType == ProductsFetched) {
+      categorySelected as ProductsFetched;
+      _selectedChip = categorySelected.products.first.category;
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Flexible(
@@ -77,6 +97,7 @@ class _CategoryChipsState extends State<CategoryChips> {
       onTap: () {
         setState(() {
           _selectedChip = label;
+          fetchCategorizedProducts(context, label);
         });
       },
       child: AnimatedContainer(

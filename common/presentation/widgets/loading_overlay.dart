@@ -6,18 +6,9 @@ class LoadingOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return false;
-      },
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: Center(
-          child: CircularProgressIndicator(
-            color: Constants.selectedColor,
-          ),
-        ),
-      ),
+    return const Scaffold(
+      backgroundColor: Constants.backgroundColor,
+      body: Constants.loading,
     );
   }
 }

@@ -1,9 +1,9 @@
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:amazon_clone/components/cart/presentation/pages/cart_page.dart';
+import 'package:amazon_clone/components/home/presentation/pages/categorized_products.dart';
 import 'package:amazon_clone/components/home/presentation/pages/searched_products_page.dart';
 import 'package:amazon_clone/components/home/presentation/widgets/category_chips.dart';
-import 'package:amazon_clone/components/home/presentation/widgets/product_thumbnail.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
               fontSize: 26,
               color: Constants.selectedColor,
               fontWeight: FontWeight.normal,
+              letterSpacing: 0.025,
             ),
           ),
         ),
@@ -164,7 +165,6 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-
             Stack(
               children: [
                 Container(
@@ -319,55 +319,12 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Transform.translate(
-                    offset: const Offset(0, 295), child: const CategoryChips()),
+                  offset: const Offset(0, 295),
+                  child: const CategoryChips(),
+                ),
               ],
             ),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 30.0,
-                vertical: 40.0,
-              ),
-              child: GridView.count(
-                childAspectRatio: 3 / 4,
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                crossAxisCount: 2,
-                children: const [
-                  ProductThumbnail(
-                    productName: 'AirPods',
-                    productImage:
-                        'https://www.pngmart.com/files/13/Apple-Airpods-PNG-Photos.png',
-                    rating: 4.88,
-                    price: 132.00,
-                  ), //
-
-                  ProductThumbnail(
-                    productName: 'MacBook Air',
-                    productImage:
-                        'https://cdn.pixabay.com/photo/2020/06/26/12/21/macbook-pro-5342546_1280.png',
-                    rating: 5.0,
-                    price: 1100.0,
-                  ), // here
-
-                  ProductThumbnail(
-                    productName: 'Comsetics Kit',
-                    productImage:
-                        'https://www.pngmart.com/files/17/Luxury-Cosmetics-PNG-Transparent-Image.png',
-                    rating: 4.5,
-                    price: 39,
-                  ), //
-                  ProductThumbnail(
-                    productName: 'Bottle',
-                    productImage:
-                        'https://www.pngmart.com/files/1/Aluminium-Water-Bottle-PNG.png',
-                    rating: 4.1,
-                    price: 15,
-                  ), //here
-                ],
-              ),
-            ),
-            // const DealOfTheDay(),
+            const CategorizedProducts(),
           ],
         ),
       ),

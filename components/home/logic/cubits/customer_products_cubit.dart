@@ -5,14 +5,14 @@ import 'package:bloc/bloc.dart';
 import 'package:amazon_clone/components/admin/data/models/product_model.dart';
 
 class CustomerProductsCubit extends Cubit<CustomerProductsState> {
-  CustomerProductsCubit() : super(FetchingProducts());
+  CustomerProductsCubit() : super(NoProducts());
   // Method to display categorized products
   void displayCategorizedProducts({
     required String category,
     required String token,
   }) async {
     emit(FetchingProducts());
-
+    await Future.delayed(const Duration(seconds: 2));
     try {
       var res = await CustomerProductsService.fetchProductsByCategory(
         category: category,
@@ -31,7 +31,14 @@ class CustomerProductsCubit extends Cubit<CustomerProductsState> {
         products.add(Product.fromMap(productMap));
       }
 
-      emit(ProductsFetched(products: products));
+      print('from products cubit');
+      print(products);
+
+      if (products.isEmpty) {
+        emit(NoProducts());
+      } else {
+        emit(ProductsFetched(products: products));
+      }
     } catch (e) {
       emit(ErrorFetching(errorMessage: e.toString()));
     }
@@ -72,6 +79,8 @@ class CustomerProductsCubit extends Cubit<CustomerProductsState> {
 abstract class CustomerProductsState {}
 
 class FetchingProducts extends CustomerProductsState {}
+
+class NoProducts extends CustomerProductsState {}
 
 class ProductsFetched extends CustomerProductsState {
   final List<Product> products;

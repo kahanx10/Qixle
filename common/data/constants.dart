@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Constants {
   static String host = 'http://192.168.46.86:8000';
@@ -18,10 +19,17 @@ class Constants {
     stops: [0.5, 1.0],
   );
 
+  static const Widget loading = Center(
+    child: SpinKitChasingDots(
+      color: Colors.black,
+      size: 30.0,
+    ),
+  );
+
   static const secondaryColor = Color.fromRGBO(255, 153, 0, 1);
   static const backgroundColor = Colors.white;
   static const Color greyBackgroundColor = Color(0xffebecee);
-  static var selectedColor = const Color.fromRGBO(35, 35, 35, 1);
+  static var selectedColor = const Color.fromRGBO(26, 25, 25, 1);
   static const unselectedColor = Colors.black26;
 
   // STATIC IMAGES
