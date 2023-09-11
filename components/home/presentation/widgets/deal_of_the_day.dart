@@ -88,9 +88,7 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 15,
-                  ).copyWith(left: 15),
+                  padding: const EdgeInsets.only(top: 15, bottom: 15, left: 15),
                   alignment: Alignment.topLeft,
                   child: Text(
                     'See all deals',

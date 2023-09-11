@@ -19,8 +19,6 @@ class CustomerBottomBarPage extends StatefulWidget {
 
 class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
   int _page = 0;
-  double bottomBarWidth = 42;
-  double bottomBarBorderWidth = 5;
 
   List<Widget> pages = [
     const HomePage(),
@@ -39,18 +37,35 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
     return Scaffold(
       body: pages[_page],
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(
+                0.125,
+              ), // subtle shadow
+              blurRadius: 10, // soften the shadow
+              spreadRadius:
+                  1, // extent of shadow, negative values can also be used
+              offset: const Offset(
+                0,
+                -5,
+              ), // Move to bottom-left by 4 units
+            ),
+          ],
           color: Colors.black,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
+          ),
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
           child: Stack(
             children: [
               GNav(
-                iconSize: 28,
-                padding: const EdgeInsets.all(16),
+                iconSize: 24,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 backgroundColor: Constants.selectedColor,
                 rippleColor: Colors.grey.shade500,
                 textStyle: GoogleFonts.leagueSpartan(
@@ -60,26 +75,28 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
                 ),
                 activeColor: Constants.backgroundColor,
                 color: Constants.backgroundColor,
-                tabActiveBorder: Border.all(
-                  color: Constants.backgroundColor,
-                ),
+                // tabActiveBorder: Border.all(
+                //   color: Constants.backgroundColor,
+                // ),
                 gap: 8,
                 onTabChange: (index) {
                   setState(() {
                     _page = index;
                   });
                 },
-                tabs: const [
+                tabs: [
                   GButton(
-                    icon: LineIcons.home,
+                    icon: _page == 0 ? Icons.home_rounded : Icons.home_outlined,
                     text: 'Home',
                   ),
                   GButton(
-                    icon: Icons.person,
+                    icon: _page == 1 ? Icons.person : Icons.person_outlined,
                     text: 'Account',
                   ),
                   GButton(
-                    icon: LineIcons.shoppingBasket,
+                    icon: _page == 2
+                        ? Icons.shopping_bag
+                        : Icons.shopping_bag_outlined,
                     text: 'Cart',
                   ),
                 ],
