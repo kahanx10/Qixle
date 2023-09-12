@@ -168,7 +168,7 @@ class _HomePageState extends State<HomePage> {
             Stack(
               children: [
                 Container(
-                  height: 220,
+                  height: 200,
                   constraints: const BoxConstraints(
                     // This ensures the height does not exceed 50 units.
                     minWidth:
@@ -260,50 +260,50 @@ class _HomePageState extends State<HomePage> {
                       child: CarouselSlider(
                         items: [
                           Transform.translate(
-                            offset: const Offset(80, 10), //
+                            offset: const Offset(80, 0), //
                             child: Image.network(
                               'https://images.dailyobjects.com/marche/product-images/1101/dailyobjects-blue-hybrid-clear-case-cover-for-iphone-13-pro-max-images/DailyObjects-Blue-Hybrid-Clear-Case-Cover-for-iPhone-13-Pro-Max.png?tr=cm-pad_resize,v-2',
                               fit: BoxFit.cover,
-                              height: 210,
-                              width: 210,
+                              height: 150,
+                              width: 150,
                             ),
                           ),
                           Transform.translate(
-                            offset: const Offset(60, -10), //
+                            offset: const Offset(60, 0), //
                             child: Image.network(
                               'https://www.freepnglogos.com/uploads/laptop-png/laptop-transparent-png-pictures-icons-and-png-40.png',
                               // fit: BoxFit.cover,
-                              height: 250,
-                              width: 250,
+                              height: 240,
+                              width: 240,
                             ),
                           ),
                           Transform.translate(
-                            offset: const Offset(100, 65), //
+                            offset: const Offset(100, 55), //
                             child: Image.network(
                               'https://www.freepnglogos.com/uploads/women-bag-png/women-bag-women-shoulder-bags-png-transparent-images-27.png',
-                              height: 180,
-                              width: 180,
+                              height: 170,
+                              width: 170,
                             ),
                           ),
                           Transform.rotate(
-                            angle: -45 * (math.pi / 180),
+                            angle: -35 * (math.pi / 180),
                             child: Transform.translate(
-                              offset: const Offset(65, 15), //
+                              offset: const Offset(55, -10), //
                               child: Image.network(
                                 'https://static.nike.com/a/images/t_default/e47bddea-7a42-4925-8f36-b4364b6fa12c/custom-nike-air-force-1-mid-by-you-shoes.png',
                                 // fit: BoxFit.cover,
-                                height: 265,
-                                width: 265,
+                                height: 240,
+                                width: 240,
                               ),
                             ),
                           ),
                           Transform.translate(
-                            offset: const Offset(85, 50), //
+                            offset: const Offset(85, 40), //
                             child: Image.network(
                               'https://static.vecteezy.com/system/resources/previews/008/847/343/original/isolated-blue-front-sweater-free-png.png',
                               // fit: BoxFit.cover,
-                              height: 350,
-                              width: 350,
+                              height: 340,
+                              width: 340,
                             ),
                           ),
                         ],
@@ -319,8 +319,14 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Transform.translate(
-                  offset: const Offset(0, 295),
-                  child: const CategoryChips(),
+                  offset: const Offset(0, 270),
+                  child: const CategoryChips(chipList: [
+                    'Mobiles',
+                    'Essentials',
+                    'Appliances',
+                    'Books',
+                    'Fashion',
+                  ]),
                 ),
               ],
             ),

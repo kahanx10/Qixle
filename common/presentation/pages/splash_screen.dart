@@ -17,7 +17,7 @@ class SplashScreen extends StatelessWidget {
           backgroundColor: Colors.black,
           body: Center(
             child: Text(
-              'QIXA',
+              'Qique',
               style: GoogleFonts.playfairDisplay(
                 color: Constants.backgroundColor,
                 fontSize: 24,

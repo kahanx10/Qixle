@@ -28,10 +28,13 @@ class _CategorizedProductsState extends State<CategorizedProducts> {
               height: 300,
               child: Column(
                 children: [
-                  Lottie.asset(
-                    'assets/lottie/click.json',
-                    width: 100,
-                    height: 100,
+                  Transform.translate(
+                    offset: const Offset(0, -20),
+                    child: Lottie.asset(
+                      'assets/lottie/click.json',
+                      width: 100,
+                      height: 100,
+                    ),
                   ),
                   const SizedBox(
                     height: 50,
@@ -75,7 +78,7 @@ class _CategorizedProductsState extends State<CategorizedProducts> {
                 : Padding(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 30.0,
-                      vertical: 40.0,
+                      vertical: 30.0,
                     ),
                     child: GridView.builder(
                       itemCount: productsList.length,
@@ -90,10 +93,7 @@ class _CategorizedProductsState extends State<CategorizedProducts> {
                       itemBuilder: (context, index) {
                         final product = productsList[index];
                         return ProductThumbnail(
-                          productImage: product.images[0],
-                          price: product.price.toDouble(),
-                          rating: product.avgRating.toDouble(),
-                          productName: product.name,
+                          product: product,
                         );
                       },
                     ),

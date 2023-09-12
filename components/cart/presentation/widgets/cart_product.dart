@@ -18,16 +18,12 @@ class CartProduct extends StatefulWidget {
 class _CartProductState extends State<CartProduct> {
   void increaseQuantity(Product product) {
     CartService.addToCart(
-      context: context,
-      product: product,
-    );
+        context: context, product: product, showMessage: false);
   }
 
   void decreaseQuantity(Product product) {
     CartService.removeFromCart(
-      context: context,
-      productId: product.id!,
-    );
+        context: context, productId: product.id!, showMessage: false);
   }
 
   @override

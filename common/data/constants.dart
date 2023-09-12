@@ -29,7 +29,7 @@ class Constants {
   static const secondaryColor = Color.fromRGBO(255, 153, 0, 1);
   static const backgroundColor = Colors.white;
   static const Color greyBackgroundColor = Color(0xffebecee);
-  static var selectedColor = const Color.fromRGBO(26, 25, 25, 1);
+  static var selectedColor = Colors.black;
   static const unselectedColor = Colors.black26;
 
   // STATIC IMAGES

@@ -21,10 +21,13 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return CustomPaint(
       size: preferredSize,
-      painter: CurvedAppBarPainter(),
+      painter: CurvedAppBarPainter(borderColor: Colors.grey.shade300),
       child: SizedBox(
         height: preferredSize.height,
-        child: Center(child: title),
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 8.0),
+          child: Center(child: title),
+        ),
       ),
     );
   }

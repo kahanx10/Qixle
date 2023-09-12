@@ -53,11 +53,12 @@ class _AuthPageState extends State<AuthPage> {
           backgroundColor: Constants.backgroundColor,
           appBar: MyAppBar(
             title: Text(
-              'LOGIN',
+              'Login',
               style: GoogleFonts.leagueSpartan(
+                fontSize: 26,
                 color: Constants.selectedColor,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.normal,
+                letterSpacing: 0.025,
               ),
             ),
           ),
@@ -87,16 +88,18 @@ class _AuthPageState extends State<AuthPage> {
                       Column(
                         children: [
                           RadioListTile(
+                            contentPadding: const EdgeInsets.only(left: 60),
                             activeColor: Constants.selectedColor,
                             tileColor: Colors.transparent,
                             title: Text(
                               'Create Account',
                               style: GoogleFonts.leagueSpartan(
+                                fontSize: 20,
                                 color: _authVal == Auth.signUp
                                     ? Constants.selectedColor
                                     : Constants.unselectedColor,
-                                fontSize: 24,
-                                fontWeight: FontWeight.w500,
+                                letterSpacing: 0.1,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                             value: Auth.signUp,
@@ -203,16 +206,18 @@ class _AuthPageState extends State<AuthPage> {
                       Column(
                         children: [
                           RadioListTile(
+                            contentPadding: const EdgeInsets.only(left: 60),
                             activeColor: Constants.selectedColor,
                             tileColor: Constants.backgroundColor,
                             title: Text(
                               'Existing Account',
                               style: GoogleFonts.leagueSpartan(
+                                fontSize: 20,
                                 color: _authVal == Auth.signIn
                                     ? Constants.selectedColor
                                     : Constants.unselectedColor,
-                                fontSize: 24,
-                                fontWeight: FontWeight.w500,
+                                letterSpacing: 0.1,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                             value: Auth.signIn,

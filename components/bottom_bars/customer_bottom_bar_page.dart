@@ -54,8 +54,8 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
           ],
           color: Constants.selectedColor,
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
+            topLeft: Radius.circular(15),
+            topRight: Radius.circular(15),
           ),
         ),
         child: Padding(

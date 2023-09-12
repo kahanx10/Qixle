@@ -1,12 +1,19 @@
-import 'package:amazon_clone/common/data/constants.dart';
-import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
-import 'package:amazon_clone/components/home/logic/cubits/customer_products_cubit.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:amazon_clone/common/data/constants.dart';
+import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
+import 'package:amazon_clone/components/home/logic/cubits/customer_products_cubit.dart';
+
 class CategoryChips extends StatefulWidget {
-  const CategoryChips({super.key});
+  final List<String> chipList;
+
+  const CategoryChips({
+    Key? key,
+    required this.chipList,
+  }) : super(key: key);
 
   @override
   _CategoryChipsState createState() => _CategoryChipsState();
@@ -73,15 +80,12 @@ class _CategoryChipsState extends State<CategoryChips> {
             ),
             SizedBox(
               height: 60,
-              child: ListView(
+              child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  _buildCustomChip('Mobile'),
-                  _buildCustomChip('Essentials'),
-                  _buildCustomChip('Appliances'),
-                  _buildCustomChip('Books'),
-                  _buildCustomChip('Fashion'),
-                ],
+                itemCount: widget.chipList.length,
+                itemBuilder: (context, index) {
+                  return _buildCustomChip(widget.chipList[index]);
+                },
               ),
             ),
           ],

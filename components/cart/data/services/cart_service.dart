@@ -12,9 +12,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 
 class CartService {
-  static void addToCart({
+  static Future<void> addToCart({
     required Product product,
     required BuildContext context,
+    bool showMessage = true,
+    int quantity = 1,
   }) async {
     var authBloc = context.read<UserBloc>();
     var uiFeedbackCubit = context.read<UiFeedbackCubit>();
@@ -28,7 +30,7 @@ class CartService {
           'Content-Type': 'application/json; charset=UTF-8',
           'authToken': token,
         },
-        body: jsonEncode({'product': product.toMap()}),
+        body: jsonEncode({'product': product.toMap(), 'quantity': quantity}),
       );
 
       if (res.statusCode == 200) {
@@ -38,7 +40,12 @@ class CartService {
 
         authBloc.add(UpdateUser(user));
 
-        MessageService.showSnackBar(context, message: 'Added product to cart!');
+        if (showMessage) {
+          MessageService.showSnackBar(
+            context,
+            message: 'Product added to cart',
+          );
+        }
       } else if (res.statusCode == 400) {
         uiFeedbackCubit.showSnackbar(
           jsonDecode(res.body)['msg'],
@@ -55,6 +62,7 @@ class CartService {
   static void removeFromCart({
     required String productId,
     required BuildContext context,
+    bool showMessage = false,
   }) async {
     var authBloc = context.read<UserBloc>();
     var uiFeedbackCubit = context.read<UiFeedbackCubit>();
@@ -77,9 +85,14 @@ class CartService {
         user.token = token;
 
         authBloc.add(UpdateUser(user));
+        if (showMessage) {
+          uiFeedbackCubit.showSnackbar(
+            'Product removed from cart.',
+          );
+        }
       } else {
         uiFeedbackCubit.showSnackbar(
-          'Couldn\'t remove from cart, please try again!',
+          'Couldn\'t remove from cart, please try again.',
         );
       }
     }

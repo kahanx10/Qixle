@@ -1,12 +1,12 @@
 import 'package:amazon_clone/common/data/constants.dart';
-import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:amazon_clone/components/cart/presentation/widgets/cart_product.dart';
 import 'package:amazon_clone/components/home/presentation/pages/address_page.dart';
 import 'package:amazon_clone/components/home/presentation/pages/searched_products_page.dart';
-import 'package:amazon_clone/components/home/presentation/widgets/address_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
 
 class CartPage extends StatefulWidget {
   static const String routeName = '/cart_route';
@@ -48,112 +48,134 @@ class _CartPageState extends State<CartPage> {
             .toList();
 
         return Scaffold(
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(60),
-            child: AppBar(
-              flexibleSpace: Container(
-                decoration: const BoxDecoration(
-                  gradient: Constants.appBarGradient,
-                ),
-              ),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 42,
-                      margin: const EdgeInsets.only(left: 15),
-                      child: Material(
-                        borderRadius: BorderRadius.circular(7),
-                        elevation: 1,
-                        child: TextFormField(
-                          onFieldSubmitted: navigateToSearchScreen,
-                          decoration: InputDecoration(
-                            prefixIcon: InkWell(
-                              onTap: () {},
-                              child: const Padding(
-                                padding: EdgeInsets.only(
-                                  left: 6,
-                                ),
-                                child: Icon(
-                                  Icons.search,
-                                  color: Colors.black,
-                                  size: 23,
-                                ),
-                              ),
+          backgroundColor: Constants.backgroundColor,
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 30,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Constants.backgroundColor,
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(
+                              color: Colors.grey.shade200,
+                              width: 2,
                             ),
-                            filled: true,
-                            fillColor: Colors.white,
-                            contentPadding: const EdgeInsets.only(top: 10),
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(7),
-                              ),
-                              borderSide: BorderSide.none,
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(7),
-                              ),
-                              borderSide: BorderSide(
-                                color: Colors.black38,
-                                width: 1,
-                              ),
-                            ),
-                            hintText: 'Find More Products',
-                            hintStyle: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              fontSize: 17,
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              color: Constants.selectedColor,
+                              size: 20,
                             ),
                           ),
                         ),
                       ),
-                    ),
+                      Text(
+                        'My cart',
+                        style: GoogleFonts.leagueSpartan(
+                          fontSize: 20,
+                          color: Constants.selectedColor,
+                          letterSpacing: 0.1,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Constants.backgroundColor,
+                            borderRadius: BorderRadius.circular(100),
+                            border: Border.all(
+                              color: Colors.grey.shade200,
+                              width: 2,
+                            ),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.more_horiz,
+                              color: Constants.selectedColor,
+                              size: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    color: Colors.transparent,
-                    height: 42,
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    child: const Icon(Icons.mic, color: Colors.black, size: 25),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              children: [
-                const AddressPanel(),
+                ),
                 // const CartSubtotal(),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: MyButton(
-                    label: 'Proceed to Buy (${user.cart.length} items)',
-                    onPressed: () => navigateToAddress(sum),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.yellow[600],
-                    ),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: MyButton(
+                //     label: 'Proceed to Buy (${user.cart.length} items)',
+                //     onPressed: () => navigateToAddress(sum),
+                //     style: ElevatedButton.styleFrom(
+                //       backgroundColor: Colors.yellow[600],
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(height: 15),
-                Container(
-                  color: Colors.black12.withOpacity(0.08),
-                  height: 1,
-                ),
-                const SizedBox(height: 5),
-                ListView.builder(
-                  itemCount: user.cart.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    if (user.cart[index] == null) {
-                      return null;
-                    }
+                user.cart.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: user.cart.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          if (user.cart[index] == null) {
+                            return null;
+                          }
 
-                    return CartProduct(
-                      index: index,
-                    );
-                  },
-                ),
+                          return CartProduct(
+                            index: index,
+                          );
+                        },
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Lottie.asset('assets/lottie/empty_cart.json'),
+                          Text(
+                            'Nothing here yet.',
+                            style: GoogleFonts.leagueSpartan(
+                              color: Constants.selectedColor,
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'Your cart seems lonely right now.\nLet\'s Fill It Up!',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.leagueSpartan(
+                              color: Colors.grey.shade600,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                        ],
+                      ),
+                // Container(
+                //   color: Colors.grey.shade200,
+                //   height: 2,
+                // ),
               ],
             ),
           ),
