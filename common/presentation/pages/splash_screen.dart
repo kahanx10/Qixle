@@ -1,7 +1,6 @@
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -10,20 +9,13 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light.copyWith(
-        statusBarColor: Colors.black,
+        statusBarColor: Constants.backgroundColor,
       ),
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: Colors.black,
+          backgroundColor: Constants.backgroundColor,
           body: Center(
-            child: Text(
-              'Qique',
-              style: GoogleFonts.playfairDisplay(
-                color: Constants.backgroundColor,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: Image.asset('assets/images/logo.png'),
           ),
         ),
       ),

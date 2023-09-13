@@ -18,18 +18,18 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    runApp(const Qique());
+    runApp(const BagAway());
   });
 }
 
-class Qique extends StatefulWidget {
-  const Qique({super.key});
+class BagAway extends StatefulWidget {
+  const BagAway({super.key});
 
   @override
-  State<Qique> createState() => _QiqueState();
+  State<BagAway> createState() => _BagAwayState();
 }
 
-class _QiqueState extends State<Qique> {
+class _BagAwayState extends State<BagAway> {
   final Connectivity _connectivity = Connectivity();
 
   @override
@@ -56,13 +56,19 @@ class _QiqueState extends State<Qique> {
         title: 'Flutter Demo',
         theme: ThemeData(
           useMaterial3: true,
+          popupMenuTheme: PopupMenuThemeData(
+            color: const Color.fromARGB(255, 0, 0, 0),
+            shape: RoundedRectangleBorder(
+              borderRadius:
+                  BorderRadius.circular(15), // Adjust the radius as needed
+            ),
+          ),
           scrollbarTheme: ScrollbarThemeData(
             thickness: MaterialStateProperty.all<double>(5),
             radius: const Radius.circular(6),
             thumbColor: MaterialStateProperty.all<Color>(
               Constants.selectedColor,
-            ), // Your color
-            // You can also set other properties like thickness, radius, etc.
+            ),
           ),
         ),
         home: const LayoutPage(),

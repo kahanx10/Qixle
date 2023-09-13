@@ -62,7 +62,7 @@ class CartService {
   static void removeFromCart({
     required String productId,
     required BuildContext context,
-    bool showMessage = false,
+    bool showMessage = true,
   }) async {
     var authBloc = context.read<UserBloc>();
     var uiFeedbackCubit = context.read<UiFeedbackCubit>();
@@ -93,6 +93,77 @@ class CartService {
       } else {
         uiFeedbackCubit.showSnackbar(
           'Couldn\'t remove from cart, please try again.',
+        );
+      }
+    }
+  }
+
+  static void deleteFromCart({
+    required String productId,
+    required BuildContext context,
+    bool showMessage = true,
+  }) async {
+    var authBloc = context.read<UserBloc>();
+    var uiFeedbackCubit = context.read<UiFeedbackCubit>();
+
+    var token = await AuthTokenService.getToken();
+
+    if (token != null) {
+      var res = await http.post(
+        Uri.parse('${Constants.host}/cart/delete'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authToken': token,
+        },
+        body: jsonEncode({'productId': productId}),
+      );
+
+      if (res.statusCode == 200) {
+        var user = User.fromJson(res.body);
+
+        user.token = token;
+
+        authBloc.add(UpdateUser(user));
+      } else {
+        uiFeedbackCubit.showSnackbar(
+          'Couldn\'t delete from cart, please try again.',
+        );
+      }
+    }
+  }
+
+  static void clearCart(
+    BuildContext context, {
+    bool showMessage = true,
+  }) async {
+    var authBloc = context.read<UserBloc>();
+    var uiFeedbackCubit = context.read<UiFeedbackCubit>();
+
+    var token = await AuthTokenService.getToken();
+
+    if (token != null) {
+      var res = await http.delete(
+        Uri.parse('${Constants.host}/cart/clear'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authToken': token,
+        },
+      );
+
+      if (res.statusCode == 200) {
+        var user = User.fromJson(res.body);
+
+        user.token = token;
+
+        authBloc.add(UpdateUser(user));
+        if (showMessage) {
+          uiFeedbackCubit.showSnackbar(
+            'Cart cleared, start fresh!',
+          );
+        }
+      } else {
+        uiFeedbackCubit.showSnackbar(
+          'Couldn\'t clear cart, please try again.',
         );
       }
     }

@@ -7,6 +7,7 @@ import 'package:amazon_clone/components/home/data/services/address_service.dart'
 import 'package:amazon_clone/components/orders/data/services/order_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 import 'package:pay/pay.dart';
 
 class AddressPage extends StatefulWidget {
@@ -81,12 +82,12 @@ class _AddressPageState extends State<AddressPage> {
   void payPressed(String addressFromProvider) {
     addressToBeUsed = "";
 
-    bool isForm = flatBuildingController.text.isNotEmpty ||
+    bool isFormFilled = flatBuildingController.text.isNotEmpty ||
         areaController.text.isNotEmpty ||
         pincodeController.text.isNotEmpty ||
         cityController.text.isNotEmpty;
 
-    if (isForm) {
+    if (isFormFilled) {
       if (_addressFormKey.currentState!.validate()) {
         addressToBeUsed =
             '${flatBuildingController.text}, ${areaController.text}, ${cityController.text} - ${pincodeController.text}';
@@ -107,14 +108,11 @@ class _AddressPageState extends State<AddressPage> {
         .address;
 
     return Scaffold(
+      backgroundColor: Constants.backgroundColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: Constants.appBarGradient,
-            ),
-          ),
+          backgroundColor: Constants.backgroundColor,
         ),
       ),
       body: SingleChildScrollView(
@@ -152,6 +150,7 @@ class _AddressPageState extends State<AddressPage> {
                     const SizedBox(height: 20),
                   ],
                 ),
+              Lottie.asset('assets/lottie/city.json'),
               Form(
                 key: _addressFormKey,
                 child: Column(

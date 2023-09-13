@@ -46,6 +46,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
   Key key = UniqueKey();
 
   double calculatePercentageLiked(int totalRatings, int avgRating) {
+    if (totalRatings == 0 || avgRating == 0) return 0;
+
     double maxPossibleLikes = totalRatings.toDouble();
     double actualLikes = (avgRating / 5) * totalRatings;
 

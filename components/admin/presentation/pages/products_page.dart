@@ -1,7 +1,6 @@
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/data/services/message_service.dart';
 import 'package:amazon_clone/common/logic/cubits/ui_feedback_cubit.dart';
-import 'package:amazon_clone/common/presentation/widgets/my_app_bar.dart';
 import 'package:amazon_clone/common/presentation/widgets/single_product.dart';
 import 'package:amazon_clone/components/admin/data/models/product_model.dart';
 import 'package:amazon_clone/components/admin/logic/blocs/products_bloc.dart';
@@ -90,8 +89,8 @@ class _ProductsPageState extends State<ProductsPage> {
       },
       child: Scaffold(
         backgroundColor: Constants.backgroundColor,
-        appBar: MyAppBar(
-          title: const Text('QIXA'),
+        appBar: AppBar(
+          title: const Text('Qique'),
           actions: [
             const Text(
               'Admin',
