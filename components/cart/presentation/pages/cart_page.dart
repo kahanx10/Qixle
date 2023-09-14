@@ -27,72 +27,72 @@ class _CartPageState extends State<CartPage> {
     );
   }
 
-  void _showMenu(BuildContext context, Offset position) {
-    void _showAlertDialog(BuildContext context) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: Constants.selectedColor,
-            title: Text(
-              'Clear Cart?',
-              style: GoogleFonts.leagueSpartan(
-                fontSize: 20,
-                color: Constants.backgroundColor,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.025,
-              ),
+  void _showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Constants.selectedColor,
+          title: Text(
+            'Clear Cart?',
+            style: GoogleFonts.leagueSpartan(
+              fontSize: 20,
+              color: Constants.backgroundColor,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.025,
             ),
-            content: Text(
-              'All cart items will be discarded.\nThink again!',
-              style: GoogleFonts.leagueSpartan(
-                fontSize: 16,
-                color: Constants.backgroundColor,
-                fontWeight: FontWeight.normal,
-                letterSpacing: 0.025,
-              ),
+          ),
+          content: Text(
+            'All cart items will be discarded.\nThink again!',
+            style: GoogleFonts.leagueSpartan(
+              fontSize: 16,
+              color: Constants.backgroundColor,
+              fontWeight: FontWeight.normal,
+              letterSpacing: 0.025,
             ),
-            actions: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    child: Text(
-                      'Cancel',
-                      style: GoogleFonts.leagueSpartan(
-                        fontSize: 14,
-                        color: Constants.backgroundColor,
-                        fontWeight: FontWeight.normal,
-                        letterSpacing: 0.025,
-                      ),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  child: Text(
+                    'Cancel',
+                    style: GoogleFonts.leagueSpartan(
+                      fontSize: 14,
+                      color: Constants.backgroundColor,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: 0.025,
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop(); // Close the dialog
-                    },
                   ),
-                  TextButton(
-                    child: Text(
-                      'OK',
-                      style: GoogleFonts.leagueSpartan(
-                        fontSize: 14,
-                        color: Colors.grey,
-                        fontWeight: FontWeight.normal,
-                        letterSpacing: 0.025,
-                      ),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                ),
+                TextButton(
+                  child: Text(
+                    'OK',
+                    style: GoogleFonts.leagueSpartan(
+                      fontSize: 14,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: 0.025,
                     ),
-                    onPressed: () {
-                      CartService.clearCart(context);
-                      Navigator.of(context).pop(); // Close the dialog
-                    },
                   ),
-                ],
-              ),
-            ],
-          );
-        },
-      );
-    }
+                  onPressed: () {
+                    CartService.clearCart(context);
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
 
+  void _showMenu(BuildContext context, Offset position) {
     showMenu(
       context: context,
       position: RelativeRect.fromLTRB(

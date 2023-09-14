@@ -47,7 +47,7 @@ class OrderService {
 
         MessageService.showSnackBar(
           context,
-          message: 'Order placed, go to your account to view orders!',
+          message: 'Order placed! Open account page to view it.',
         );
       } else {
         throw Exception('Could\'nt place order, please try again!');

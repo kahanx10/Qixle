@@ -1,7 +1,7 @@
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:amazon_clone/components/cart/presentation/pages/cart_page.dart';
-import 'package:amazon_clone/components/home/presentation/pages/categorized_products.dart';
+import 'package:amazon_clone/components/home/presentation/pages/categorized_products_page.dart';
 import 'package:amazon_clone/components/home/presentation/pages/searched_products_page.dart';
 import 'package:amazon_clone/components/home/presentation/widgets/category_chips.dart';
 import 'package:carousel_slider/carousel_slider.dart';

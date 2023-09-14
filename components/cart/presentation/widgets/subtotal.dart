@@ -81,7 +81,7 @@ class _CartSubtotalState extends State<CartSubtotal> {
                     ),
                   ),
                   Text(
-                    sum > 50 ? 'FREE' : '\\$deliveryFee',
+                    sum > 50 ? 'FREE' : '\$$deliveryFee',
                     style: GoogleFonts.leagueSpartan(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -114,7 +114,7 @@ class _CartSubtotalState extends State<CartSubtotal> {
                 child: MyButton(
                   label: user.cart.length == 1
                       ? 'Let\'s Checkout! (1 item)'
-                      : 'Let\'s Checkout! (${user.cart.length} item)',
+                      : 'Let\'s Checkout! (${user.cart.length} items)',
                   onPressed: () => navigateToAddress(sum),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Constants.selectedColor,

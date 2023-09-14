@@ -10,6 +10,7 @@ class MyTextField extends StatelessWidget {
   final int maxLines;
   final String? Function(String?)? validator;
   final TextInputType? keyboardType;
+  final String? title;
 
   const MyTextField({
     Key? key,
@@ -19,41 +20,57 @@ class MyTextField extends StatelessWidget {
     this.maxLines = 1,
     this.validator,
     this.keyboardType,
+    this.title,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: GoogleFonts.leagueSpartan(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        color: Constants.selectedColor,
+      ),
       keyboardType: keyboardType,
       obscureText: obscureText,
       controller: controller,
       cursorColor: Constants.selectedColor,
       decoration: InputDecoration(
+        label: title != null
+            ? Padding(
+                padding: const EdgeInsets.only(left: 3.0),
+                child: Text(
+                  title!.toUpperCase(),
+                  style: GoogleFonts.leagueSpartan(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Constants.selectedColor),
+                ),
+              )
+            : null,
         hintStyle: GoogleFonts.leagueSpartan(
           fontSize: 16,
           fontWeight: FontWeight.w500,
+          color: Colors.grey.shade400,
         ),
         hintText: hintText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(
+          borderSide: BorderSide(
             width: 2.5,
-            color: Colors.black26,
+            color: Colors.grey.shade400,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(
+          borderSide: BorderSide(
             width: 2.5,
-            color: Colors.black26,
+            color: Colors.grey.shade400,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          borderSide: const BorderSide(
-            width: 2.5,
-            color: Colors.black,
-          ),
+          borderSide: BorderSide(width: 2.5, color: Constants.selectedColor),
         ),
       ),
       validator: validator,

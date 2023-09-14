@@ -58,8 +58,8 @@ class _AddressPageState extends State<AddressPage> {
     try {
       var user =
           (context.read<UserBloc>().state as UserAuthenticatedState).user;
-      var addressToBeUsed = user.address;
-      if (addressToBeUsed.isEmpty) {
+      var addressToBeUsedForPayment = user.address;
+      if (addressToBeUsedForPayment.isEmpty) {
         AddressService.saveUserAddress(
           context,
           address: addressToBeUsed,
@@ -68,7 +68,7 @@ class _AddressPageState extends State<AddressPage> {
 
       await OrderService.placeOrder(
         context: context,
-        address: addressToBeUsed,
+        address: addressToBeUsedForPayment,
         totalSum: double.parse(widget.totalAmount),
         cart: user.cart,
       );
@@ -80,7 +80,7 @@ class _AddressPageState extends State<AddressPage> {
   }
 
   void payPressed(String addressFromProvider) {
-    addressToBeUsed = "";
+    addressToBeUsed = "none";
 
     bool isFormFilled = flatBuildingController.text.isNotEmpty ||
         areaController.text.isNotEmpty ||
@@ -91,13 +91,11 @@ class _AddressPageState extends State<AddressPage> {
       if (_addressFormKey.currentState!.validate()) {
         addressToBeUsed =
             '${flatBuildingController.text}, ${areaController.text}, ${cityController.text} - ${pincodeController.text}';
-      } else {
-        throw Exception('Please enter all the values!');
       }
     } else if (addressFromProvider.isNotEmpty) {
       addressToBeUsed = addressFromProvider;
     } else {
-      MessageService.showSnackBar(context, message: 'Error');
+      MessageService.showSnackBar(context, message: 'All fields are required!');
     }
   }
 
@@ -112,12 +110,13 @@ class _AddressPageState extends State<AddressPage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
+          scrolledUnderElevation: 0,
           backgroundColor: Constants.backgroundColor,
         ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
               if (address.isNotEmpty)
@@ -155,28 +154,72 @@ class _AddressPageState extends State<AddressPage> {
                 key: _addressFormKey,
                 child: Column(
                   children: [
-                    MyTextField(
-                      controller: flatBuildingController,
-                      hintText: 'Flat, House no, Building',
-                      obscureText: false,
+                    Row(
+                      children: [
+                        Flexible(
+                          child: MyTextField(
+                            title: 'Door No.',
+                            controller: flatBuildingController,
+                            hintText: 'Enter Flat/House No.',
+                            obscureText: false,
+                            validator: (val) {
+                              if (val != null && val.isNotEmpty) {
+                                return null;
+                              } else {
+                                return 'Door No. is required!';
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Flexible(
+                          flex: 2,
+                          child: MyTextField(
+                            title: 'Locality',
+                            controller: areaController,
+                            hintText: 'Enter Area/Street',
+                            obscureText: false,
+                            validator: (val) {
+                              if (val != null && val.isNotEmpty) {
+                                return null;
+                              } else {
+                                return 'Locality is required!';
+                              }
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 15),
                     MyTextField(
-                      controller: areaController,
-                      hintText: 'Area, Street',
-                      obscureText: false,
-                    ),
-                    const SizedBox(height: 10),
-                    MyTextField(
-                      controller: pincodeController,
-                      hintText: 'Pincode',
-                      obscureText: false,
-                    ),
-                    const SizedBox(height: 10),
-                    MyTextField(
+                      title: 'City',
                       controller: cityController,
-                      hintText: 'Town/City',
+                      hintText: 'Enter Town/City/Village',
                       obscureText: false,
+                      validator: (val) {
+                        if (val != null && val.isNotEmpty) {
+                          return null;
+                        } else {
+                          return 'City is required!';
+                        }
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    MyTextField(
+                      title: 'Pincode',
+                      controller: pincodeController,
+                      hintText: 'Enter Your Area Pincode',
+                      keyboardType: TextInputType.number,
+                      obscureText: false,
+                      validator: (val) {
+                        if (val != null && val.isNotEmpty && val.length == 6) {
+                          return null;
+                        } else if (val != null && val.length != 6) {
+                          return 'Pincode should be of 6 digits!';
+                        } else {
+                          return 'Pincode is required!';
+                        }
+                      },
                     ),
                     const SizedBox(height: 10),
                   ],
@@ -210,6 +253,9 @@ class _AddressPageState extends State<AddressPage> {
                 loadingIndicator: const Center(
                   child: CircularProgressIndicator(),
                 ),
+              ),
+              const SizedBox(
+                height: 20,
               ),
             ],
           ),
