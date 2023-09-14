@@ -11,15 +11,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 
 class OrderService {
-  static Future<void> placeOrder({
+  static Future<Order> placeOrder({
     required BuildContext context,
     required List<dynamic> cart,
     required String address,
     required double totalSum,
   }) async {
     if (cart.isEmpty) {
-      MessageService.showSnackBar(context, message: 'Cart is empty!');
-      return;
+      throw Exception('Cart is empty!');
     }
 
     var token = await AuthTokenService.getToken();
@@ -41,22 +40,16 @@ class OrderService {
       if (res.statusCode == 200) {
         context.read<UserBloc>().add(
               UpdateUser(
-                User.fromJson(res.body),
+                User.fromMap(jsonDecode(res.body)['user']),
               ),
             );
 
-        MessageService.showSnackBar(
-          context,
-          message: 'Order placed! Open account page to view it.',
-        );
+        return Order.fromMap(jsonDecode(res.body)['order']);
       } else {
         throw Exception('Could\'nt place order, please try again!');
       }
     } else {
-      MessageService.showSnackBar(
-        context,
-        message: 'Session expired, please log-in again!',
-      );
+      throw Exception('Session expired, please log-in again!');
     }
   }
 
@@ -66,7 +59,7 @@ class OrderService {
     var orders = <Order>[];
 
     if (token != null) {
-      var res = await post(
+      var res = await get(
         Uri.parse('${Constants.host}/fetch-my-orders'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',

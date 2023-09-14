@@ -26,7 +26,7 @@ class ButtonsPanel extends StatelessWidget {
                     foregroundColor: Constants.selectedColor,
                   ),
                   onPressed: () {},
-                  label: 'Your Orders',
+                  text: 'Your Orders',
                 ),
               ),
               const SizedBox(
@@ -39,7 +39,7 @@ class ButtonsPanel extends StatelessWidget {
                     foregroundColor: Constants.selectedColor,
                   ),
                   onPressed: () {},
-                  label: 'Turn Seller',
+                  text: 'Turn Seller',
                 ),
               ),
             ],
@@ -59,7 +59,7 @@ class ButtonsPanel extends StatelessWidget {
                   onPressed: () {
                     BlocProvider.of<UserBloc>(context).add(SignOutUser());
                   },
-                  label: 'Log Out',
+                  text: 'Log Out',
                 ),
               ),
               const SizedBox(
@@ -72,7 +72,7 @@ class ButtonsPanel extends StatelessWidget {
                     foregroundColor: Constants.selectedColor,
                   ),
                   onPressed: () {},
-                  label: 'Wish List',
+                  text: 'Wish List',
                 ),
               ),
             ],

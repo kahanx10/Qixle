@@ -280,7 +280,7 @@ class _CartPageState extends State<CartPage> {
                                 return route.isFirst;
                               });
                             },
-                            label: 'Explore',
+                            text: 'Explore',
                           ),
                         ],
                       ),

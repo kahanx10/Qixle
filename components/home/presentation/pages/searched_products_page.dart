@@ -61,11 +61,7 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
         child: AppBar(
-          flexibleSpace: Container(
-            decoration: const BoxDecoration(
-              gradient: Constants.appBarGradient,
-            ),
-          ),
+          backgroundColor: Constants.selectedColor,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

@@ -2,6 +2,7 @@ import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class GreetBar extends StatelessWidget {
   const GreetBar({Key? key}) : super(key: key);
@@ -13,10 +14,10 @@ class GreetBar extends StatelessWidget {
             .user;
 
     return Container(
-      decoration: const BoxDecoration(
-        gradient: Constants.appBarGradient,
+      decoration: BoxDecoration(
+        color: Constants.selectedColor,
       ),
-      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      padding: const EdgeInsets.all(10),
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0),
         child: Row(
@@ -24,17 +25,16 @@ class GreetBar extends StatelessWidget {
             RichText(
               text: TextSpan(
                 text: 'Hello, ',
-                style: const TextStyle(
-                  fontSize: 22,
-                  color: Colors.black,
+                style: GoogleFonts.leagueSpartan(
+                  fontSize: 24,
+                  fontWeight: FontWeight.normal,
                 ),
                 children: [
                   TextSpan(
                     text: user.name,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
+                    style: GoogleFonts.leagueSpartan(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],

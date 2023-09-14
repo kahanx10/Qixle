@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
             child: Text(
               'Discover',
               style: GoogleFonts.leagueSpartan(
-                fontSize: 26,
+                fontSize: 24,
                 color: Constants.selectedColor,
                 fontWeight: FontWeight.normal,
                 letterSpacing: 0.025,

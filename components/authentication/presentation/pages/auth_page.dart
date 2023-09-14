@@ -55,7 +55,7 @@ class _AuthPageState extends State<AuthPage> {
             title: Text(
               'Login',
               style: GoogleFonts.leagueSpartan(
-                fontSize: 26,
+                fontSize: 24,
                 color: Constants.selectedColor,
                 fontWeight: FontWeight.normal,
                 letterSpacing: 0.025,
@@ -192,7 +192,7 @@ class _AuthPageState extends State<AuthPage> {
                                     onPressed: () {
                                       signUpUser(context);
                                     },
-                                    label: 'Register',
+                                    text: 'Register',
                                   ),
                                 ],
                               ),
@@ -296,7 +296,7 @@ class _AuthPageState extends State<AuthPage> {
                                     onPressed: () {
                                       signInUser(context);
                                     },
-                                    label: 'Log In',
+                                    text: 'Log In',
                                   ),
                                 ],
                               ),

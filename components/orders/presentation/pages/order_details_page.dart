@@ -235,7 +235,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                   controlsBuilder: (context, details) {
                     if (user.type == 'admin') {
                       return MyButton(
-                        label: 'Done',
+                        text: 'Done',
                         onPressed: () => changeOrderStatus(details.currentStep),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Constants.selectedColor,

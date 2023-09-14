@@ -5,33 +5,38 @@ import 'package:google_fonts/google_fonts.dart';
 class MyButton extends StatelessWidget {
   final ButtonStyle style;
   final VoidCallback onPressed;
-  final String label;
+  final String text;
   final double? width;
+  final TextStyle? textStyle;
+  final double? height;
   final bool useWidth;
 
   const MyButton({
     Key? key,
     required this.style,
     required this.onPressed,
-    required this.label,
+    required this.text,
+    this.textStyle,
     this.width,
     this.useWidth = false,
+    this.height,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      height: height ?? 70,
       width: useWidth ? width : 320,
-      height: 70,
       child: ElevatedButton(
         style: style,
         onPressed: onPressed,
         child: Text(
-          label,
-          style: GoogleFonts.leagueSpartan(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+          text,
+          style: textStyle ??
+              GoogleFonts.leagueSpartan(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
         ),
       ),
     );

@@ -112,7 +112,7 @@ class _CartSubtotalState extends State<CartSubtotal> {
               Container(
                 margin: const EdgeInsets.only(top: 10),
                 child: MyButton(
-                  label: user.cart.length == 1
+                  text: user.cart.length == 1
                       ? 'Let\'s Checkout! (1 item)'
                       : 'Let\'s Checkout! (${user.cart.length} items)',
                   onPressed: () => navigateToAddress(sum),

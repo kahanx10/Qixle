@@ -329,7 +329,7 @@ class _AddProductPageState extends State<AddProductPage> {
                       );
                     }
                   },
-                  label: 'Sell',
+                  text: 'Sell',
                 )
               ],
             ),
