@@ -9,13 +9,7 @@ import 'package:amazon_clone/components/admin/data/services/admin_service.dart';
 
 class ProductEvent {}
 
-class FetchProductsEvent extends ProductEvent {
-  String token;
-
-  FetchProductsEvent({
-    required this.token,
-  });
-}
+class FetchProductsEvent extends ProductEvent {}
 
 class AddProductEvent extends ProductEvent {
   String token;
@@ -37,13 +31,13 @@ class AddProductEvent extends ProductEvent {
   });
 }
 
-class DeleteProductEvent extends ProductEvent {
-  String productID;
-  String token;
+class ToggleProductEvent extends ProductEvent {
+  String productId;
+  bool isAvailable;
 
-  DeleteProductEvent({
-    required this.productID,
-    required this.token,
+  ToggleProductEvent({
+    required this.productId,
+    required this.isAvailable,
   });
 }
 
@@ -53,7 +47,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
 
     on<AddProductEvent>(_onAddProductEvent);
 
-    on<DeleteProductEvent>(_onDeleteProductEvent);
+    on<ToggleProductEvent>(_onDeleteProductEvent);
   }
 
   Future<void> _onFetchProductsEvent(
@@ -65,7 +59,7 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     var products = <Product>[];
 
     try {
-      var res = await AdminService.fetchProducts(token: event.token);
+      var res = await AdminService.fetchProducts();
 
       if (res == null) {
         emit(
@@ -145,39 +139,31 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   Future<void> _onDeleteProductEvent(
-    DeleteProductEvent event,
+    ToggleProductEvent event,
     Emitter<ProductState> emit,
   ) async {
     try {
-      var res = await AdminService.deleteProduct(event: event);
+      var res = await AdminService.deleteProduct(
+        isAvailable: event.isAvailable,
+        productId: event.productId,
+      );
 
       if (res == null) {
-        throw Exception('Couldn\'t delete the product, please try again!');
+        throw Exception(
+          'Couldn\'t toggle the product ${event.isAvailable ? 'on' : 'off'}, please try again!',
+        );
       }
 
-      switch (res.statusCode) {
-        case 200:
-          emit(
-            ProductDeletedState(
-              deletedProduct: Product.fromJson(res.body),
-            ),
-          );
-          break;
-        case 401:
-          emit(
-            ProductErrorState(errorMessage: jsonDecode(res.body)['msg']),
-          );
-        case 500:
-          emit(
-            ProductErrorState(errorMessage: jsonDecode(res.body)['error']),
-          );
-        default:
-          emit(
-            ProductErrorState(
-              errorMessage:
-                  'Some unknown error occurred while trying to delete the product!',
-            ),
-          );
+      if (res.statusCode == 200) {
+        emit(
+          ProductToggledState(
+            toggledProduct: Product.fromJson(res.body),
+          ),
+        );
+      } else {
+        emit(
+          ProductErrorState(errorMessage: jsonDecode(res.body)['message']),
+        );
       }
     } catch (e) {
       emit(ProductErrorState(errorMessage: e.toString()));
@@ -197,19 +183,19 @@ class ProductsFetchedState extends ProductState {
   });
 }
 
+class ProductToggledState extends ProductState {
+  Product toggledProduct;
+
+  ProductToggledState({
+    required this.toggledProduct,
+  });
+}
+
 class ProductAddedState extends ProductState {
   Product addedProduct;
 
   ProductAddedState({
     required this.addedProduct,
-  });
-}
-
-class ProductDeletedState extends ProductState {
-  Product deletedProduct;
-
-  ProductDeletedState({
-    required this.deletedProduct,
   });
 }
 

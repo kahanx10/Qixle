@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Constants {
-  static String host = 'http://192.168.46.86:8000';
+  static String host = 'http://192.168.65.86:3000';
   static String signUpPath = '/signup';
   static String signInPath = '/signin';
   static String authTokenName = 'authToken';

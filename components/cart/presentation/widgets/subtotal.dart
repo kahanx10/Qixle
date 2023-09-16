@@ -1,7 +1,7 @@
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
-import 'package:amazon_clone/components/home/presentation/pages/address_page.dart';
+import 'package:amazon_clone/components/orders/presentation/pages/address_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -31,10 +31,10 @@ class _CartSubtotalState extends State<CartSubtotal> {
   @override
   Widget build(BuildContext context) {
     final user =
-        (BlocProvider.of<UserBloc>(context).state as UserAuthenticatedState)
-            .user;
+        (context.watch<UserBloc>().state as UserAuthenticatedState).user;
 
-    int sum = 20;
+    int sum = 0;
+
     user.cart
         .map((cartItem) =>
             sum += cartItem['quantity'] * cartItem['product']['price'] as int)

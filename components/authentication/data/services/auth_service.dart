@@ -71,6 +71,7 @@ class AuthService {
       print(
         '---> Error in auth_service.dart:\n$e <---',
       );
+
       return null;
     } finally {
       print('exited handling userSignInAuthentication() in auth_service.dart');

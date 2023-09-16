@@ -29,20 +29,27 @@ class _AnalyticsPageState extends State<AnalyticsPage> {
 
           if (snapshot.hasData) {
             var allEarnings = snapshot.data!;
-            var totalEarnings = allEarnings.removeAt(0);
+            Earning? totalEarnings;
+            if (allEarnings.isNotEmpty) {
+              totalEarnings = allEarnings.removeAt(0);
+            }
 
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text('Total Earnings: \$${totalEarnings.earning}'),
-                  SizedBox(
-                    height: 250,
-                    child: EarningChart(earningsList: allEarnings),
-                  ),
-                ],
-              ),
-            );
+            return allEarnings.isEmpty
+                ? const Center(
+                    child: Text('No Orders yet'),
+                  )
+                : Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('Total Earnings: \$${totalEarnings!.earning}'),
+                        SizedBox(
+                          height: 250,
+                          child: EarningChart(earningsList: allEarnings),
+                        ),
+                      ],
+                    ),
+                  );
           }
 
           return const CircularProgressIndicator();

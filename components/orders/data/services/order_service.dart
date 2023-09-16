@@ -11,14 +11,54 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 
 class OrderService {
+  static Future<Map<String, dynamic>?> finalizeCart(
+    BuildContext context, {
+    required List<dynamic> cart,
+  }) async {
+    try {
+      var token = await AuthTokenService.getToken();
+
+      if (token != null) {
+        var res = await post(
+          Uri.parse('${Constants.host}/finalize-cart'),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'authToken': token,
+          },
+          body: jsonEncode({
+            'cart': cart,
+          }),
+        );
+
+        if (res.statusCode == 200) {
+          return {
+            'products': jsonDecode(res.body)['products'],
+            'totalPrice': jsonDecode(res.body)['totalPrice']
+          };
+        } else {
+          throw Exception(jsonDecode(res.body)['message']);
+        }
+      } else {
+        throw Exception('Session expired, please log-in again!');
+      }
+    } catch (e) {
+      MessageService.showSnackBar(
+        context,
+        message: e.toString(),
+      );
+
+      return null;
+    }
+  }
+
   static Future<Order> placeOrder({
     required BuildContext context,
-    required List<dynamic> cart,
+    required List<dynamic> products,
     required String address,
-    required double totalSum,
+    required double totalPrice,
   }) async {
-    if (cart.isEmpty) {
-      throw Exception('Cart is empty!');
+    if (products.isEmpty) {
+      throw Exception('No products are available!');
     }
 
     var token = await AuthTokenService.getToken();
@@ -31,16 +71,18 @@ class OrderService {
           'authToken': token,
         },
         body: jsonEncode({
-          'cart': cart,
+          'products': products,
           'address': address,
-          'totalPrice': totalSum,
+          'totalPrice': totalPrice,
         }),
       );
 
       if (res.statusCode == 200) {
         context.read<UserBloc>().add(
               UpdateUser(
-                User.fromMap(jsonDecode(res.body)['user']),
+                User.fromMap(
+                  jsonDecode(res.body)['user'],
+                ),
               ),
             );
 

@@ -3,6 +3,7 @@ import 'dart:convert';
 
 class Product {
   final String name;
+  final bool isAvailable;
   final String description;
   final num price;
   final num quantity;
@@ -19,6 +20,7 @@ class Product {
     required this.price,
     required this.quantity,
     this.id,
+    required this.isAvailable,
     required this.category,
     required this.images,
     required this.avgRating,
@@ -35,6 +37,7 @@ class Product {
       'category': category,
       'images': images,
       'avgRating': avgRating,
+      'isAvailable': isAvailable,
     };
   }
 
@@ -51,6 +54,7 @@ class Product {
       ),
       totalRatings: map['ratings'].length as num,
       avgRating: map['avgRating'],
+      isAvailable: map['isAvailable'],
     );
   }
 

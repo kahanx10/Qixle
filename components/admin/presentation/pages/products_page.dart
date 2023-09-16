@@ -20,12 +20,7 @@ class _ProductsPageState extends State<ProductsPage> {
   var products = <Product>[];
 
   void fetchProducts() {
-    var token =
-        (BlocProvider.of<UserBloc>(context).state as UserAuthenticatedState)
-            .user
-            .token;
-
-    BlocProvider.of<ProductBloc>(context).add(FetchProductsEvent(token: token));
+    BlocProvider.of<ProductBloc>(context).add(FetchProductsEvent());
   }
 
   @override
@@ -59,25 +54,17 @@ class _ProductsPageState extends State<ProductsPage> {
             setState(() {});
             break;
 
-          case ProductDeletedState:
-            var product = (state as ProductDeletedState).deletedProduct;
-            products.removeWhere((element) => element.id == product.id);
-
-            var token = (BlocProvider.of<UserBloc>(context).state
-                    as UserAuthenticatedState)
-                .user
-                .token;
-
-            BlocProvider.of<ProductBloc>(context).add(FetchProductsEvent(
-              token: token,
-            ));
+          case ProductToggledState:
+            state as ProductToggledState;
+            var toggledProduct = state.toggledProduct;
 
             MessageService.showSnackBar(
               context,
-              message: '${product.name} deleted!',
+              message:
+                  'Made ${toggledProduct.name} ${toggledProduct.isAvailable ? 'available' : 'unavailable'}',
             );
 
-            setState(() {});
+            fetchProducts();
             break;
 
           case ProductErrorState:
@@ -107,9 +94,9 @@ class _ProductsPageState extends State<ProductsPage> {
 
                 await Future.delayed(const Duration(seconds: 3));
 
-                BlocProvider.of<UserBloc>(context).add(SignOutUser());
-
                 BlocProvider.of<UiFeedbackCubit>(context).popLoadingOverlay();
+
+                BlocProvider.of<UserBloc>(context).add(SignOutUser());
               },
               icon: const Icon(Icons.logout_outlined),
             ),
@@ -129,6 +116,7 @@ class _ProductsPageState extends State<ProductsPage> {
                 ),
                 itemBuilder: (context, index) {
                   final product = products[index];
+
                   return Column(
                     children: [
                       SizedBox(
@@ -147,23 +135,16 @@ class _ProductsPageState extends State<ProductsPage> {
                               maxLines: 2,
                             ),
                           ),
-                          IconButton(
-                            onPressed: () {
-                              var token = (BlocProvider.of<UserBloc>(context)
-                                      .state as UserAuthenticatedState)
-                                  .user
-                                  .token;
-
+                          Switch(
+                            value: product.isAvailable,
+                            onChanged: (value) {
                               BlocProvider.of<ProductBloc>(context).add(
-                                DeleteProductEvent(
-                                  productID: product.id!,
-                                  token: token,
+                                ToggleProductEvent(
+                                  productId: product.id!,
+                                  isAvailable: value,
                                 ),
                               );
                             },
-                            icon: const Icon(
-                              Icons.delete_outline,
-                            ),
                           ),
                         ],
                       ),

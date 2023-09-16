@@ -289,7 +289,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                           Row(
                             children: [
                               Container(
-                                width: 90,
+                                width: 95,
                                 alignment: Alignment.center,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 10,
@@ -303,7 +303,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceEvenly,
                                   children: [
                                     const Icon(
                                       Icons.star_rounded,
@@ -326,7 +326,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                               ),
                               const SizedBox(width: 8),
                               Container(
-                                width: 90,
+                                width: 95,
                                 alignment: Alignment.center,
                                 padding: const EdgeInsets.symmetric(
                                   horizontal: 10,
@@ -344,7 +344,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                   children: [
                                     const Icon(
                                       Icons.thumb_up_alt_rounded,
-                                      size: 20,
+                                      size: 16,
                                       color: Colors.black,
                                     ),
                                     Padding(

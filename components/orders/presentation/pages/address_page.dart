@@ -1,10 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/data/payment_configurations.dart';
 import 'package:amazon_clone/common/data/services/message_service.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
 import 'package:amazon_clone/common/presentation/widgets/my_textfield.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
-import 'package:amazon_clone/components/home/data/services/address_service.dart';
+import 'package:amazon_clone/components/orders/data/services/address_service.dart';
 import 'package:amazon_clone/components/orders/data/services/order_service.dart';
 import 'package:amazon_clone/components/orders/presentation/pages/order_details_page.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +18,11 @@ import 'package:pay/pay.dart';
 
 class AddressPage extends StatefulWidget {
   static const String routeName = '/address_route';
-  final String totalAmount;
+  final String totalPrice;
 
   const AddressPage({
     Key? key,
-    required this.totalAmount,
+    required this.totalPrice,
   }) : super(key: key);
 
   @override
@@ -34,19 +36,18 @@ class _AddressPageState extends State<AddressPage> {
   final TextEditingController cityController = TextEditingController();
   final _addressFormKey = GlobalKey<FormState>();
 
+  late double totalPrice;
+
   String addressToBeUsed = "";
   List<PaymentItem> paymentItems = [];
+
+  List<dynamic> productsForOrder = [];
 
   @override
   void initState() {
     super.initState();
-    paymentItems.add(
-      PaymentItem(
-        amount: widget.totalAmount,
-        label: 'Total Amount',
-        status: PaymentItemStatus.final_price,
-      ),
-    );
+
+    totalPrice = double.parse(widget.totalPrice);
   }
 
   @override
@@ -137,13 +138,11 @@ class _AddressPageState extends State<AddressPage> {
       var user =
           (context.read<UserBloc>().state as UserAuthenticatedState).user;
 
-      var addressToBeUsedForPayment = user.address;
-
       var order = await OrderService.placeOrder(
         context: context,
-        address: addressToBeUsedForPayment,
-        totalSum: double.parse(widget.totalAmount),
-        cart: user.cart,
+        address: user.address,
+        totalPrice: totalPrice,
+        products: productsForOrder,
       );
 
       navigator.pop();
@@ -170,12 +169,11 @@ class _AddressPageState extends State<AddressPage> {
 
         _addressFormKey.currentState!.reset();
 
-        showPaymentAlertDialog(
-            context, 'Place Order', 'Time to finally grab your bag!');
+        finalizeProducts();
       } else if (addressToBeUsed.isNotEmpty) {
         _addressFormKey.currentState!.reset();
-        showPaymentAlertDialog(
-            context, 'Place Order', 'Time to finally grab your bag!',);
+
+        finalizeProducts();
       } else {
         MessageService.showSnackBar(
           context,
@@ -203,7 +201,7 @@ class _AddressPageState extends State<AddressPage> {
         child: Column(
           children: [
             const SizedBox(
-              height: 40,
+              height: 35,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -217,6 +215,13 @@ class _AddressPageState extends State<AddressPage> {
                     style: GoogleFonts.leagueSpartan(
                       fontSize: 24,
                       fontWeight: FontWeight.normal,
+                    ),
+                  ),
+                  Container(
+                    color: Colors.grey.shade200,
+                    height: 2,
+                    margin: const EdgeInsets.only(
+                      bottom: 15,
                     ),
                   ),
                   Text(
@@ -443,5 +448,54 @@ class _AddressPageState extends State<AddressPage> {
         ),
       ),
     );
+  }
+
+  finalizeProducts() async {
+    var user = (context.read<UserBloc>().state as UserAuthenticatedState).user;
+
+    var res = await OrderService.finalizeCart(
+      context,
+      cart: user.cart,
+    );
+
+    if (res == null) {
+      MessageService.showSnackBar(
+        context,
+        message: 'Some error occurred, please try agan!',
+      );
+      return;
+    }
+
+    if (res['totalPrice'] != 0 && res['products'].isNotEmpty) {
+      if (paymentItems.isEmpty) {
+        paymentItems.add(
+          PaymentItem(
+            amount: res['totalPrice'].toString(),
+            label: 'Total Amount',
+            status: PaymentItemStatus.final_price,
+          ),
+        );
+      } else {
+        paymentItems[0] = PaymentItem(
+          amount: res['totalPrice'].toString(),
+          label: 'Total Amount',
+          status: PaymentItemStatus.final_price,
+        );
+      }
+
+      productsForOrder = res['products'];
+      totalPrice = double.parse(res['totalPrice'].toString());
+
+      showPaymentAlertDialog(
+        context,
+        'Place Order',
+        'Time to finally grab your bag!',
+      );
+    } else {
+      MessageService.showSnackBar(
+        context,
+        message: 'Too late! All products are out of stock :(',
+      );
+    }
   }
 }

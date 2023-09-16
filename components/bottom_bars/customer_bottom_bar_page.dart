@@ -81,10 +81,12 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
             },
             tabs: [
               GButton(
+                iconSize: 30,
                 icon: _page == 0 ? Icons.home_rounded : Icons.home_outlined,
                 text: 'Home',
               ),
               GButton(
+                iconSize: 30,
                 icon: _page == 1 ? Icons.person : Icons.person_outlined,
                 text: 'Account',
               ),

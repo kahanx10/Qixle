@@ -18,33 +18,37 @@ class AdminService {
     BuildContext context,
   ) async {
     var allEarnings = <Earning>[];
+    try {
+      var token = await AuthTokenService.getToken();
 
-    var token = await AuthTokenService.getToken();
+      if (token == null) {
+        MessageService.showSnackBar(
+          context,
+          message: 'Session expired, please log in again to proceed!',
+        );
 
-    if (token == null) {
-      MessageService.showSnackBar(
-        context,
-        message: 'Session expired, please log in again to proceed!',
+        throw Exception('Couldn\'nt get analytics, please try again!');
+      }
+
+      var res = await http.get(
+        Uri.parse('${Constants.host}/admin/analytics'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'authToken': token,
+        },
       );
 
-      throw Exception('Couldn\'nt get analytics, please try again!');
-    }
+      if (res.statusCode != 200) {
+        throw Exception('Couldn\'nt get analytics, please try again!');
+      }
 
-    var res = await http.get(
-      Uri.parse('${Constants.host}/admin/analytics'),
-      headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
-        'authToken': token,
-      },
-    );
+      var earningsList = jsonDecode(res.body);
 
-    if (res.statusCode != 200) {
-      throw Exception('Couldn\'nt get analytics, please try again!');
-    }
-    var earningsList = jsonDecode(res.body);
-
-    for (var earnings in earningsList) {
-      allEarnings.add(Earning.fromMap(earnings));
+      for (var earnings in earningsList) {
+        allEarnings.add(Earning.fromMap(earnings));
+      }
+    } catch (e) {
+      MessageService.showSnackBar(context, message: e.toString());
     }
 
     return allEarnings;
@@ -85,9 +89,15 @@ class AdminService {
     return jsonDecode(res.body);
   }
 
-  static Future<http.Response?> fetchProducts({required String token}) async {
+  static Future<http.Response?> fetchProducts() async {
     late http.Response res;
     try {
+      var token = await AuthTokenService.getToken();
+
+      if (token == null) {
+        return null;
+      }
+
       res = await http.get(
         Uri.parse('${Constants.host}/admin/fetch-products'),
         headers: {
@@ -151,19 +161,24 @@ class AdminService {
   }
 
   static Future<http.Response?> deleteProduct({
-    required DeleteProductEvent event,
+    required String productId,
+    required bool isAvailable,
   }) async {
     try {
+      var token = await AuthTokenService.getToken();
+
+      if (token == null) {
+        return null;
+      }
+
       var res = await http.delete(
         Uri.parse('${Constants.host}/admin/delete-product'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
-          'authToken': event.token,
+          'authToken': token,
         },
-        body: jsonEncode({'id': event.productID}),
+        body: jsonEncode({'productId': productId, 'isAvailable': isAvailable}),
       );
-
-      print(res.statusCode);
 
       if (res.statusCode == 200) {
         return res;
