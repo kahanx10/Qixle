@@ -127,6 +127,8 @@ class _CartPageState extends State<CartPage> {
             (BlocProvider.of<UserBloc>(context).state as UserAuthenticatedState)
                 .user;
 
+       
+
         return Scaffold(
           backgroundColor: Constants.backgroundColor,
           body: SingleChildScrollView(

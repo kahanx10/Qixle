@@ -33,6 +33,14 @@ class _CartSubtotalState extends State<CartSubtotal> {
     final user =
         (context.watch<UserBloc>().state as UserAuthenticatedState).user;
 
+    var canCheckout = true;
+
+    if (user.cart.isNotEmpty) {
+      canCheckout = user.cart.any((item) => item['product']['isAvailable']);
+    } else {
+      canCheckout = false;
+    }
+
     int sum = 0;
 
     user.cart
@@ -109,16 +117,23 @@ class _CartSubtotalState extends State<CartSubtotal> {
                     ),
                   ),
                 ),
-              Container(
-                margin: const EdgeInsets.only(top: 10),
-                child: MyButton(
-                  text: user.cart.length == 1
-                      ? 'Let\'s Checkout! (1 item)'
-                      : 'Let\'s Checkout! (${user.cart.length} items)',
-                  onPressed: () => navigateToAddress(sum),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Constants.selectedColor,
-                    foregroundColor: Constants.backgroundColor,
+              AbsorbPointer(
+                absorbing: !canCheckout,
+                child: Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  child: MyButton(
+                    text: user.cart.length == 1
+                        ? 'Let\'s Checkout! (1 item)'
+                        : 'Let\'s Checkout! (${user.cart.length} items)',
+                    onPressed: () => navigateToAddress(sum),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: canCheckout
+                          ? Constants.selectedColor
+                          : Colors.grey.shade400,
+                      foregroundColor: canCheckout
+                          ? Constants.backgroundColor
+                          : Colors.grey.shade300,
+                    ),
                   ),
                 ),
               ),

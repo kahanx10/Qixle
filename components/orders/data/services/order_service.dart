@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/data/services/message_service.dart';
+import 'package:amazon_clone/components/admin/logic/blocs/products_bloc.dart';
 import 'package:amazon_clone/components/authentication/data/models/user_model.dart';
 import 'package:amazon_clone/components/authentication/data/services/auth_token_service.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
@@ -33,8 +34,47 @@ class OrderService {
         if (res.statusCode == 200) {
           return {
             'products': jsonDecode(res.body)['products'],
-            'totalPrice': jsonDecode(res.body)['totalPrice']
+            'totalPrice': jsonDecode(res.body)['totalPrice'],
           };
+        } else {
+          throw Exception(jsonDecode(res.body)['message']);
+        }
+      } else {
+        throw Exception('Session expired, please log-in again!');
+      }
+    } catch (e) {
+      MessageService.showSnackBar(
+        context,
+        message: e.toString(),
+      );
+
+      return null;
+    }
+  }
+
+  static Future<bool?> checkAvailability(
+    BuildContext context, {
+    required String productId,
+  }) async {
+    try {
+      var token = await AuthTokenService.getToken();
+
+      if (token != null) {
+        var res = await post(
+          Uri.parse('${Constants.host}/check-availability'),
+          headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'authToken': token,
+          },
+          body: jsonEncode(
+            {
+              'productId': productId,
+            },
+          ),
+        );
+
+        if (res.statusCode == 200) {
+          return jsonDecode(res.body)['isAvailable'];
         } else {
           throw Exception(jsonDecode(res.body)['message']);
         }
@@ -84,6 +124,10 @@ class OrderService {
                   jsonDecode(res.body)['user'],
                 ),
               ),
+            );
+
+        context.read<ProductBloc>().add(
+              FetchProductsEvent(),
             );
 
         return Order.fromMap(jsonDecode(res.body)['order']);

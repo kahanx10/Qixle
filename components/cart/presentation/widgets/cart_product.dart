@@ -5,6 +5,7 @@ import 'package:amazon_clone/components/admin/data/models/product_model.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:amazon_clone/components/cart/data/services/cart_service.dart';
 import 'package:amazon_clone/components/home/presentation/pages/product_details_page.dart';
+import 'package:amazon_clone/components/orders/data/services/order_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -105,15 +106,55 @@ class _CartProductState extends State<CartProduct> {
                           children: [
                             Row(
                               children: [
-                                Text(
-                                  product.name,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: GoogleFonts.leagueSpartan(
-                                    fontSize: 20,
-                                    color: Constants.selectedColor,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  maxLines: 2,
+                                Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      product.name,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: GoogleFonts.leagueSpartan(
+                                        fontSize: 20,
+                                        color: Constants.selectedColor,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                      maxLines: 2,
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    FutureBuilder(
+                                      future: OrderService.checkAvailability(
+                                        context,
+                                        productId: product.id!,
+                                      ),
+                                      builder: ((context, snapshot) {
+                                        if (snapshot.hasError) {
+                                          return const SizedBox(
+                                              width: 0, height: 0);
+                                        }
+
+                                        if (snapshot.hasData) {
+                                          bool availabilty = snapshot.data!;
+                                          return Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 5.0),
+                                            child: Icon(
+                                              availabilty
+                                                  ? Icons
+                                                      .check_circle_outline_rounded
+                                                  : Icons.block_outlined,
+                                              color: availabilty
+                                                  ? Colors.green.shade400
+                                                  : Colors.red.shade400,
+                                            ),
+                                          );
+                                        } else {
+                                          return Constants.loading;
+                                        }
+                                      }),
+                                    ),
+                                  ],
                                 ),
                                 const Spacer(),
                                 IconButton(

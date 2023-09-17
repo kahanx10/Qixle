@@ -5,6 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
+// import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
+// import 'package:amazon_clone/components/cart/presentation/pages/cart_page.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
+
 class CustomerBottomBarPage extends StatefulWidget {
   static const String routeName = '/bottom_bar_route';
   const CustomerBottomBarPage({Key? key}) : super(key: key);
@@ -14,6 +19,126 @@ class CustomerBottomBarPage extends StatefulWidget {
 }
 
 class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
+  // @override
+  // Widget build(BuildContext context) {
+  //   return HiddenDrawerMenu(
+  //     contentCornerRadius: 25,
+  //     slidePercent: 50,
+  //     withShadow: false,
+  //     actionsAppBar: [
+  //       Padding(
+  //         padding: const EdgeInsets.only(
+  //           right: 30.0,
+  //           bottom: 5.0,
+  //         ),
+  //         child: GestureDetector(
+  //           onTap: () {
+  //             Navigator.of(context).pushNamed(CartPage.routeName);
+  //           },
+  //           child: Stack(
+  //             children: [
+  //               Container(
+  //                 width: 35.0,
+  //                 height: 35.0,
+  //                 alignment: Alignment.center,
+  //                 decoration: BoxDecoration(
+  //                   border: Border.all(color: Colors.grey.shade100, width: 2),
+  //                   borderRadius: BorderRadius.circular(100.0),
+  //                   color: Constants.backgroundColor,
+  //                 ),
+  //                 child: const Icon(
+  //                   Icons.shopping_bag_outlined,
+  //                   size: 18.0,
+  //                 ),
+  //               ),
+  //               Positioned(
+  //                 top: 0,
+  //                 right: 0,
+  //                 child: BlocBuilder<UserBloc, UserState>(
+  //                   buildWhen: (previous, current) {
+  //                     return previous.runtimeType == UserAuthenticatedState;
+  //                   },
+  //                   builder: (context, state) {
+  //                     var user = (BlocProvider.of<UserBloc>(context).state
+  //                             as UserAuthenticatedState)
+  //                         .user;
+
+  //                     return user.cart.isNotEmpty
+  //                         ? Badge(
+  //                             backgroundColor: Constants.selectedColor,
+  //                             label: Text(
+  //                               '${user.cart.length}',
+  //                               style: GoogleFonts.leagueSpartan(
+  //                                 fontSize: 10,
+  //                                 color: Constants.backgroundColor,
+  //                                 fontWeight: FontWeight.w600,
+  //                               ),
+  //                             ),
+  //                           )
+  //                         : const SizedBox(
+  //                             width: 0,
+  //                             height: 0,
+  //                           );
+  //                   },
+  //                 ),
+  //               )
+  //             ],
+  //           ),
+  //         ),
+  //       )
+  //     ],
+  //     isDraggable: true,
+  //     backgroundColorAppBar: Colors.white,
+  //     elevationAppBar: 0,
+  //     styleAutoTittleName: GoogleFonts.leagueSpartan(
+  //       fontSize: 24,
+  //       color: Constants.selectedColor,
+  //       fontWeight: FontWeight.normal,
+  //       letterSpacing: 0.025,
+  //     ),
+
+  //     initPositionSelected: 0,
+
+  //     screens: [
+  //       ScreenHiddenDrawer(
+  //         ItemHiddenMenu(
+  //           name: "Discover",
+  //           baseStyle: GoogleFonts.leagueSpartan(
+  //             fontSize: 14,
+  //             color: Colors.grey.shade400,
+  //             fontWeight: FontWeight.w600,
+  //           ),
+  //           colorLineSelected: Constants.selectedColor,
+  //           selectedStyle: GoogleFonts.leagueSpartan(
+  //             fontSize: 14,
+  //             color: Constants.selectedColor,
+  //             fontWeight: FontWeight.w600,
+  //           ),
+  //         ),
+  //         const HomePage(),
+  //       ),
+  //       ScreenHiddenDrawer(
+  //         ItemHiddenMenu(
+  //           name: "Account",
+  //           baseStyle: GoogleFonts.leagueSpartan(
+  //             fontSize: 14,
+  //             color: Colors.grey.shade400,
+  //             fontWeight: FontWeight.w600,
+  //           ),
+  //           colorLineSelected: Constants.selectedColor,
+  //           selectedStyle: GoogleFonts.leagueSpartan(
+  //             fontSize: 14,
+  //             color: Constants.selectedColor,
+  //             fontWeight: FontWeight.w600,
+  //           ),
+  //         ),
+  //         const AccountPage(),
+  //       ),
+  //     ],
+  //     backgroundColorMenu: Colors.grey.shade200,
+  //     // ... add other customization properties as needed
+  //   );
+  // }
   int _page = 0;
 
   List<Widget> pages = [
@@ -81,12 +206,10 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
             },
             tabs: [
               GButton(
-                iconSize: 30,
                 icon: _page == 0 ? Icons.home_rounded : Icons.home_outlined,
                 text: 'Home',
               ),
               GButton(
-                iconSize: 30,
                 icon: _page == 1 ? Icons.person : Icons.person_outlined,
                 text: 'Account',
               ),
