@@ -5,6 +5,8 @@ import 'package:amazon_clone/components/home/presentation/widgets/address_panel.
 import 'package:amazon_clone/components/home/presentation/widgets/searched_product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:line_icons/line_icons.dart';
 
 class SearchedProductsPage extends StatefulWidget {
   static const String routeName = '/searched_page';
@@ -58,79 +60,7 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(60),
-        child: AppBar(
-          backgroundColor: Constants.selectedColor,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Container(
-                  height: 42,
-                  margin: const EdgeInsets.only(left: 15),
-                  child: Material(
-                    borderRadius: BorderRadius.circular(7),
-                    elevation: 1,
-                    child: TextFormField(
-                      controller: searchController,
-                      onFieldSubmitted: navigateToSearchScreen,
-                      decoration: InputDecoration(
-                        prefixIcon: InkWell(
-                          onTap: () {
-                            if (searchController.text.isNotEmpty) {
-                              navigateToSearchScreen(searchController.text);
-                            }
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.only(
-                              left: 6,
-                            ),
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.black,
-                              size: 23,
-                            ),
-                          ),
-                        ),
-                        filled: true,
-                        fillColor: Colors.white,
-                        contentPadding: const EdgeInsets.only(top: 10),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(7),
-                          ),
-                          borderSide: BorderSide.none,
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(7),
-                          ),
-                          borderSide: BorderSide(
-                            color: Colors.black38,
-                            width: 1,
-                          ),
-                        ),
-                        hintText: 'Find More Products',
-                        hintStyle: const TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                color: Colors.transparent,
-                height: 42,
-                margin: const EdgeInsets.symmetric(horizontal: 10),
-                child: const Icon(Icons.mic, color: Colors.black, size: 25),
-              ),
-            ],
-          ),
-        ),
-      ),
+      backgroundColor: Constants.backgroundColor,
       body: BlocBuilder<CustomerProductsCubit, CustomerProductsState>(
           builder: (context, state) {
         switch (state.runtimeType) {
@@ -147,14 +77,92 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
             return products.isNotEmpty
                 ? Column(
                     children: [
-                      const AddressPanel(),
-                      const SizedBox(height: 10),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      Text(
+                        widget.searchQuery.trim().length > 2
+                            ? widget.searchQuery
+                            : 'All Products',
+                        style: GoogleFonts.leagueSpartan(
+                          fontSize: 24,
+                          color: Constants.selectedColor,
+                          fontWeight: FontWeight.normal,
+                          letterSpacing: 0.025,
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(6),
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.grey.shade100,
+                        ),
+                        margin: const EdgeInsets.only(
+                            left: 30, right: 30, top: 15, bottom: 20),
+                        child: Center(
+                          child: TextFormField(
+                            controller: searchController,
+                            onFieldSubmitted: (val) {
+                              if (val.isNotEmpty) {
+                                Navigator.of(context).pushReplacementNamed(
+                                  SearchedProductsPage.routeName,
+                                  arguments: val,
+                                );
+                              }
+                            },
+                            cursorColor: Constants.selectedColor,
+                            decoration: InputDecoration(
+                              suffixIcon: InkWell(
+                                onTap: () {
+                                  if (searchController.text.isNotEmpty) {
+                                    Navigator.of(context).pushNamed(
+                                      SearchedProductsPage.routeName,
+                                      arguments: searchController.text,
+                                    );
+                                  }
+                                },
+                                child: const Padding(
+                                  padding: EdgeInsets.only(left: 6),
+                                  child: Icon(
+                                    LineIcons.search,
+                                    color: Colors.black,
+                                    size: 23,
+                                  ),
+                                ),
+                              ),
+                              contentPadding: const EdgeInsets.only(
+                                left: 10,
+                                right: 10,
+                                top: 5,
+                              ),
+                              border: InputBorder.none,
+                              hintText: 'Search More',
+                              hintStyle: GoogleFonts.leagueSpartan(
+                                fontSize: 16,
+                                color: Colors.grey.shade400,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        child: AddressPanel(),
+                      ),
                       Expanded(
                         child: ListView.builder(
                           itemCount: products.length,
                           itemBuilder: (context, index) {
-                            return SearchedProduct(
-                              product: products[index],
+                            return Container(
+                              margin: const EdgeInsets.only(bottom: 10),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              child: SearchedProduct(
+                                product: products[index],
+                              ),
                             );
                           },
                         ),

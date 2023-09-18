@@ -15,12 +15,13 @@ class AddressPanel extends StatelessWidget {
     return Container(
       height: 40,
       decoration: BoxDecoration(
-          border: Border.symmetric(
-              horizontal: BorderSide(
-        color: Constants.selectedColor,
-        width: 2.5,
-      ))),
-      padding: const EdgeInsets.only(left: 10),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: Constants.selectedColor,
+          width: 2.5,
+        ),
+      ),
+      padding: const EdgeInsets.only(left: 5, right: 5),
       child: Row(
         children: [
           const Icon(
@@ -30,12 +31,14 @@ class AddressPanel extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: 5),
-              child: Text(
-                'Deliver to ${user.name} - ${user.address}',
-                style: const TextStyle(
-                  fontWeight: FontWeight.w500,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Text(
+                  'Deliver to ${user.name} - ${user.address}',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),

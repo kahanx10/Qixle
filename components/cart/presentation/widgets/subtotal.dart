@@ -89,7 +89,7 @@ class _CartSubtotalState extends State<CartSubtotal> {
                     ),
                   ),
                   Text(
-                    sum > 50 ? 'FREE' : '\$$deliveryFee',
+                    sum >= 50 ? 'FREE' : '\$$deliveryFee',
                     style: GoogleFonts.leagueSpartan(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,

@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           content: Text(
-            'Are yoos surely willing to log out?',
+            'Do you really want to go?',
             style: GoogleFonts.leagueSpartan(
               fontSize: 16,
               color: Constants.backgroundColor,

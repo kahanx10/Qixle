@@ -239,14 +239,24 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                           physics: const ScrollPhysics(),
                           currentStep: currentStep,
                           controlsBuilder: (context, details) {
-                            if (user.type == 'admin') {
-                              return MyButton(
-                                text: 'Done',
-                                onPressed: () =>
-                                    changeOrderStatus(details.currentStep),
-                                style: ElevatedButton.styleFrom(
-                                  foregroundColor: Constants.backgroundColor,
-                                  backgroundColor: Constants.selectedColor,
+                            if (user.type == 'admin' && currentStep != 3) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(50),
+                                  child: MyButton(
+                                    width: 250,
+                                    useWidth: true,
+                                    text: 'Done',
+                                    onPressed: () =>
+                                        changeOrderStatus(details.currentStep),
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor:
+                                          Constants.backgroundColor,
+                                      backgroundColor: Constants.selectedColor,
+                                    ),
+                                  ),
                                 ),
                               );
                             }
