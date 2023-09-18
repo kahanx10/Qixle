@@ -1,8 +1,6 @@
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/presentation/widgets/app_button.dart';
-import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ButtonsPanel extends StatelessWidget {
   const ButtonsPanel({super.key});
@@ -50,18 +48,6 @@ class ButtonsPanel extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Expanded(
-                child: MyButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Constants.backgroundColor,
-                    foregroundColor: Constants.selectedColor,
-                  ),
-                  onPressed: () {
-                    BlocProvider.of<UserBloc>(context).add(SignOutUser());
-                  },
-                  text: 'Log Out',
-                ),
-              ),
               const SizedBox(
                 width: 8,
               ),

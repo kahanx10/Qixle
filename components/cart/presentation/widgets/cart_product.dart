@@ -110,15 +110,17 @@ class _CartProductState extends State<CartProduct> {
                                   mainAxisSize: MainAxisSize.min,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      product.name,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: GoogleFonts.leagueSpartan(
-                                        fontSize: 20,
-                                        color: Constants.selectedColor,
-                                        fontWeight: FontWeight.w400,
+                                    SizedBox(
+                                      width: 150,
+                                      child: Text(
+                                        product.name,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: GoogleFonts.leagueSpartan(
+                                          fontSize: 20,
+                                          color: Constants.selectedColor,
+                                          fontWeight: FontWeight.w400,
+                                        ),
                                       ),
-                                      maxLines: 2,
                                     ),
                                     const SizedBox(
                                       width: 5,

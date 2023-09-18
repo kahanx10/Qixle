@@ -22,6 +22,71 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var searchController = TextEditingController();
 
+  void _showLogOutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Constants.selectedColor,
+          title: Text(
+            'Log Out',
+            style: GoogleFonts.leagueSpartan(
+              fontSize: 20,
+              color: Constants.backgroundColor,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 0.025,
+            ),
+          ),
+          content: Text(
+            'Are yoos surely willing to log out?',
+            style: GoogleFonts.leagueSpartan(
+              fontSize: 16,
+              color: Constants.backgroundColor,
+              fontWeight: FontWeight.normal,
+              letterSpacing: 0.025,
+            ),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                TextButton(
+                  child: Text(
+                    'No Stay :)',
+                    style: GoogleFonts.leagueSpartan(
+                      fontSize: 14,
+                      color: Constants.backgroundColor,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: 0.025,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop(); // Close the dialog
+                  },
+                ),
+                TextButton(
+                  child: Text(
+                    'Yes, Bye :(',
+                    style: GoogleFonts.leagueSpartan(
+                      fontSize: 14,
+                      color: Colors.grey,
+                      fontWeight: FontWeight.normal,
+                      letterSpacing: 0.025,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    BlocProvider.of<UserBloc>(context).add(SignOutUser());
+                  },
+                ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -47,7 +112,7 @@ class _HomePageState extends State<HomePage> {
           actions: [
             Padding(
               padding: const EdgeInsets.only(
-                right: 30.0,
+                right: 15.0,
                 bottom: 5.0,
               ),
               child: GestureDetector(
@@ -105,7 +170,37 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-            )
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                right: 30.0,
+                bottom: 5.0,
+              ),
+              child: GestureDetector(
+                onTap: () {
+                  _showLogOutDialog(context);
+                },
+                child: Stack(
+                  children: [
+                    Container(
+                      width: 35.0,
+                      height: 35.0,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: Colors.grey.shade100, width: 2),
+                        borderRadius: BorderRadius.circular(100.0),
+                        color: Constants.backgroundColor,
+                      ),
+                      child: const Icon(
+                        LineIcons.doorClosed,
+                        size: 18.0,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
         body: SingleChildScrollView(

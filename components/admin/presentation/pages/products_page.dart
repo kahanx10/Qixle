@@ -1,6 +1,5 @@
 import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/common/data/services/message_service.dart';
-import 'package:amazon_clone/common/logic/cubits/ui_feedback_cubit.dart';
 import 'package:amazon_clone/common/presentation/widgets/single_product.dart';
 import 'package:amazon_clone/components/admin/data/models/product_model.dart';
 import 'package:amazon_clone/components/admin/logic/blocs/products_bloc.dart';
@@ -90,12 +89,6 @@ class _ProductsPageState extends State<ProductsPage> {
             ),
             IconButton(
               onPressed: () async {
-                BlocProvider.of<UiFeedbackCubit>(context).showLoadingOverlay();
-
-                await Future.delayed(const Duration(seconds: 3));
-
-                BlocProvider.of<UiFeedbackCubit>(context).popLoadingOverlay();
-
                 BlocProvider.of<UserBloc>(context).add(SignOutUser());
               },
               icon: const Icon(Icons.logout_outlined),

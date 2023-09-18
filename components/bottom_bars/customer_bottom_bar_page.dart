@@ -158,6 +158,8 @@ class _CustomerBottomBarPageState extends State<CustomerBottomBarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:
+          _page == 0 ? Constants.backgroundColor : Colors.grey.shade100,
       body: pages[_page],
       bottomNavigationBar: Container(
         decoration: BoxDecoration(

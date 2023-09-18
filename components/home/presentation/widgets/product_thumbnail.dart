@@ -67,14 +67,18 @@ class _ProductThumbnailState extends State<ProductThumbnail> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      widget.product.name,
-                      style: GoogleFonts.leagueSpartan(
-                        fontSize: 14,
-                        color: Colors.blueGrey.shade100,
-                        fontWeight: FontWeight.w500,
-                        height: 1,
-                        letterSpacing: 0.1,
+                    SizedBox(
+                      width: 100,
+                      child: Text(
+                        widget.product.name,
+                        style: GoogleFonts.leagueSpartan(
+                          fontSize: 14,
+                          color: Colors.blueGrey.shade100,
+                          fontWeight: FontWeight.w500,
+                          height: 1,
+                          letterSpacing: 0.1,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                     const SizedBox(
