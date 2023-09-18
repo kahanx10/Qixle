@@ -1,12 +1,15 @@
-import 'package:amazon_clone/common/data/constants.dart';
-import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
-import 'package:amazon_clone/components/home/logic/cubits/customer_products_cubit.dart';
-import 'package:amazon_clone/components/home/presentation/widgets/address_panel.dart';
-import 'package:amazon_clone/components/home/presentation/widgets/searched_product.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
+
+import 'package:amazon_clone/common/data/constants.dart';
+import 'package:amazon_clone/components/admin/data/models/product_model.dart';
+import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
+import 'package:amazon_clone/components/home/logic/cubits/customer_products_cubit.dart';
+import 'package:amazon_clone/components/home/presentation/widgets/address_panel.dart';
+import 'package:amazon_clone/components/home/presentation/widgets/searched_product.dart';
 
 class SearchedProductsPage extends StatefulWidget {
   static const String routeName = '/searched_page';
@@ -57,6 +60,104 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
     );
   }
 
+  var products = <Product>[];
+  var selectedFilter = 0;
+
+  void _showMenu(BuildContext context, Offset position) {
+    showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(
+          position.dx, position.dy, position.dx, position.dy),
+      items: [
+        PopupMenuItem<int>(
+          value: 0,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (selectedFilter == 0)
+                const Icon(
+                  Icons.check,
+                  color: Constants.backgroundColor,
+                  size: 20,
+                ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                'Relevance',
+                style: GoogleFonts.leagueSpartan(
+                  fontSize: 14,
+                  color: Constants.backgroundColor,
+                  fontWeight: FontWeight.normal,
+                  letterSpacing: 0.025,
+                ),
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem<int>(
+          value: 1,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (selectedFilter == 1)
+                const Icon(
+                  Icons.check,
+                  color: Constants.backgroundColor,
+                  size: 20,
+                ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                'Lowest',
+                style: GoogleFonts.leagueSpartan(
+                  fontSize: 14,
+                  color: Constants.backgroundColor,
+                  fontWeight: FontWeight.normal,
+                  letterSpacing: 0.025,
+                ),
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem<int>(
+          value: 2,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (selectedFilter == 2)
+                const Icon(
+                  Icons.check,
+                  color: Constants.backgroundColor,
+                  size: 20,
+                ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                'Highest',
+                style: GoogleFonts.leagueSpartan(
+                  fontSize: 14,
+                  color: Constants.backgroundColor,
+                  fontWeight: FontWeight.normal,
+                  letterSpacing: 0.025,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+      elevation: 4.0,
+    ).then((value) {
+      if (value != null) {
+        setState(() {
+          selectedFilter = value;
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,14 +166,23 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
           builder: (context, state) {
         switch (state.runtimeType) {
           case FetchingProducts:
-            return Center(
-              child: CircularProgressIndicator(
-                color: Constants.selectedColor,
-              ),
-            );
+            return Constants.loading;
 
           case ProductsFetched:
-            var products = (state as ProductsFetched).products;
+            products = (state as ProductsFetched).products;
+
+            switch (selectedFilter) {
+              case 0:
+                sortByRelevance(products);
+                break;
+              case 1:
+                sortByPriceLowestFirst(products);
+                break;
+              case 2:
+                sortByPriceHighestFirst(products);
+                break;
+              default:
+            }
 
             return products.isNotEmpty
                 ? Column(
@@ -80,16 +190,61 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
                       const SizedBox(
                         height: 40,
                       ),
-                      Text(
-                        widget.searchQuery.trim().length > 2
-                            ? widget.searchQuery
-                            : 'All Products',
-                        style: GoogleFonts.leagueSpartan(
-                          fontSize: 24,
-                          color: Constants.selectedColor,
-                          fontWeight: FontWeight.normal,
-                          letterSpacing: 0.025,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(
+                            width: 70,
+                          ),
+                          Text(
+                            widget.searchQuery.trim().length > 2
+                                ? widget.searchQuery
+                                : 'All Products',
+                            style: GoogleFonts.leagueSpartan(
+                              fontSize: 24,
+                              color: Constants.selectedColor,
+                              fontWeight: FontWeight.normal,
+                              letterSpacing: 0.025,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              double screenWidth =
+                                  MediaQuery.of(context).size.width;
+                              double screenHeight =
+                                  MediaQuery.of(context).size.height;
+
+                              _showMenu(
+                                context,
+                                Offset(
+                                  screenWidth * 0.68,
+                                  screenHeight * 0.035,
+                                ),
+                              );
+                            },
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              margin: const EdgeInsets.only(right: 30),
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Constants.backgroundColor,
+                                borderRadius: BorderRadius.circular(100),
+                                border: Border.all(
+                                  color: Colors.grey.shade200,
+                                  width: 2,
+                                ),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  Icons.sort_rounded,
+                                  color: Constants.selectedColor,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       Container(
                         padding: const EdgeInsets.all(6),
@@ -152,19 +307,9 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
                         child: AddressPanel(),
                       ),
                       Expanded(
-                        child: ListView.builder(
-                          itemCount: products.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin: const EdgeInsets.only(bottom: 10),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                              ),
-                              child: SearchedProduct(
-                                product: products[index],
-                              ),
-                            );
-                          },
+                        child: ShakeListView(
+                          products: products,
+                          selectedFilter: selectedFilter,
                         ),
                       ),
                     ],
@@ -186,6 +331,112 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
             );
         }
       }),
+    );
+  }
+
+  // Method to sort products by price in ascending order (lowest first)
+  List<Product> sortByPriceLowestFirst(List<Product> products) {
+    products.sort((a, b) => a.price.compareTo(b.price));
+
+    return products;
+  }
+
+// Method to sort products by price in descending order (highest first)
+  List<Product> sortByPriceHighestFirst(List<Product> products) {
+    products.sort((a, b) => b.price.compareTo(a.price));
+
+    return products;
+  }
+
+  List<Product> sortByRelevance(List<Product> products) {
+    products.sort((a, b) => b.avgRating.compareTo(a.avgRating));
+
+    return products;
+  }
+}
+
+class ShakeListView extends StatefulWidget {
+  final List<Product> products;
+  final int selectedFilter;
+
+  const ShakeListView({
+    Key? key,
+    required this.products,
+    required this.selectedFilter, //
+  }) : super(key: key);
+
+  @override
+  _ShakeListViewState createState() => _ShakeListViewState();
+}
+
+class _ShakeListViewState extends State<ShakeListView>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _shakeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 200), // Shake duration
+      vsync: this,
+    );
+
+    // This defines the amount and pattern of shake
+    _shakeAnimation = Tween<double>(begin: -5.0, end: 5.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.elasticIn),
+    );
+
+    // Start the shake as soon as the widget is built
+    _controller.forward().then((_) {
+      if (_controller.status == AnimationStatus.completed) {
+        _controller.reverse();
+      }
+    });
+  }
+
+  @override
+  void didUpdateWidget(covariant ShakeListView oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.selectedFilter != widget.selectedFilter) {
+      _controller.reset();
+      _controller.forward().then((_) {
+        if (_controller.status == AnimationStatus.completed) {
+          _controller.reverse();
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _shakeAnimation,
+      builder: (context, child) {
+        return Transform.translate(
+          offset: Offset(_shakeAnimation.value, 0),
+          child: child,
+        );
+      },
+      child: ListView.builder(
+        itemCount: widget.products.length,
+        itemBuilder: (context, index) {
+          return Container(
+            margin: const EdgeInsets.only(bottom: 10),
+            child: SearchedProduct(
+              product: widget.products[index],
+            ),
+          );
+        },
+      ),
     );
   }
 }
