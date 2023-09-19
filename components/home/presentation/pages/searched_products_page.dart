@@ -161,6 +161,7 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Constants.backgroundColor,
       body: BlocBuilder<CustomerProductsCubit, CustomerProductsState>(
           builder: (context, state) {
@@ -303,13 +304,18 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
                         ),
                       ),
                       const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.0),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 20.0,
+                        ),
                         child: AddressPanel(),
                       ),
                       Expanded(
-                        child: ShakeListView(
-                          products: products,
-                          selectedFilter: selectedFilter,
+                        child: Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: ShakeListView(
+                            products: products,
+                            selectedFilter: selectedFilter,
+                          ),
                         ),
                       ),
                     ],
@@ -355,7 +361,7 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
   }
 }
 
-class ShakeListView extends StatefulWidget {
+class ShakeListView extends StatelessWidget {
   final List<Product> products;
   final int selectedFilter;
 
@@ -366,77 +372,33 @@ class ShakeListView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ShakeListViewState createState() => _ShakeListViewState();
-}
-
-class _ShakeListViewState extends State<ShakeListView>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _shakeAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 200), // Shake duration
-      vsync: this,
-    );
-
-    // This defines the amount and pattern of shake
-    _shakeAnimation = Tween<double>(begin: -5.0, end: 5.0).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.elasticIn),
-    );
-
-    // Start the shake as soon as the widget is built
-    _controller.forward().then((_) {
-      if (_controller.status == AnimationStatus.completed) {
-        _controller.reverse();
-      }
-    });
-  }
-
-  @override
-  void didUpdateWidget(covariant ShakeListView oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (oldWidget.selectedFilter != widget.selectedFilter) {
-      _controller.reset();
-      _controller.forward().then((_) {
-        if (_controller.status == AnimationStatus.completed) {
-          _controller.reverse();
-        }
-      });
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _shakeAnimation,
-      builder: (context, child) {
-        return Transform.translate(
-          offset: Offset(_shakeAnimation.value, 0),
-          child: child,
+    return PageView.builder(
+      scrollDirection: Axis.vertical,
+      itemCount: (products.length / 2).ceil(),
+      itemBuilder: (context, pageIndex) {
+        int firstIndex = pageIndex * 2;
+        int secondIndex = firstIndex + 1;
+
+        return Column(
+          children: [
+            if (products.length > firstIndex)
+              Expanded(
+                child: SearchedProduct(
+                  product: products[firstIndex],
+                  isReversed: false,
+                ),
+              ),
+            if (products.length > secondIndex)
+              Expanded(
+                child: SearchedProduct(
+                  product: products[secondIndex],
+                  isReversed: true,
+                ),
+              ),
+          ],
         );
       },
-      child: ListView.builder(
-        itemCount: widget.products.length,
-        itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.only(bottom: 10),
-            child: SearchedProduct(
-              product: widget.products[index],
-            ),
-          );
-        },
-      ),
     );
   }
 }

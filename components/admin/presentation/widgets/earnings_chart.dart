@@ -3,6 +3,7 @@
 import 'package:amazon_clone/components/admin/data/models/earnings_model.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class EarningChart extends StatelessWidget {
   final List<Earning> earningsList;
@@ -17,9 +18,6 @@ class EarningChart extends StatelessWidget {
     maxEarnings = earningsList
         .reduce((curr, next) => curr.earning > next.earning ? curr : next)
         .earning;
-
-    earningsList.add(Earning(category: 'mobiles', earning: 1500));
-    earningsList.add(Earning(category: 'essentials', earning: 500));
 
     return BarChart(
       BarChartData(
@@ -72,7 +70,10 @@ class EarningChart extends StatelessWidget {
   }
 
   Widget getTitles(double value, TitleMeta meta) {
-    Widget text = Text(categoriesAvailable[value.toInt()]!);
+    Widget text = Text(
+      categoriesAvailable[value.toInt()]!,
+      style: GoogleFonts.leagueSpartan(),
+    );
 
     return text;
   }
