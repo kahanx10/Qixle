@@ -30,7 +30,7 @@ class SearchedProduct extends StatelessWidget {
                   : product.price.toString().length >= 4
                       ? 100
                       : 165,
-              -25,
+              -20,
             ),
             child: Column(
               mainAxisAlignment:

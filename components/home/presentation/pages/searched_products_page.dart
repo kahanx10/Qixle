@@ -312,10 +312,12 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
                       Expanded(
                         child: Container(
                           margin: const EdgeInsets.only(top: 20),
-                          child: ShakeListView(
-                            products: products,
-                            selectedFilter: selectedFilter,
-                          ),
+                          child: widget.searchQuery.trim().length > 2
+                              ? Container()
+                              : ShakeListView(
+                                  products: products,
+                                  selectedFilter: selectedFilter,
+                                ),
                         ),
                       ),
                     ],
