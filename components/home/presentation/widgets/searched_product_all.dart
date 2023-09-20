@@ -8,11 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 
-class SearchedProduct extends StatelessWidget {
+class SearchedProductAll extends StatelessWidget {
   final Product product;
   final bool isReversed;
 
-  const SearchedProduct({
+  const SearchedProductAll({
     Key? key,
     required this.product,
     required this.isReversed,
@@ -43,7 +43,7 @@ class SearchedProduct extends StatelessWidget {
                   width: 150,
                   height: 2.0,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
+                    color: Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   margin: const EdgeInsets.only(
@@ -76,7 +76,7 @@ class SearchedProduct extends StatelessWidget {
                   width: 50,
                   height: 2.0,
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
+                    color: Colors.grey.shade100,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   margin: const EdgeInsets.only(top: 5, bottom: 10),

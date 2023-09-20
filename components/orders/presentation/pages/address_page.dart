@@ -34,6 +34,8 @@ class _AddressPageState extends State<AddressPage> {
   final TextEditingController areaController = TextEditingController();
   final TextEditingController pincodeController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
+  final TextEditingController contactController = TextEditingController();
+
   final _addressFormKey = GlobalKey<FormState>();
 
   late double totalPrice;
@@ -57,6 +59,15 @@ class _AddressPageState extends State<AddressPage> {
     areaController.dispose();
     pincodeController.dispose();
     cityController.dispose();
+    contactController.dispose();
+  }
+
+  bool allFieldsAreEmpty() {
+    return flatBuildingController.text.trim().isEmpty &&
+        areaController.text.trim().isEmpty &&
+        pincodeController.text.trim().isEmpty &&
+        cityController.text.trim().isEmpty &&
+        contactController.text.trim().isEmpty;
   }
 
   void showPaymentAlertDialog(
@@ -158,19 +169,23 @@ class _AddressPageState extends State<AddressPage> {
 
   void onNextPressed() async {
     try {
-      if (_addressFormKey.currentState!.validate()) {
+      var isValidated = _addressFormKey.currentState!.validate();
+
+      setState(() {});
+
+      if (addressToBeUsed.isNotEmpty && allFieldsAreEmpty()) {
+        _addressFormKey.currentState!.reset();
+
+        finalizeProducts();
+      } else if (isValidated) {
         addressToBeUsed =
-            '${flatBuildingController.text}, ${areaController.text}, ${cityController.text} - ${pincodeController.text}';
+            '${flatBuildingController.text}, ${areaController.text}, ${cityController.text} - ${pincodeController.text}, Contact: ${contactController.text}';
 
         await AddressService.saveUserAddress(
           context,
           address: addressToBeUsed,
         );
 
-        _addressFormKey.currentState!.reset();
-
-        finalizeProducts();
-      } else if (addressToBeUsed.isNotEmpty) {
         _addressFormKey.currentState!.reset();
 
         finalizeProducts();
@@ -221,7 +236,8 @@ class _AddressPageState extends State<AddressPage> {
                     color: Colors.grey.shade200,
                     height: 2,
                     margin: const EdgeInsets.only(
-                      bottom: 15,
+                      top: 10,
+                      bottom: 5,
                     ),
                   ),
                   Text(
@@ -354,35 +370,64 @@ class _AddressPageState extends State<AddressPage> {
                           ],
                         ),
                         const SizedBox(height: 15),
-                        MyTextField(
-                          title: 'City',
-                          controller: cityController,
-                          hintText: 'Enter Town/City/Village',
-                          obscureText: false,
-                          validator: (val) {
-                            if (val != null && val.isNotEmpty) {
-                              return null;
-                            } else {
-                              return 'City is required!';
-                            }
-                          },
+                        Row(
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: MyTextField(
+                                title: 'Pincode',
+                                controller: pincodeController,
+                                hintText: 'Enter Your Area Pincode',
+                                keyboardType: TextInputType.number,
+                                obscureText: false,
+                                validator: (val) {
+                                  if (val != null &&
+                                      val.isNotEmpty &&
+                                      val.length == 6) {
+                                    return null;
+                                  } else if (val != null && val.length != 6) {
+                                    return 'Pincode should be of 6 digits!';
+                                  } else {
+                                    return 'Pincode is required!';
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 15),
+                            Flexible(
+                              flex: 2,
+                              child: MyTextField(
+                                title: 'City',
+                                controller: cityController,
+                                hintText: 'Enter City/Town',
+                                obscureText: false,
+                                validator: (val) {
+                                  if (val != null && val.isNotEmpty) {
+                                    return null;
+                                  } else {
+                                    return 'City is required!';
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 15),
                         MyTextField(
-                          title: 'Pincode',
-                          controller: pincodeController,
-                          hintText: 'Enter Your Area Pincode',
+                          title: 'Phone',
+                          controller: contactController,
+                          hintText: 'Your Contact Number',
                           keyboardType: TextInputType.number,
                           obscureText: false,
                           validator: (val) {
                             if (val != null &&
                                 val.isNotEmpty &&
-                                val.length == 6) {
+                                val.length == 10) {
                               return null;
-                            } else if (val != null && val.length != 6) {
-                              return 'Pincode should be of 6 digits!';
+                            } else if (val != null && val.length != 10) {
+                              return 'Contact no. should be of 10 digits!';
                             } else {
-                              return 'Pincode is required!';
+                              return 'Contact no. is required!';
                             }
                           },
                         ),

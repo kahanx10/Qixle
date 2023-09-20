@@ -127,8 +127,6 @@ class _CartPageState extends State<CartPage> {
             (BlocProvider.of<UserBloc>(context).state as UserAuthenticatedState)
                 .user;
 
-       
-
         return Scaffold(
           backgroundColor: Constants.backgroundColor,
           body: SingleChildScrollView(
@@ -266,7 +264,7 @@ class _CartPageState extends State<CartPage> {
                             style: GoogleFonts.leagueSpartan(
                               color: Colors.grey.shade600,
                               fontSize: 15,
-                              fontWeight: FontWeight.w300,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                           const SizedBox(height: 20),

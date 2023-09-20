@@ -10,6 +10,7 @@ class MyButton extends StatelessWidget {
   final TextStyle? textStyle;
   final double? height;
   final bool useWidth;
+  final bool useOffset;
 
   const MyButton({
     Key? key,
@@ -20,25 +21,40 @@ class MyButton extends StatelessWidget {
     this.width,
     this.useWidth = false,
     this.height,
+    this.useOffset = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: height ?? 70,
-      width: useWidth ? width : 320,
-      child: ElevatedButton(
-        style: style,
-        onPressed: onPressed,
-        child: Text(
-          text,
-          style: textStyle ??
-              GoogleFonts.leagueSpartan(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+    return Stack(
+      children: [
+        Transform.translate(
+            offset: useOffset ? const Offset(4, 4) : const Offset(0, 0),
+            child: Container(
+              height: height ?? 70,
+              width: useWidth ? width : 320,
+              decoration: BoxDecoration(
+                color: Colors.grey.shade300,
+                borderRadius: BorderRadius.circular(100),
               ),
+            )),
+        SizedBox(
+          height: height ?? 70,
+          width: useWidth ? width : 320,
+          child: ElevatedButton(
+            style: style,
+            onPressed: onPressed,
+            child: Text(
+              text,
+              style: textStyle ??
+                  GoogleFonts.leagueSpartan(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }

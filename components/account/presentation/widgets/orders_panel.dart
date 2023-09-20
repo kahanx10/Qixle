@@ -53,88 +53,106 @@ class _OrdersPanelState extends State<OrdersPanel> {
                       text: 'Explore',
                     ),
                   )
-                : Container(
-                    padding: const EdgeInsets.symmetric(vertical: 15),
-                    margin: const EdgeInsets.symmetric(horizontal: 15),
-                    decoration: BoxDecoration(
-                      color: Constants.backgroundColor,
-                      border:
-                          Border.all(width: 2, color: Constants.selectedColor),
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        ListView.builder(
-                          controller: listViewController,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: orders.length,
-                          itemBuilder: (context, index) {
-                            return GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(
-                                  OrderDetailsPage.routeName,
-                                  arguments: orders[index],
+                : Stack(
+                    children: [
+                      Transform.translate(
+                        offset: const Offset(4, 4),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          margin: const EdgeInsets.symmetric(horizontal: 15),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            border: Border.all(
+                                width: 2, color: Constants.selectedColor),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                        margin: const EdgeInsets.symmetric(horizontal: 15),
+                        decoration: BoxDecoration(
+                          color: Constants.backgroundColor,
+                          border: Border.all(
+                              width: 2, color: Constants.selectedColor),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            ListView.builder(
+                              controller: listViewController,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: orders.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                      OrderDetailsPage.routeName,
+                                      arguments: orders[index],
+                                    );
+                                  },
+                                  child: Stack(
+                                    alignment: Alignment.topCenter,
+                                    children: [
+                                      ConstrainedBox(
+                                        constraints:
+                                            const BoxConstraints(maxWidth: 125),
+                                        child: Text(
+                                          orders[index]
+                                              .products[0]['product']['name']
+                                              .toString(),
+                                          style: GoogleFonts.leagueSpartan(
+                                            fontSize: 14,
+                                            color: Colors.grey.shade300,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      SingleProduct(
+                                        imageUrl: orders[index].products[0]
+                                            ['product']['images'][0],
+                                      ),
+                                    ],
+                                  ),
                                 );
                               },
-                              child: Stack(
-                                alignment: Alignment.topCenter,
-                                children: [
-                                  ConstrainedBox(
-                                    constraints:
-                                        const BoxConstraints(maxWidth: 125),
-                                    child: Text(
-                                      orders[index]
-                                          .products[0]['product']['name']
-                                          .toString(),
-                                      style: GoogleFonts.leagueSpartan(
-                                        fontSize: 14,
-                                        color: Colors.grey.shade300,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  SingleProduct(
-                                    imageUrl: orders[index].products[0]
-                                        ['product']['images'][0],
-                                  ),
-                                ],
+                            ),
+                            Positioned(
+                              left: 0,
+                              child: IconButton(
+                                icon: const Icon(Icons.arrow_back_ios_rounded),
+                                onPressed: () {
+                                  listViewController.animateTo(
+                                    0,
+                                    duration: const Duration(milliseconds: 400),
+                                    curve: Curves.decelerate,
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
-                        Positioned(
-                          left: 0,
-                          child: IconButton(
-                            icon: const Icon(Icons.arrow_back_ios_rounded),
-                            onPressed: () {
-                              listViewController.animateTo(
-                                0,
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.decelerate,
-                              );
-                            },
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: IconButton(
-                            icon: const Icon(Icons.arrow_forward_ios_rounded),
-                            onPressed: () {
-                              final maxScroll =
-                                  listViewController.position.maxScrollExtent;
+                            ),
+                            Positioned(
+                              right: 0,
+                              child: IconButton(
+                                icon:
+                                    const Icon(Icons.arrow_forward_ios_rounded),
+                                onPressed: () {
+                                  final maxScroll = listViewController
+                                      .position.maxScrollExtent;
 
-                              listViewController.animateTo(
-                                maxScroll,
-                                duration: const Duration(milliseconds: 400),
-                                curve: Curves.decelerate,
-                              );
-                            },
-                          ),
+                                  listViewController.animateTo(
+                                    maxScroll,
+                                    duration: const Duration(milliseconds: 400),
+                                    curve: Curves.decelerate,
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
           );
         }

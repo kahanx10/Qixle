@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:amazon_clone/components/home/presentation/widgets/searched_product_with_query.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,7 +10,7 @@ import 'package:amazon_clone/components/admin/data/models/product_model.dart';
 import 'package:amazon_clone/components/authentication/logic/blocs/auth_bloc.dart';
 import 'package:amazon_clone/components/home/logic/cubits/customer_products_cubit.dart';
 import 'package:amazon_clone/components/home/presentation/widgets/address_panel.dart';
-import 'package:amazon_clone/components/home/presentation/widgets/searched_product.dart';
+import 'package:amazon_clone/components/home/presentation/widgets/searched_product_all.dart';
 
 class SearchedProductsPage extends StatefulWidget {
   static const String routeName = '/searched_page';
@@ -169,7 +170,7 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
           case FetchingProducts:
             return Constants.loading;
 
-          case ProductsFetched:
+          case ProductsFetchedBySearch:
             products = (state as ProductsFetched).products;
 
             switch (selectedFilter) {
@@ -185,156 +186,239 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
               default:
             }
 
-            return products.isNotEmpty
-                ? Column(
-                    children: [
-                      const SizedBox(
-                        height: 40,
+            return Column(
+              children: [
+                const SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(
+                      width: 70,
+                    ),
+                    Text(
+                      widget.searchQuery.trim().length > 2
+                          ? widget.searchQuery.replaceRange(
+                              0, 1, widget.searchQuery[0].toUpperCase())
+                          : 'All Products',
+                      style: GoogleFonts.leagueSpartan(
+                        fontSize: 24,
+                        color: Constants.selectedColor,
+                        fontWeight: FontWeight.normal,
+                        letterSpacing: 0.025,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const SizedBox(
-                            width: 70,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        double screenWidth = MediaQuery.of(context).size.width;
+                        double screenHeight =
+                            MediaQuery.of(context).size.height;
+
+                        _showMenu(
+                          context,
+                          Offset(
+                            screenWidth * 0.68,
+                            screenHeight * 0.035,
                           ),
-                          Text(
-                            widget.searchQuery.trim().length > 2
-                                ? widget.searchQuery
-                                : 'All Products',
-                            style: GoogleFonts.leagueSpartan(
-                              fontSize: 24,
-                              color: Constants.selectedColor,
-                              fontWeight: FontWeight.normal,
-                              letterSpacing: 0.025,
+                        );
+                      },
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        margin: const EdgeInsets.only(right: 30),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Constants.backgroundColor,
+                          borderRadius: BorderRadius.circular(100),
+                          border: Border.all(
+                            color: Colors.grey.shade200,
+                            width: 2,
+                          ),
+                        ),
+                        child: Center(
+                          child: Icon(
+                            Icons.sort_rounded,
+                            color: Constants.selectedColor,
+                            size: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 2.0,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  margin: const EdgeInsets.symmetric(vertical: 20),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  height: 60,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey.shade100,
+                  ),
+                  margin: const EdgeInsets.only(
+                      left: 30, right: 30, top: 10, bottom: 20),
+                  child: Center(
+                    child: TextFormField(
+                      controller: searchController,
+                      onFieldSubmitted: (val) {
+                        if (val.isNotEmpty) {
+                          Navigator.of(context).pushReplacementNamed(
+                            SearchedProductsPage.routeName,
+                            arguments: val,
+                          );
+                        }
+                      },
+                      cursorColor: Constants.selectedColor,
+                      decoration: InputDecoration(
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            if (searchController.text.isNotEmpty) {
+                              Navigator.of(context).pushReplacementNamed(
+                                SearchedProductsPage.routeName,
+                                arguments: searchController.text,
+                              );
+                            }
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.only(left: 6),
+                            child: Icon(
+                              LineIcons.search,
+                              color: Colors.black,
+                              size: 23,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              double screenWidth =
-                                  MediaQuery.of(context).size.width;
-                              double screenHeight =
-                                  MediaQuery.of(context).size.height;
+                        ),
+                        contentPadding: const EdgeInsets.only(
+                          left: 10,
+                          right: 10,
+                          top: 5,
+                        ),
+                        border: InputBorder.none,
+                        hintText: 'Search More',
+                        hintStyle: GoogleFonts.leagueSpartan(
+                          fontSize: 16,
+                          color: Colors.grey.shade300,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                  ),
+                  child: AddressPanel(),
+                ),
+                Expanded(
+                  child: widget.searchQuery.trim().length <= 2
+                      ? Container(
+                          margin: const EdgeInsets.only(top: 20),
+                          child: PageView.builder(
+                            scrollDirection: Axis.vertical,
+                            itemCount: (products.length / 2).ceil(),
+                            itemBuilder: (context, pageIndex) {
+                              int firstIndex = pageIndex * 2;
+                              int secondIndex = firstIndex + 1;
 
-                              _showMenu(
-                                context,
-                                Offset(
-                                  screenWidth * 0.68,
-                                  screenHeight * 0.035,
-                                ),
+                              return Column(
+                                children: [
+                                  if (products.length > firstIndex)
+                                    Expanded(
+                                      child: SearchedProductAll(
+                                        product: products[firstIndex],
+                                        isReversed: false,
+                                      ),
+                                    ),
+                                  if (products.length > secondIndex)
+                                    Expanded(
+                                      child: SearchedProductAll(
+                                        product: products[secondIndex],
+                                        isReversed: true,
+                                      ),
+                                    ),
+                                ],
                               );
                             },
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              margin: const EdgeInsets.only(right: 30),
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Constants.backgroundColor,
-                                borderRadius: BorderRadius.circular(100),
-                                border: Border.all(
-                                  color: Colors.grey.shade200,
-                                  width: 2,
-                                ),
-                              ),
-                              child: Center(
-                                child: Icon(
-                                  Icons.sort_rounded,
-                                  color: Constants.selectedColor,
-                                  size: 20,
-                                ),
-                              ),
-                            ),
                           ),
-                        ],
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(6),
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.grey.shade100,
-                        ),
-                        margin: const EdgeInsets.only(
-                            left: 30, right: 30, top: 15, bottom: 20),
-                        child: Center(
-                          child: TextFormField(
-                            controller: searchController,
-                            onFieldSubmitted: (val) {
-                              if (val.isNotEmpty) {
-                                Navigator.of(context).pushReplacementNamed(
-                                  SearchedProductsPage.routeName,
-                                  arguments: val,
-                                );
-                              }
-                            },
-                            cursorColor: Constants.selectedColor,
-                            decoration: InputDecoration(
-                              suffixIcon: InkWell(
-                                onTap: () {
-                                  if (searchController.text.isNotEmpty) {
-                                    Navigator.of(context).pushNamed(
-                                      SearchedProductsPage.routeName,
-                                      arguments: searchController.text,
-                                    );
-                                  }
-                                },
-                                child: const Padding(
-                                  padding: EdgeInsets.only(left: 6),
-                                  child: Icon(
-                                    LineIcons.search,
-                                    color: Colors.black,
-                                    size: 23,
+                        )
+                      : Stack(
+                          children: [
+                            Transform.translate(
+                              offset: const Offset(5, 5),
+                              child: Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade400,
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(
+                                      color: Constants.selectedColor,
+                                      width: 2.5,
+                                    ),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                  ),
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 20,
+                                    vertical: 20,
                                   ),
                                 ),
                               ),
-                              contentPadding: const EdgeInsets.only(
-                                left: 10,
-                                right: 10,
-                                top: 5,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                border: Border.all(
+                                  color: Constants.selectedColor,
+                                  width: 2.5,
+                                ),
+                                color: Constants.backgroundColor,
                               ),
-                              border: InputBorder.none,
-                              hintText: 'Search More',
-                              hintStyle: GoogleFonts.leagueSpartan(
-                                fontSize: 16,
-                                color: Colors.grey.shade400,
-                                fontWeight: FontWeight.w500,
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 20,
+                              ),
+                              child: ListView.builder(
+                                itemCount: products.length,
+                                itemBuilder: (context, index) {
+                                  return SearchedProductWithQuery(
+                                    product: products[index],
+                                  );
+                                },
                               ),
                             ),
-                          ),
+                          ],
                         ),
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20.0,
-                        ),
-                        child: AddressPanel(),
-                      ),
-                      Expanded(
-                        child: Container(
-                          margin: const EdgeInsets.only(top: 20),
-                          child: widget.searchQuery.trim().length > 2
-                              ? Container()
-                              : ShakeListView(
-                                  products: products,
-                                  selectedFilter: selectedFilter,
-                                ),
-                        ),
-                      ),
-                    ],
-                  )
-                : const Center(
-                    child: Text('No products found!'),
-                  );
+                ),
+              ],
+            );
 
-          case ErrorFetching:
+          case ErrorFetchingBySearch:
             var errorMessage = (state as ErrorFetching).errorMessage;
+
             return Center(
-              child: Text(errorMessage),
+              child: Text(
+                errorMessage,
+                style: GoogleFonts.leagueSpartan(),
+              ),
             );
           default:
-            return const Center(
+            return Center(
               child: Text(
                 'Invalid state, please try again!',
+                style: GoogleFonts.leagueSpartan(),
               ),
             );
         }
@@ -360,47 +444,5 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
     products.sort((a, b) => b.avgRating.compareTo(a.avgRating));
 
     return products;
-  }
-}
-
-class ShakeListView extends StatelessWidget {
-  final List<Product> products;
-  final int selectedFilter;
-
-  const ShakeListView({
-    Key? key,
-    required this.products,
-    required this.selectedFilter, //
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return PageView.builder(
-      scrollDirection: Axis.vertical,
-      itemCount: (products.length / 2).ceil(),
-      itemBuilder: (context, pageIndex) {
-        int firstIndex = pageIndex * 2;
-        int secondIndex = firstIndex + 1;
-
-        return Column(
-          children: [
-            if (products.length > firstIndex)
-              Expanded(
-                child: SearchedProduct(
-                  product: products[firstIndex],
-                  isReversed: false,
-                ),
-              ),
-            if (products.length > secondIndex)
-              Expanded(
-                child: SearchedProduct(
-                  product: products[secondIndex],
-                  isReversed: true,
-                ),
-              ),
-          ],
-        );
-      },
-    );
   }
 }

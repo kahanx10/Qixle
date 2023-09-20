@@ -206,8 +206,14 @@ class _HomePageState extends State<HomePage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 10,
+              Container(
+                width: double.infinity,
+                height: 2.0,
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                margin: const EdgeInsets.only(top: 10, bottom: 20),
               ),
               Container(
                 padding: const EdgeInsets.all(6),
@@ -239,11 +245,11 @@ class _HomePageState extends State<HomePage> {
                             );
                           }
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.only(left: 6),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 6),
                           child: Icon(
                             LineIcons.search,
-                            color: Colors.black,
+                            color: Constants.selectedColor,
                             size: 23,
                           ),
                         ),
@@ -257,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                       hintText: 'Search',
                       hintStyle: GoogleFonts.leagueSpartan(
                         fontSize: 16,
-                        color: Colors.grey.shade400,
+                        color: Colors.grey.shade300,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -266,6 +272,28 @@ class _HomePageState extends State<HomePage> {
               ),
               Stack(
                 children: [
+                  Transform.translate(
+                    offset: const Offset(5, 5),
+                    child: Container(
+                      height: 200,
+                      constraints: const BoxConstraints(
+                        // This ensures the height does not exceed 50 units.
+                        minWidth:
+                            0, // This means the width can be as small as possible.
+                        maxWidth: double
+                            .infinity, // This allows the width to expand as much as possible.
+                      ),
+                      margin: const EdgeInsets.all(30.0),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade300,
+                        borderRadius: BorderRadius.circular(30),
+                        border: Border.all(
+                          width: 2.0,
+                          color: Constants.selectedColor,
+                        ),
+                      ),
+                    ),
+                  ),
                   Container(
                     height: 200,
                     constraints: const BoxConstraints(
@@ -277,21 +305,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                     margin: const EdgeInsets.all(30.0),
                     decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color:
-                              Colors.black.withOpacity(0.275), // subtle shadow
-                          blurRadius: 15, // soften the shadow
-                          spreadRadius:
-                              1, // extent of shadow, negative values can also be used
-                          offset: const Offset(
-                            -3,
-                            3,
-                          ), // Move to bottom-left by 4 units
-                        ),
-                      ],
-                      color: Constants.selectedColor,
+                      color: Colors.grey.shade100,
                       borderRadius: BorderRadius.circular(30),
+                      border: Border.all(
+                        width: 2.0,
+                        color: Constants.selectedColor,
+                      ),
                     ),
                     child: Align(
                       alignment: Alignment.centerLeft,
@@ -309,44 +328,62 @@ class _HomePageState extends State<HomePage> {
                               'Clearance\nSales',
                               style: GoogleFonts.leagueSpartan(
                                 fontSize: 30,
-                                color: Constants.backgroundColor,
+                                color: Colors.grey.shade300,
                                 fontWeight: FontWeight.w600,
                                 height: 1,
                               ),
                             ),
-                            SizedBox(
-                              width: 170,
-                              height: 50,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    foregroundColor: Constants.selectedColor,
-                                    backgroundColor: Constants.backgroundColor),
-                                onPressed: () {},
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: GoogleFonts.leagueSpartan(
-                                        fontSize: 16,
-                                        // fontWeight: FontWeight.w900,
-                                        color: Constants.selectedColor),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: '% ',
+                            Stack(
+                              children: [
+                                Transform.translate(
+                                    offset: const Offset(4, 4),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade300,
+                                          borderRadius:
+                                              BorderRadius.circular(100)),
+                                      width: 170,
+                                      height: 50,
+                                    )),
+                                SizedBox(
+                                  width: 170,
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      foregroundColor:
+                                          Constants.backgroundColor,
+                                      backgroundColor: Constants.selectedColor,
+                                    ),
+                                    onPressed: () {},
+                                    child: RichText(
+                                      text: TextSpan(
                                         style: GoogleFonts.leagueSpartan(
                                           fontSize: 16,
-                                          fontWeight: FontWeight.w900,
+                                          // fontWeight: FontWeight.w900,
+                                          color: Constants.backgroundColor,
                                         ),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: 'Up to 50 '.toUpperCase(),
+                                            style: GoogleFonts.leagueSpartan(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w400,
+                                              color: Constants.backgroundColor,
+                                            ),
+                                          ),
+                                          TextSpan(
+                                            text: '% '.toUpperCase(),
+                                            style: GoogleFonts.leagueSpartan(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      TextSpan(
-                                        text: 'Up to 50%',
-                                        style: GoogleFonts.leagueSpartan(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ],
                         ),
@@ -363,37 +400,58 @@ class _HomePageState extends State<HomePage> {
                         child: CarouselSlider(
                           items: [
                             Transform.translate(
-                              offset: const Offset(80, 0), //
-                              child: Image.network(
-                                'https://images.dailyobjects.com/marche/product-images/1101/dailyobjects-blue-hybrid-clear-case-cover-for-iphone-13-pro-max-images/DailyObjects-Blue-Hybrid-Clear-Case-Cover-for-iPhone-13-Pro-Max.png?tr=cm-pad_resize,v-2',
-                                fit: BoxFit.cover,
-                                height: 150,
-                                width: 150,
-                              ),
-                            ),
-                            Transform.translate(
-                              offset: const Offset(60, 0), //
-                              child: Image.network(
-                                'https://www.freepnglogos.com/uploads/laptop-png/laptop-transparent-png-pictures-icons-and-png-40.png',
-                                // fit: BoxFit.cover,
-                                height: 240,
-                                width: 240,
-                              ),
-                            ),
-                            Transform.translate(
                               offset: const Offset(100, 55), //
-                              child: Image.network(
-                                'https://www.freepnglogos.com/uploads/women-bag-png/women-bag-women-shoulder-bags-png-transparent-images-27.png',
+                              child: Image.asset(
+                                'assets/images/purse.png',
+                                height: 170,
+                                width: 170,
+                              ),
+                            ),
+                            Transform.translate(
+                              offset: const Offset(70, -10),
+                              child: Transform.rotate(
+                                angle: -30 * (math.pi / 180),
+                                child: Transform.flip(
+                                  flipX: true,
+                                  child: Image.asset(
+                                    'assets/images/shoe-bg.png',
+                                    fit: BoxFit.contain,
+                                    height: 220,
+                                    width: 220,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Transform.translate(
+                              offset: const Offset(100, 50), //
+                              child: Image.asset(
+                                'assets/images/shirt.png',
+                                fit: BoxFit.contain,
                                 height: 170,
                                 width: 170,
                               ),
                             ),
                             Transform.rotate(
-                              angle: -35 * (math.pi / 180),
+                              angle: 20 * (math.pi / 180),
+                              child: Transform.flip(
+                                flipX: true,
+                                child: Transform.translate(
+                                  offset: const Offset(-90, 10), //
+                                  child: Image.asset(
+                                    'assets/images/umbrella.png',
+                                    // fit: BoxFit.cover,
+                                    height: 190,
+                                    width: 190,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Transform.flip(
+                              flipX: true,
                               child: Transform.translate(
-                                offset: const Offset(55, -10), //
-                                child: Image.network(
-                                  'https://static.nike.com/a/images/t_default/e47bddea-7a42-4925-8f36-b4364b6fa12c/custom-nike-air-force-1-mid-by-you-shoes.png',
+                                offset: const Offset(-90, 0), //
+                                child: Image.asset(
+                                  'assets/images/phone.png',
                                   // fit: BoxFit.cover,
                                   height: 240,
                                   width: 240,
@@ -401,12 +459,12 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                             Transform.translate(
-                              offset: const Offset(85, 40), //
-                              child: Image.network(
-                                'https://static.vecteezy.com/system/resources/previews/008/847/343/original/isolated-blue-front-sweater-free-png.png',
-                                // fit: BoxFit.cover,
-                                height: 340,
-                                width: 340,
+                              offset: const Offset(80, 0), //
+                              child: Image.asset(
+                                'assets/images/laptop-3.png',
+                                fit: BoxFit.contain,
+                                height: 200,
+                                width: 200,
                               ),
                             ),
                           ],

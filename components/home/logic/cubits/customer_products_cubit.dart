@@ -69,9 +69,9 @@ class CustomerProductsCubit extends Cubit<CustomerProductsState> {
         products.add(Product.fromMap(productMap));
       }
 
-      emit(ProductsFetched(products: products));
+      emit(ProductsFetchedBySearch(products: products));
     } catch (e) {
-      emit(ErrorFetching(errorMessage: e.toString()));
+      emit(ErrorFetchingBySearch(errorMessage: e.toString()));
     }
   }
 }
@@ -88,8 +88,20 @@ class ProductsFetched extends CustomerProductsState {
   ProductsFetched({required this.products});
 }
 
+class ProductsFetchedBySearch extends CustomerProductsState {
+  final List<Product> products;
+
+  ProductsFetchedBySearch({required this.products});
+}
+
 class ErrorFetching extends CustomerProductsState {
   final String errorMessage;
 
   ErrorFetching({required this.errorMessage});
+}
+
+class ErrorFetchingBySearch extends CustomerProductsState {
+  final String errorMessage;
+
+  ErrorFetchingBySearch({required this.errorMessage});
 }

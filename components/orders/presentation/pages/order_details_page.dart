@@ -421,6 +421,7 @@ class _OrderDetailsPageState extends State<OrderDetailsPage> {
                             ),
                             MyButton(
                               useWidth: true,
+                              useOffset: false,
                               width: 150,
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.grey.shade900,
