@@ -152,7 +152,7 @@ class _CartProductState extends State<CartProduct> {
                                             ),
                                           );
                                         } else {
-                                          return Constants.loading;
+                                          return const SizedBox();
                                         }
                                       }),
                                     ),
@@ -195,14 +195,18 @@ class _CartProductState extends State<CartProduct> {
                             ),
                             Row(
                               children: [
-                                Text(
-                                  '\$${product.price.toStringAsFixed(2)}',
-                                  style: GoogleFonts.leagueSpartan(
-                                    fontSize: 18,
-                                    color: Constants.selectedColor,
-                                    fontWeight: FontWeight.w500,
+                                SizedBox(
+                                  width: 90,
+                                  child: Text(
+                                    '\$${product.price.toStringAsFixed(2)}',
+                                    style: GoogleFonts.leagueSpartan(
+                                      fontSize: 18,
+                                      color: Constants.selectedColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    overflow: TextOverflow.ellipsis,
+                                    // maxLines: 2,
                                   ),
-                                  maxLines: 2,
                                 ),
                                 const Spacer(),
                                 Container(

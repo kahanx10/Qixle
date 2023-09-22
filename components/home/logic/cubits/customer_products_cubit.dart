@@ -49,7 +49,7 @@ class CustomerProductsCubit extends Cubit<CustomerProductsState> {
     required String name,
     required String token,
   }) async {
-    emit(FetchingProducts());
+    emit(FetchingProductsBySearch());
 
     try {
       var res = await CustomerProductsService.fetchProductsBySearch(
@@ -79,6 +79,8 @@ class CustomerProductsCubit extends Cubit<CustomerProductsState> {
 abstract class CustomerProductsState {}
 
 class FetchingProducts extends CustomerProductsState {}
+
+class FetchingProductsBySearch extends CustomerProductsState {}
 
 class NoProducts extends CustomerProductsState {}
 

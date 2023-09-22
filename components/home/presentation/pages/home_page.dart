@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 TextButton(
                   child: Text(
-                    'No Stay :)',
+                    'No Stay',
                     style: GoogleFonts.leagueSpartan(
                       fontSize: 14,
                       color: Constants.backgroundColor,
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 TextButton(
                   child: Text(
-                    'Yes, Bye :(',
+                    'Yes, Bye',
                     style: GoogleFonts.leagueSpartan(
                       fontSize: 14,
                       color: Colors.grey,
@@ -425,7 +425,7 @@ class _HomePageState extends State<HomePage> {
                             Transform.translate(
                               offset: const Offset(100, 50), //
                               child: Image.asset(
-                                'assets/images/shirt.png',
+                                'assets/images/t-shirt.png',
                                 fit: BoxFit.contain,
                                 height: 170,
                                 width: 170,

@@ -108,11 +108,7 @@ class _CategorizedProductsState extends State<CategorizedProducts> {
               ),
             );
           default:
-            return const Center(
-              child: Text(
-                'Unhandled state, technical error!',
-              ),
-            );
+            return const SizedBox();
         }
       },
     );

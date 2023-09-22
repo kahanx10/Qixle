@@ -43,53 +43,51 @@ class _CategoryChipsState extends State<CategoryChips> {
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Flexible(
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(left: 10),
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'Categories',
-                    style: GoogleFonts.leagueSpartan(
-                      fontSize: 20,
-                      color: Constants.selectedColor,
-                      letterSpacing: 0.1,
-                      fontWeight: FontWeight.w600,
-                    ),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(left: 10),
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'Categories',
+                  style: GoogleFonts.leagueSpartan(
+                    fontSize: 20,
+                    color: Constants.selectedColor,
+                    letterSpacing: 0.1,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(right: 10),
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    'See all',
-                    style: GoogleFonts.leagueSpartan(
-                      fontSize: 14,
-                      color: Colors.grey.shade300,
-                      letterSpacing: 0.1,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 60,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: widget.chipList.length,
-                itemBuilder: (context, index) {
-                  return _buildCustomChip(widget.chipList[index]);
-                },
               ),
+              Container(
+                padding: const EdgeInsets.only(right: 10),
+                alignment: Alignment.topLeft,
+                child: Text(
+                  'See all',
+                  style: GoogleFonts.leagueSpartan(
+                    fontSize: 14,
+                    color: Colors.grey.shade300,
+                    letterSpacing: 0.1,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 60,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.chipList.length,
+              itemBuilder: (context, index) {
+                return _buildCustomChip(widget.chipList[index]);
+              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

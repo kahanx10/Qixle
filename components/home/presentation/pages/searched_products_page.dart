@@ -167,11 +167,11 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
       body: BlocBuilder<CustomerProductsCubit, CustomerProductsState>(
           builder: (context, state) {
         switch (state.runtimeType) {
-          case FetchingProducts:
+          case FetchingProductsBySearch:
             return Constants.loading;
 
           case ProductsFetchedBySearch:
-            products = (state as ProductsFetched).products;
+            products = (state as ProductsFetchedBySearch).products;
 
             switch (selectedFilter) {
               case 0:
@@ -406,7 +406,7 @@ class _SearchedProductsPageState extends State<SearchedProductsPage> {
             );
 
           case ErrorFetchingBySearch:
-            var errorMessage = (state as ErrorFetching).errorMessage;
+            var errorMessage = (state as ErrorFetchingBySearch).errorMessage;
 
             return Center(
               child: Text(

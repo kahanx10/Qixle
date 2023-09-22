@@ -110,32 +110,28 @@ class _AddressPageState extends State<AddressPage> {
                 Navigator.of(context).pop(); // Closes the alert dialog
               },
             ),
-            Flexible(
-              child: ApplePayButton(
-                style: ApplePayButtonStyle.whiteOutline,
-                type: ApplePayButtonType.buy,
-                paymentConfiguration: PaymentConfiguration.fromJsonString(
-                  defaultApplePayConfigStrig,
-                ),
-                onPaymentResult: onPayResult,
-                paymentItems: paymentItems,
-                height: 50,
-                loadingIndicator: const Center(
-                  child: Constants.loading,
-                ),
+            ApplePayButton(
+              style: ApplePayButtonStyle.whiteOutline,
+              type: ApplePayButtonType.buy,
+              paymentConfiguration: PaymentConfiguration.fromJsonString(
+                defaultApplePayConfigStrig,
+              ),
+              onPaymentResult: onPayResult,
+              paymentItems: paymentItems,
+              height: 50,
+              loadingIndicator: const Center(
+                child: Constants.loading,
               ),
             ),
-            Flexible(
-              child: GooglePayButton(
-                paymentConfiguration: PaymentConfiguration.fromJsonString(
-                  defaultGooglePayConfigStrig,
-                ),
-                onPaymentResult: onPayResult,
-                paymentItems: paymentItems,
-                height: 50,
-                type: GooglePayButtonType.buy,
-                loadingIndicator: Constants.loading,
+            GooglePayButton(
+              paymentConfiguration: PaymentConfiguration.fromJsonString(
+                defaultGooglePayConfigStrig,
               ),
+              onPaymentResult: onPayResult,
+              paymentItems: paymentItems,
+              height: 50,
+              type: GooglePayButtonType.buy,
+              loadingIndicator: Constants.loading,
             ),
           ],
         );

@@ -449,10 +449,12 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                                             message:
                                                 'Couldn\'t rate the product, please try again!',
                                           );
+
+                                          return;
                                         }
 
                                         var averageRatingUpdated =
-                                            jsonDecode(res!.body) as num;
+                                            jsonDecode(res.body) as num;
 
                                         if (mounted) {
                                           setState(() {

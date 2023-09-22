@@ -5,6 +5,7 @@ import 'package:amazon_clone/common/data/constants.dart';
 import 'package:amazon_clone/components/admin/data/models/product_model.dart';
 import 'package:amazon_clone/components/home/presentation/pages/product_details_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -215,7 +216,7 @@ class SearchedProductAll extends StatelessWidget {
                 ),
               ),
             ),
-          ),
+          ).animate().slide(),
         ],
       ),
     ];

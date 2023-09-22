@@ -60,7 +60,7 @@ class _LayoutPageState extends State<LayoutPage> {
               switch (userState.runtimeType) {
                 case UserInitialState:
                   Future.delayed(
-                    const Duration(seconds: 5),
+                    const Duration(seconds: 3),
                   ).then(
                     (value) => BlocProvider.of<UserBloc>(context).add(
                       FetchUserData(),
